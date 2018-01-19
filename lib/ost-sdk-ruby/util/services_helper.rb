@@ -4,7 +4,16 @@ module OSTSdk
 
     module ServicesHelper
 
-      # Method which is called in service perform and handle exceptions
+      # Wrapper Method which could be used to execute business logic
+      # Error handling code wraps execution of business logic
+      #
+      # Arguments:
+      #   err_code: (String)
+      #   err_message: (String)
+      #   block: (Proc)
+      #
+      # Returns:
+      #   OSTSdk::Util::Result
       #
       def perform_and_handle_exceptions(err_code = 'swt', err_message = 'Something Went Wrong', &block)
         begin

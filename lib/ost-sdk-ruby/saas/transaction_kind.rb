@@ -15,7 +15,10 @@ module OSTSdk
         @url_prefix = '/transaction/kind'
       end
 
-      # Creates a new transaction type
+      # Fetches the list of all transaction types
+      #
+      # Returns:
+      #   response: (OSTSdk::Util::Result)
       #
       def list(params = {})
         http_helper.send_get_request("#{@url_prefix}/get-all", params)
@@ -25,6 +28,9 @@ module OSTSdk
       #
       # Arguments:
       #   params: (Hash)
+      #
+      # Returns:
+      #   response: (OSTSdk::Util::Result)
       #
       def create(params)
         http_helper.send_post_request("#{@url_prefix}/new", params)
