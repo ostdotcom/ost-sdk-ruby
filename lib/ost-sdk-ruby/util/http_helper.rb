@@ -7,6 +7,7 @@ module OSTSdk
       require "uri"
       require "open-uri"
       require "openssl"
+      require "json"
 
       # Initialize
       #
@@ -64,7 +65,7 @@ module OSTSdk
       def set_api_base_url(env)
         case env
           when 'sandbox'
-            @api_base_url = 'http://localhost:3000/'
+            @api_base_url = 'http://localhost:3000'
           when 'production'
             @api_base_url = ''
           else
@@ -85,7 +86,7 @@ module OSTSdk
 
       def get_base_params(endpoint, request_params)
         request_timestamp = Time.now.to_i.to_s
-        str = endpoint + '::' + request_timestamp + '::' + sort_hash(request_params).to_s
+        str = endpoint + '::' + request_timestamp + '::' + sort_hash(request_params).to_json
         signature = generate_signature(@api_secret, str)
         {"request-timestamp" => request_timestamp, "signature" => signature, "api-key" => @api_key}
       end
@@ -114,7 +115,12 @@ module OSTSdk
       end
 
       def sort_hash(request_params)
-        request_params.sort {|a,b| a[0]<=>b[0]}.to_h
+        sorted_array = request_params.sort {|a,b| a[0].downcase<=>b[0].downcase}
+        sorted_hash = {}
+        sorted_array.each do |element|
+          sorted_hash[element[0]] = element[1]
+        end
+        sorted_hash
       end
 
       def hash_to_query_string(hash)
