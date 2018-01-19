@@ -26,7 +26,7 @@ Or install it yourself as:
     
     obj = OSTSdk::Saas::TransactionKind.new(environment, credentials)
     
-    obj.list
+    obj.list(clientId: '1')
     
     obj.create(client_id: '1', name: 'test_1', kind: '1', value_currency_type: '1')
 

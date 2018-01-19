@@ -17,32 +17,17 @@ module OSTSdk
 
       # Creates a new transaction type
       #
-      def list
-        http_helper.send_get_request("#{@url_prefix}/get-all", {clientId: 1})
+      def list(params = {})
+        http_helper.send_get_request("#{@url_prefix}/get-all", params)
       end
 
       # Creates a new transaction type
       #
-      # @param [Hash] params (mandatory) is a Hash
+      # Arguments:
+      #   params: (Hash)
       #
       def create(params)
         http_helper.send_post_request("#{@url_prefix}/new", params)
-      end
-
-      # Update a transaction type
-      #
-      # @param [Hash] params (mandatory) is a Hash
-      #
-      def update(params)
-        http_helper.send_post_request("#{@url_prefix}/update", params)
-      end
-
-      # Delete a transaction type
-      #
-      # @param [Hash] params (mandatory) is a Hash
-      #
-      def delete(params)
-        http_helper.send_post_request("#{@url_prefix}/delete", params)
       end
 
     end
