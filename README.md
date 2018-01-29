@@ -22,14 +22,16 @@ Or install it yourself as:
 
     environment = 'sandbox' # possible values sandbox / production
     
-    credentials = OSTSdk::Util::APICredentials.new('api_key', '2e3ec863fdffcc4425a3d73878e685e702b42bf8')
+    credentials = OSTSdk::Util::APICredentials.new('2fb1cd4ff54f8d842805', '018215e8eeda1084ebcf1fefb5b702799a2d52d0cda955209d98e65bd55a69e0')
     
     obj = OSTSdk::Saas::TransactionKind.new(environment, credentials)
     
-    obj.list(clientId: '1')
+    obj.list()
     
-    obj.create(client_id: '1', name: 'test_1', kind: '1', value_currency_type: '1')
+    obj.create(name: 'test_1', kind: 'user_to_user', value_currency_type: 'usd', value_in_usd: '1.1', value_in_bt: '1.1', commission_percent: '0.0')
 
+    obj.edit(client_transaction_id: '12', name: 'test_1_1_1')
+    
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/ost-sdk-ruby/fork )

@@ -36,6 +36,18 @@ module OSTSdk
         http_helper.send_post_request("#{@url_prefix}/new", params)
       end
 
+      # Updates an existing transaction type
+      #
+      # Arguments:
+      #   params: (Hash)
+      #
+      # Returns:
+      #   response: (OSTSdk::Util::Result)
+      #
+      def edit(params)
+        http_helper.send_post_request("#{@url_prefix}/edit", params)
+      end
+
     end
 
   end
