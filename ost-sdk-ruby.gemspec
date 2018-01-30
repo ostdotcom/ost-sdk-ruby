@@ -6,11 +6,11 @@ require 'ost-sdk-ruby/version'
 Gem::Specification.new do |spec|
 
   spec.name          = "ost-sdk-ruby"
-  spec.version       = Sdk::VERSION
-  spec.authors       = []
+  spec.version       = OSTSdk::VERSION
+  spec.authors       = ['OST Devs']
   spec.email         = []
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = 'OST Ruby SDK'
+  spec.description   = 'OST Ruby SDK'
   spec.homepage      = ""
   spec.license       = "MIT"
 
