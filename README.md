@@ -32,6 +32,12 @@ Or install it yourself as:
 
     obj.edit(client_transaction_id: '12', name: 'test_1_1_1')
     
+2. On Boarding Module
+
+    obj = OSTSdk::Saas::Addresses.new(environment, credentials)
+
+    obj.create(passphrase: 'testtest')
+    
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/ost-sdk-ruby/fork )

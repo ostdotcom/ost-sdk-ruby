@@ -7,6 +7,7 @@ module OSTSdk
       require "uri"
       require "open-uri"
       require "openssl"
+      require "net/http"
       require "json"
 
       # Initialize
