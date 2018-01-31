@@ -88,7 +88,7 @@ module OSTSdk
 
       def get_base_params(endpoint, request_params)
         request_timestamp = Time.now.to_i.to_s
-        str = endpoint + '::' + request_timestamp + '::' + sort_hash(request_params).to_json
+        str = endpoint + '::' + request_timestamp + '::' + format_request_params(request_params).to_json
         signature = generate_signature(@api_secret, str)
         {"request-timestamp" => request_timestamp, "signature" => signature, "api-key" => @api_key}
       end
@@ -116,13 +116,13 @@ module OSTSdk
         end
       end
 
-      def sort_hash(request_params)
+      def format_request_params(request_params)
         sorted_array = request_params.sort {|a,b| a[0].downcase<=>b[0].downcase}
         sorted_hash = {}
         sorted_array.each do |element|
           value = element[1]
           value = value.to_s if [Float,Fixnum].include?(element[1].class)
-          sorted_hash[element[0]] = value
+          sorted_hash[element[0].to_s] = value
         end
         sorted_hash
       end
