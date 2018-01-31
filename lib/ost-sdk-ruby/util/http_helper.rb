@@ -38,7 +38,7 @@ module OSTSdk
           http = setup_request(uri)
           r_params = base_params.merge(request_params)
           result = http.post(uri.path, hash_to_query_string(r_params))
-          OSTSdk::Util::Result.success({data: JSON.parse(result.body)})
+          format_response(result.body)
         end
       end
 
@@ -57,7 +57,7 @@ module OSTSdk
           r_params = base_params.merge(request_params)
           raw_url = get_api_url(endpoint) + "?#{hash_to_query_string(r_params)}"
           result = URI.parse(raw_url).read
-          OSTSdk::Util::Result.success({data: JSON.parse(result)})
+          format_response(result)
         end
       end
 
@@ -130,6 +130,21 @@ module OSTSdk
           str_array << "#{k}=#{v.to_s}"
         end
         str_array.join('&')
+      end
+
+      def format_response(raw_response)
+        json_raw_response = JSON.parse(raw_response)
+        if json_raw_response['success']
+          OSTSdk::Util::Result.success({data: json_raw_response['data']})
+        else
+          OSTSdk::Util::Result.error(
+              {
+                  error: json_raw_response['code'],
+                  error_message: json_raw_response['error_message'],
+                  data: json_raw_response['error_data']
+              }
+          )
+        end
       end
 
     end
