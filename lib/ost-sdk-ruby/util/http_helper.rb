@@ -68,8 +68,8 @@ module OSTSdk
         case env
           when 'sandbox'
             @api_base_url = 'http://localhost:3000'
-          when 'production'
-            @api_base_url = ''
+          when 'main'
+            @api_base_url = 'http://localhost:3000'
           else
             fail "unrecognized ENV #{env}"
         end

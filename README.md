@@ -32,11 +32,17 @@ Or install it yourself as:
 
     obj.edit(client_transaction_id: '12', name: 'test_1_1_1')
     
-2. On Boarding Module
+2. Address Module
 
     obj = OSTSdk::Saas::Addresses.new(environment, credentials)
 
-    obj.create(passphrase: 'testtest')
+    obj.create()
+    
+3. User Module
+ 
+    obj = OSTSdk::Saas::Users.new(environment, credentials)
+    
+    obj.create(name: 'test test')
     
 ## Contributing
 
