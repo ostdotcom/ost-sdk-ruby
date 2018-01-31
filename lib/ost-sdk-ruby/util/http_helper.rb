@@ -38,7 +38,7 @@ module OSTSdk
           http = setup_request(uri)
           r_params = base_params.merge(request_params)
           result = http.post(uri.path, hash_to_query_string(r_params))
-          format_response(result.body)
+          format_response(result.body, result.code)
         end
       end
 
@@ -57,7 +57,7 @@ module OSTSdk
           r_params = base_params.merge(request_params)
           raw_url = get_api_url(endpoint) + "?#{hash_to_query_string(r_params)}"
           result = URI.parse(raw_url).read
-          format_response(result)
+          format_response(result, result.code)
         end
       end
 
@@ -119,7 +119,9 @@ module OSTSdk
         sorted_array = request_params.sort {|a,b| a[0].downcase<=>b[0].downcase}
         sorted_hash = {}
         sorted_array.each do |element|
-          sorted_hash[element[0]] = element[1]
+          value = element[1]
+          value = value.to_s if [Float,Fixnum].include?(element[1].class)
+          sorted_hash[element[0]] = value
         end
         sorted_hash
       end
@@ -132,7 +134,11 @@ module OSTSdk
         str_array.join('&')
       end
 
-      def format_response(raw_response)
+      def format_response(raw_response, response_code)
+        response_code == '200' ? format_success_response(raw_response) : format_failure_response(response_code)
+      end
+
+      def format_success_response(raw_response)
         json_raw_response = JSON.parse(raw_response)
         if json_raw_response['success']
           OSTSdk::Util::Result.success({data: json_raw_response['data']})
@@ -145,6 +151,15 @@ module OSTSdk
               }
           )
         end
+      end
+
+      def format_failure_response(response_code)
+        OSTSdk::Util::Result.error(
+            {
+                error: response_code,
+                error_message: 'Non 200 HTTP Status'
+            }
+        )
       end
 
     end

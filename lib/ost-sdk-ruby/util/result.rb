@@ -88,12 +88,12 @@ module OSTSdk
       # @return [Boolean] returns True / False
       #
       def errors_present?
-        @error.present? ||
-            @error_message.present? ||
-            @error_data.present? ||
-            @error_display_text.present? ||
-            @error_display_heading.present? ||
-            @exception.present?
+        @error ||
+            @error_message ||
+            @error_data ||
+            @error_display_text ||
+            @error_display_heading ||
+            @exception
       end
 
       # Exception message
@@ -101,7 +101,7 @@ module OSTSdk
       # @return [String]
       #
       def exception_message
-        @e_m ||= @exception.present? ? @exception.message : ''
+        @e_m ||= @exception.nil? ? '' : @exception.message
       end
 
       # Exception backtrace
@@ -109,7 +109,7 @@ module OSTSdk
       # @return [String]
       #
       def exception_backtrace
-        @e_b ||= @exception.present? ? @exception.backtrace : ''
+        @e_b ||= @exception.nil? ? '' : @exception.backtrace
       end
 
       # Get instance variables Hash style from object
@@ -187,7 +187,7 @@ module OSTSdk
       def to_hash
         self.class.fields.each_with_object({}) do |key, hash|
           val = send(key)
-          hash[key] = val if val.present?
+          hash[key] = val if !val.nil?
         end
       end
 
