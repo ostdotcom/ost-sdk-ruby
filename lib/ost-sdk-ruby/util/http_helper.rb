@@ -38,7 +38,7 @@ module OSTSdk
           http = setup_request(uri)
           r_params = base_params.merge(request_params)
           result = http.post(uri.path, hash_to_query_string(r_params))
-          format_response(result.body, result.code)
+          format_response(result)
         end
       end
 
@@ -55,9 +55,10 @@ module OSTSdk
         perform_and_handle_exceptions('u_hh_2', 'GET request Failed') do
           base_params = get_base_params(endpoint, request_params)
           r_params = base_params.merge(request_params)
-          raw_url = get_api_url(endpoint) + "?#{hash_to_query_string(r_params)}"
-          result = URI.parse(raw_url).read
-          format_response(result, result.code)
+          uri = URI(get_api_url(endpoint))
+          uri.query = URI.encode_www_form(r_params)
+          result = Net::HTTP.get_response(uri)
+          format_response(result)
         end
       end
 
@@ -134,8 +135,8 @@ module OSTSdk
         str_array.join('&')
       end
 
-      def format_response(raw_response, response_code)
-        response_code == '200' ? format_success_response(raw_response) : format_failure_response(response_code)
+      def format_response(response)
+        response.code == '200' ? format_success_response(response.body) : format_failure_response(response.code)
       end
 
       def format_success_response(raw_response)
