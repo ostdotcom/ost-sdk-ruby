@@ -11,7 +11,8 @@ module OSTSdk
                     :error_data,
                     :message,
                     :data,
-                    :exception
+                    :exception,
+                    :http_code
 
       # Initialize
       #
@@ -20,13 +21,14 @@ module OSTSdk
       def initialize(params = {})
         set_error(params)
         set_message(params[:message])
+        set_http_code(params[:http_code])
         @data = params[:data] || {}
       end
 
       # Set Error
       #
-      # @param [Hash] params is a Hash
-      #
+      # Arguments:
+      #   params: (Hash)
       def set_error(params)
         @error = params[:error] if params.key?(:error)
         @error_message = params[:error_message] if params.key?(:error_message)
@@ -37,16 +39,24 @@ module OSTSdk
 
       # Set Message
       #
-      # @param [String] msg is a String
-      #
+      # Arguments:
+      #   msg: (String)
       def set_message(msg)
         @message = msg
       end
 
+      # Set HTTP Code
+      #
+      # Arguments:
+      #   msg: (String)
+      def set_http_code(h_c)
+        @http_code = h_c || 200
+      end
+
       # Set Exception
       #
-      # @param [Exception] e is an Exception
-      #
+      # Arguments:
+      #   e: (Exception)
       def set_exception(e)
         @exception = e
         @error_data = {
@@ -98,7 +108,8 @@ module OSTSdk
 
       # Exception message
       #
-      # @return [String]
+      # Returns:
+      #   exception_message: (String)
       #
       def exception_message
         @e_m ||= @exception.nil? ? '' : @exception.message
@@ -106,7 +117,8 @@ module OSTSdk
 
       # Exception backtrace
       #
-      # @return [String]
+      # Returns:
+      #   exception_backtrace: (String)
       #
       def exception_backtrace
         @e_b ||= @exception.nil? ? '' : @exception.backtrace
@@ -120,7 +132,8 @@ module OSTSdk
 
       # Error
       #
-      # @return [OSTSdk::Util::Result] returns object of OSTSdk::Util::Result class
+      # Returns:
+      #   obj: (OSTSdk::Util::Result)
       #
       def self.error(params)
         new(params)
@@ -128,7 +141,8 @@ module OSTSdk
 
       # Success
       #
-      # @return [OSTSdk::Util::Result] returns object of OSTSdk::Util::Result class
+      # Returns:
+      #   obj: (OSTSdk::Util::Result)
       #
       def self.success(params)
         new(params.merge!(no_error))
@@ -136,7 +150,8 @@ module OSTSdk
 
       # Exception
       #
-      # @return [OSTSdk::Util::Result] returns object of OSTSdk::Util::Result class
+      # Returns:
+      #   obj: (OSTSdk::Util::Result)
       #
       def self.exception(e, params = {})
         obj = new(params)
@@ -146,7 +161,8 @@ module OSTSdk
 
       # No Error
       #
-      # @return [Hash] returns Hash
+      # Returns:
+      #   obj: (Hash)
       #
       def self.no_error
         @n_err ||= {
@@ -160,7 +176,8 @@ module OSTSdk
 
       # Fields
       #
-      # @return [Array] returns Array object
+      # Returns:
+      #   obj: (Array)
       #
       def self.fields
         error_fields + [:data, :message]
@@ -168,7 +185,8 @@ module OSTSdk
 
       # Error Fields
       #
-      # @return [Array] returns Array object
+      # Returns:
+      #   obj: (Array)
       #
       def self.error_fields
         [
@@ -182,7 +200,8 @@ module OSTSdk
 
       # Create an Hash out of all instance vars
       #
-      # @return [Hash] returns Hash object
+      # Returns:
+      #   obj: (Hash)
       #
       def to_hash
         self.class.fields.each_with_object({}) do |key, hash|
@@ -192,6 +211,9 @@ module OSTSdk
       end
 
       # To JSON
+      #
+      # Returns:
+      #   obj: (Hash)
       #
       def to_json
 

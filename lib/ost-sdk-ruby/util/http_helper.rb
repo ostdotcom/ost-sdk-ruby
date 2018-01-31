@@ -158,7 +158,8 @@ module OSTSdk
         OSTSdk::Util::Result.error(
             {
                 error: response_code,
-                error_message: 'Non 200 HTTP Status'
+                error_message: 'Non 200 HTTP Status',
+                http_code: response_code
             }
         )
       end
