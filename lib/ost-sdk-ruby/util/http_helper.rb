@@ -144,11 +144,12 @@ module OSTSdk
         if json_raw_response['success']
           OSTSdk::Util::Result.success({data: json_raw_response['data']})
         else
+          err_data = json_raw_response['err']
           OSTSdk::Util::Result.error(
               {
-                  error: json_raw_response['code'],
-                  error_message: json_raw_response['error_message'],
-                  data: json_raw_response['error_data']
+                  error: err_data['code'],
+                  error_message: err_data['msg'],
+                  data: err_data['error_data']
               }
           )
         end
