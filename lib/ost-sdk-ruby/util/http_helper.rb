@@ -67,9 +67,9 @@ module OSTSdk
       def set_api_base_url(env)
         case env
           when 'sandbox'
-            @api_base_url = 'http://localhost:3000'
+            @api_base_url = 'http://localhost:4001'
           when 'main'
-            @api_base_url = 'http://localhost:3000'
+            @api_base_url = 'http://localhost:4001'
           else
             fail "unrecognized ENV #{env}"
         end

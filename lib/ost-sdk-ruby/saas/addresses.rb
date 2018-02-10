@@ -24,6 +24,15 @@ module OSTSdk
         http_helper.send_post_request("#{@url_prefix}/create", params)
       end
 
+      # Fetches balances transaction types
+      #
+      # Returns:
+      #   response: (OSTSdk::Util::Result)
+      #
+      def fetch_balances(params)
+        http_helper.send_get_request("#{@url_prefix}/fetch-balances", params)
+      end
+
     end
 
   end
