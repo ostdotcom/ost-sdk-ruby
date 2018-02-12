@@ -149,7 +149,7 @@ module OSTSdk
               {
                   error: err_data['code'],
                   error_message: err_data['msg'],
-                  error_data: err_data['detail']
+                  error_data: err_data['error_data']
               }
           )
         end
