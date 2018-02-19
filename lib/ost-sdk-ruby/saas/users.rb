@@ -15,13 +15,31 @@ module OSTSdk
         @url_prefix = '/users'
       end
 
-      # Fetches the list of all transaction types
+      # Create a new user
       #
       # Returns:
       #   response: (OSTSdk::Util::Result)
       #
       def create(params = {})
         http_helper.send_post_request("#{@url_prefix}/create", params)
+      end
+
+      # Edit an existing user
+      #
+      # Returns:
+      #   response: (OSTSdk::Util::Result)
+      #
+      def edit(params = {})
+        http_helper.send_post_request("#{@url_prefix}/edit", params)
+      end
+
+      # Fetches the list of all users
+      #
+      # Returns:
+      #   response: (OSTSdk::Util::Result)
+      #
+      def list(params = {})
+        http_helper.send_post_request("#{@url_prefix}/list", params)
       end
 
     end
