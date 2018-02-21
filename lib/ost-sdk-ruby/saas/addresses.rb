@@ -21,7 +21,7 @@ module OSTSdk
       #   response: (OSTSdk::Util::Result)
       #
       def fetch_balances(params)
-        http_helper.send_get_request("#{@url_prefix}/fetch-balances", params)
+        http_helper.send_get_request("#{@url_prefix}/fetch-utility-chain-balances", params)
       end
 
     end
