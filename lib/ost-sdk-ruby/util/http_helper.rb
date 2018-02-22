@@ -89,11 +89,11 @@ module OSTSdk
       def get_base_params(endpoint, request_params)
         request_timestamp = Time.now.to_i.to_s
         str = endpoint + '::' + request_timestamp + '::' + format_request_params(request_params).to_json
-        signature = generate_signature(@api_secret, str)
+        signature = generate_signature(str)
         {"request-timestamp" => request_timestamp, "signature" => signature, "api-key" => @api_key}
       end
 
-      def generate_signature(api_secret, string_to_sign)
+      def generate_signature(string_to_sign)
         digest = OpenSSL::Digest.new('sha256')
         OpenSSL::HMAC.hexdigest(digest, @api_secret, string_to_sign)
       end
