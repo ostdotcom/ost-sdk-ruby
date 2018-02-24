@@ -42,6 +42,15 @@ module OSTSdk
         http_helper.send_post_request("#{@url_prefix}/list", params)
       end
 
+      # Airdrop Branded Token to list of users
+      #
+      # Returns:
+      #   response: (OSTSdk::Util::Result)
+      #
+      def airdrop_tokens(params = {})
+        http_helper.send_post_request("#{@url_prefix}/airdrop-tokens", params)
+      end
+
     end
 
   end

@@ -50,6 +50,8 @@ Or install it yourself as:
     
     obj.list()
     
+    obj.airdrop_tokens(symbol: 'FRC', amount: 100, list_type: 'new')
+    
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/ost-sdk-ruby/fork )
