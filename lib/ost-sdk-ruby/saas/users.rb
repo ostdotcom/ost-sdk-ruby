@@ -51,6 +51,15 @@ module OSTSdk
         http_helper.send_post_request("#{@url_prefix}/airdrop-tokens", params)
       end
 
+      # Get status of an Airdrop request for users.
+      #
+      # Returns:
+      #   response: (OSTSdk::Util::Result)
+      #
+      def get_airdrop_status(params = {})
+        http_helper.send_get_request("#{@url_prefix}/airdrop/get-status", params)
+      end
+
     end
 
   end

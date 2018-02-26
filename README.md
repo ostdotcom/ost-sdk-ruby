@@ -46,11 +46,13 @@ Or install it yourself as:
     
     obj.create(name: 'test test')
     
-    obj.edit(name: 'test test', address_uuid: '0xddA2cB099235F657b77b8ABf055725c88cbc6112')
+    obj.edit(name: 'test test', address_uuid: '1234-1928-1081dsds-djhksjd')
     
     obj.list()
     
     obj.airdrop_tokens(symbol: 'FRC', amount: 100, list_type: 'new')
+    
+    obj.get_airdrop_status(airdrop_uuid: '1234-1928-1081dsds-djhksjd')
     
 ## Contributing
 
