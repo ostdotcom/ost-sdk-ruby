@@ -65,13 +65,18 @@ module OSTSdk
       private
 
       def set_api_base_url(env)
-        case env
-          when 'sandbox'
-            @api_base_url = 'http://localhost:4001'
-          when 'main'
-            @api_base_url = 'http://localhost:4001'
-          else
-            fail "unrecognized ENV #{env}"
+        ost_sdk_saas_api_endpoint = ENV['CA_SAAS_API_ENDPOINT']
+        if ost_sdk_saas_api_endpoint.present?
+          @api_base_url =  ost_sdk_saas_api_endpoint
+        else
+          case env
+            when 'sandbox'
+              @api_base_url = 'https://sandboxapi.ost.com'
+            when 'main'
+              @api_base_url = 'https://api.ost.com'
+            else
+              fail "unrecognized ENV #{env}"
+          end
         end
       end
 
@@ -112,16 +117,16 @@ module OSTSdk
         begin
           yield if block_given?
         rescue StandardError => se
-          OSTSdk::Util::Result.exception(se, {error: err_code, error_message: err_message} )
+          OSTSdk::Util::Result.exception(se, {error: err_code, error_message: err_message})
         end
       end
 
       def format_request_params(request_params)
-        sorted_array = request_params.sort {|a,b| a[0].downcase<=>b[0].downcase}
+        sorted_array = request_params.sort {|a, b| a[0].downcase <=> b[0].downcase}
         sorted_hash = {}
         sorted_array.each do |element|
           value = element[1]
-          value = value.to_s if [Float,Fixnum].include?(element[1].class)
+          value = value.to_s if [Float, Fixnum].include?(element[1].class)
           sorted_hash[element[0].to_s] = value
         end
         sorted_hash
@@ -129,7 +134,7 @@ module OSTSdk
 
       def hash_to_query_string(hash)
         str_array = []
-        hash.each do |k,v|
+        hash.each do |k, v|
           str_array << "#{k}=#{v.to_s}"
         end
         str_array.join('&')
