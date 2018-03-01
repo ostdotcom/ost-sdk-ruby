@@ -126,7 +126,7 @@ module OSTSdk
         sorted_hash = {}
         sorted_array.each do |element|
           value = element[1]
-          value = value.to_s if [Float, Fixnum].include?(element[1].class)
+          value = value.to_s
           sorted_hash[element[0].to_s] = value
         end
         sorted_hash
