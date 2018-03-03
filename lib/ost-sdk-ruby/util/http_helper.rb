@@ -64,7 +64,7 @@ module OSTSdk
           uri = URI(get_api_url(endpoint))
           uri.query = URI.encode_www_form(r_params)
           if @api_spec
-            return OSTSdk::Util::Result.success({data: {request_uri: uri, request_type: 'GET', request_params: r_params}})
+            return OSTSdk::Util::Result.success({data: {request_uri: uri.split("?")[0], request_type: 'GET', request_params: r_params}})
           else
             result = Net::HTTP.get_response(uri)
             return format_response(result)
