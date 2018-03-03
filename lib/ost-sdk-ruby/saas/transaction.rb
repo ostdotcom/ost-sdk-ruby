@@ -13,7 +13,7 @@ module OSTSdk
       #
       def initialize(environment, credentials, api_spec = false)
         super
-        @url_prefix = '/transaction/'
+        @url_prefix = '/transaction'
       end
 
       # Execute a transaction
