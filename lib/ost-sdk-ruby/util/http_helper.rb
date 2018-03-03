@@ -15,11 +15,13 @@ module OSTSdk
       # Arguments:
       #   environment: (String)
       #   credentials: (OSTSdk::Util::APICredentials)
+      #   api_spec: (Boolean)
       #
-      def initialize(environment, credentials)
+      def initialize(environment, credentials, api_spec)
         set_api_base_url(environment)
         @api_key = credentials.api_key
         @api_secret = credentials.api_secret
+        @api_spec = api_spec
       end
 
       # Send POST requests
@@ -37,8 +39,12 @@ module OSTSdk
           uri = post_api_uri(endpoint)
           http = setup_request(uri)
           r_params = base_params.merge(request_params)
-          result = http.post(uri.path, hash_to_query_string(r_params))
-          format_response(result)
+          if @api_spec
+            return OSTSdk::Util::Result.success({data: {request_uri: uri, request_type: 'POST', request_params: r_params}})
+          else
+            result = http.post(uri.path, hash_to_query_string(r_params))
+            return format_response(result)
+          end
         end
       end
 
@@ -57,8 +63,12 @@ module OSTSdk
           r_params = base_params.merge(request_params)
           uri = URI(get_api_url(endpoint))
           uri.query = URI.encode_www_form(r_params)
-          result = Net::HTTP.get_response(uri)
-          format_response(result)
+          if @api_spec
+            return OSTSdk::Util::Result.success({data: {request_uri: uri, request_type: 'GET', request_params: r_params}})
+          else
+            result = Net::HTTP.get_response(uri)
+            return format_response(result)
+          end
         end
       end
 

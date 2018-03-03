@@ -9,8 +9,9 @@ module OSTSdk
       # Arguments:
       #   environment: (String)
       #   credentials: (OSTSdk::Util::APICredentials)
+      #   api_spec: (Boolean)
       #
-      def initialize(environment, credentials)
+      def initialize(environment, credentials, api_spec = false)
         super
         @url_prefix = '/addresses'
       end
