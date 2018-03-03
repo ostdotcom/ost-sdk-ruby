@@ -40,7 +40,7 @@ module OSTSdk
           http = setup_request(uri)
           r_params = base_params.merge(request_params)
           if @api_spec
-            return OSTSdk::Util::Result.success({data: {request_uri: uri, request_type: 'POST', request_params: r_params}})
+            return OSTSdk::Util::Result.success({data: {request_uri: uri.to_s, request_type: 'POST', request_params: hash_to_query_string(r_params)}})
           else
             result = http.post(uri.path, hash_to_query_string(r_params))
             return format_response(result)
@@ -64,7 +64,7 @@ module OSTSdk
           uri = URI(get_api_url(endpoint))
           uri.query = URI.encode_www_form(r_params)
           if @api_spec
-            return OSTSdk::Util::Result.success({data: {request_uri: uri.split("?")[0], request_type: 'GET', request_params: r_params}})
+            return OSTSdk::Util::Result.success({data: {request_uri: uri.split("?")[0].to_s, request_type: 'GET', request_params: hash_to_query_string(r_params)}})
           else
             result = Net::HTTP.get_response(uri)
             return format_response(result)
