@@ -76,7 +76,7 @@ module OSTSdk
 
       def set_api_base_url(env)
         ost_sdk_saas_api_endpoint = ENV['CA_SAAS_API_ENDPOINT']
-        if ost_sdk_saas_api_endpoint.nil?
+        if !ost_sdk_saas_api_endpoint.nil?
           @api_base_url =  ost_sdk_saas_api_endpoint
         else
           case env
