@@ -15,11 +15,13 @@ module OSTSdk
       # Arguments:
       #   environment: (String)
       #   credentials: (OSTSdk::Util::APICredentials)
+      #   api_spec: (Boolean)
       #
-      def initialize(environment, credentials)
+      def initialize(environment, credentials, api_spec)
         set_api_base_url(environment)
         @api_key = credentials.api_key
         @api_secret = credentials.api_secret
+        @api_spec = api_spec
       end
 
       # Send POST requests
@@ -37,8 +39,12 @@ module OSTSdk
           uri = post_api_uri(endpoint)
           http = setup_request(uri)
           r_params = base_params.merge(request_params)
-          result = http.post(uri.path, hash_to_query_string(r_params))
-          format_response(result)
+          if @api_spec
+            return OSTSdk::Util::Result.success({data: {request_uri: uri.to_s, request_type: 'POST', request_params: hash_to_query_string(r_params)}})
+          else
+            result = http.post(uri.path, hash_to_query_string(r_params))
+            return format_response(result)
+          end
         end
       end
 
@@ -57,21 +63,30 @@ module OSTSdk
           r_params = base_params.merge(request_params)
           uri = URI(get_api_url(endpoint))
           uri.query = URI.encode_www_form(r_params)
-          result = Net::HTTP.get_response(uri)
-          format_response(result)
+          if @api_spec
+            return OSTSdk::Util::Result.success({data: {request_uri: uri.to_s.split("?")[0], request_type: 'GET', request_params: hash_to_query_string(r_params)}})
+          else
+            result = Net::HTTP.get_response(uri)
+            return format_response(result)
+          end
         end
       end
 
       private
 
       def set_api_base_url(env)
-        case env
-          when 'sandbox'
-            @api_base_url = 'http://localhost:4001'
-          when 'main'
-            @api_base_url = 'http://localhost:4001'
-          else
-            fail "unrecognized ENV #{env}"
+        ost_sdk_saas_api_endpoint = ENV['CA_SAAS_API_ENDPOINT']
+        if !ost_sdk_saas_api_endpoint.nil?
+          @api_base_url =  ost_sdk_saas_api_endpoint
+        else
+          case env
+            when 'sandbox'
+              @api_base_url = 'https://sandboxapi.ost.com'
+            when 'main'
+              @api_base_url = 'https://api.ost.com'
+            else
+              fail "unrecognized ENV #{env}"
+          end
         end
       end
 
@@ -89,11 +104,11 @@ module OSTSdk
       def get_base_params(endpoint, request_params)
         request_timestamp = Time.now.to_i.to_s
         str = endpoint + '::' + request_timestamp + '::' + format_request_params(request_params).to_json
-        signature = generate_signature(@api_secret, str)
+        signature = generate_signature(str)
         {"request-timestamp" => request_timestamp, "signature" => signature, "api-key" => @api_key}
       end
 
-      def generate_signature(api_secret, string_to_sign)
+      def generate_signature(string_to_sign)
         digest = OpenSSL::Digest.new('sha256')
         OpenSSL::HMAC.hexdigest(digest, @api_secret, string_to_sign)
       end
@@ -112,16 +127,16 @@ module OSTSdk
         begin
           yield if block_given?
         rescue StandardError => se
-          OSTSdk::Util::Result.exception(se, {error: err_code, error_message: err_message} )
+          OSTSdk::Util::Result.exception(se, {error: err_code, error_message: err_message})
         end
       end
 
       def format_request_params(request_params)
-        sorted_array = request_params.sort {|a,b| a[0].downcase<=>b[0].downcase}
+        sorted_array = request_params.sort {|a, b| a[0].downcase <=> b[0].downcase}
         sorted_hash = {}
         sorted_array.each do |element|
           value = element[1]
-          value = value.to_s if [Float,Fixnum].include?(element[1].class)
+          value = value.to_s
           sorted_hash[element[0].to_s] = value
         end
         sorted_hash
@@ -129,7 +144,7 @@ module OSTSdk
 
       def hash_to_query_string(hash)
         str_array = []
-        hash.each do |k,v|
+        hash.each do |k, v|
           str_array << "#{k}=#{v.to_s}"
         end
         str_array.join('&')
