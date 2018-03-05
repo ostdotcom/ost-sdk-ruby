@@ -94,12 +94,6 @@
     ostUserObject.get_airdrop_status(airdrop_uuid: '1234-1928-1081dsds-djhksjd')
   ```
   
-* Get user ST Prime balance 
-
-  ```
-    ostUserObject.get_st_prime_balance(uuid: '1234-1928-1081dsds-djhksjd')
-  ```
-
 #### Transaction Module
 
 ##### Create an object of transactions module
@@ -112,18 +106,6 @@
 
   ```
     ostTransactionObject.transfer_bt_by_transaction_kind(from_uuid: '1234-1928-1081dsds-djhksjd', to_uuid: '1234-1928-1081-1223232', transaction_kind: 'Purchase', token_symbol: 'ACME')
-  ```
-
-* Transfer Branded Token by value
-
-  ```
-    ostTransactionObject.transfer_bt_by_value(from_uuid: '1234-1928-1081dsds-djhksjd', to_uuid: '1234-1928-1081-1223232', amount: '1', token_symbol: 'ACME')
-  ```
-  
-* Transfer ST Prime by value
-
-  ```
-    ostTransactionObject.transfer_st_prime_by_value(from_uuid: '1234-1928-1081dsds-djhksjd', to_uuid: '1234-1928-1081-1223232', amount: '1')
   ```
 
 * Get transaction status

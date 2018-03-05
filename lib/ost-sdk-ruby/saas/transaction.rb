@@ -28,30 +28,6 @@ module OSTSdk
         http_helper.send_post_request("#{@url_prefix}/bt-by-tx-kind", params)
       end
 
-      # Execute transfer BT by tx kind
-      #
-      # Arguments:
-      #   params: (Hash)
-      #
-      # Returns:
-      #   response: (OSTSdk::Util::Result)
-      #
-      def transfer_bt_by_value(params)
-        http_helper.send_post_request("#{@url_prefix}/bt-by-value", params)
-      end
-
-      # Execute transfer ST Prime by value
-      #
-      # Arguments:
-      #   params: (Hash)
-      #
-      # Returns:
-      #   response: (OSTSdk::Util::Result)
-      #
-      def transfer_st_prime_by_value(params)
-        http_helper.send_post_request("#{@url_prefix}/st-prime-by-value", params)
-      end
-
       # Get details of a transaction(s)
       #
       # Arguments:

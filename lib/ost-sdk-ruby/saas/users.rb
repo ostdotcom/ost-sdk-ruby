@@ -61,15 +61,6 @@ module OSTSdk
         http_helper.send_get_request("#{@url_prefix}/airdrop/get-status", params)
       end
 
-      # Get ST Prime Balance.
-      #
-      # Returns:
-      #   response: (OSTSdk::Util::Result)
-      #
-      def get_st_prime_balance(params = {})
-        http_helper.send_get_request("#{@url_prefix}/get-st-prime-balance", params)
-      end
-
     end
 
   end
