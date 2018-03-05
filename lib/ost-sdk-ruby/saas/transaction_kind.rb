@@ -12,7 +12,7 @@ module OSTSdk
       #
       def initialize(environment, credentials)
         super
-        @url_prefix = '/transaction/kind'
+        @url_prefix = '/transaction-types'
       end
 
       # Fetches the list of all transaction types
@@ -21,7 +21,7 @@ module OSTSdk
       #   response: (OSTSdk::Util::Result)
       #
       def list(params = {})
-        http_helper.send_get_request("#{@url_prefix}/get-all", params)
+        http_helper.send_get_request("#{@url_prefix}/list", params)
       end
 
       # Creates a new transaction type
@@ -33,7 +33,7 @@ module OSTSdk
       #   response: (OSTSdk::Util::Result)
       #
       def create(params)
-        http_helper.send_post_request("#{@url_prefix}/new", params)
+        http_helper.send_post_request("#{@url_prefix}/create", params)
       end
 
       # Updates an existing transaction type
@@ -46,6 +46,30 @@ module OSTSdk
       #
       def edit(params)
         http_helper.send_post_request("#{@url_prefix}/edit", params)
+      end
+
+      # Execute transfer BT by tx kind
+      #
+      # Arguments:
+      #   params: (Hash)
+      #
+      # Returns:
+      #   response: (OSTSdk::Util::Result)
+      #
+      def execute(params)
+        http_helper.send_post_request("#{@url_prefix}/execute", params)
+      end
+
+      # Get details of a transaction(s)
+      #
+      # Arguments:
+      #   params: (Hash)
+      #
+      # Returns:
+      #   response: (OSTSdk::Util::Result)
+      #
+      def status(params)
+        http_helper.send_post_request("#{@url_prefix}/status", params)
       end
 
     end
