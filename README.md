@@ -99,17 +99,17 @@
 ##### Create an object of transactions module
 
   ```
-    ostTransactionObject = OSTSdk::Saas::Transaction.new(environment, credentials)
+    ostTransactionObject = OSTSdk::Saas::TransactionKind.new(environment, credentials)
   ```
   
 * Transfer Branded Token by transaction kind
 
   ```
-    ostTransactionObject.transfer_bt_by_transaction_kind(from_uuid: '1234-1928-1081dsds-djhksjd', to_uuid: '1234-1928-1081-1223232', transaction_kind: 'Purchase', token_symbol: 'ACME')
+    ostTransactionObject.execute(from_uuid: '1234-1928-1081dsds-djhksjd', to_uuid: '1234-1928-1081-1223232', transaction_kind: 'Purchase', token_symbol: 'ACME')
   ```
 
 * Get transaction status
     
   ```
-    ostTransactionObject.get_details(transaction_uuids: ['5f79063f-e22a-4d28-99d7-dd095f02c72e'])
+    ostTransactionObject.status(transaction_uuids: ['5f79063f-e22a-4d28-99d7-dd095f02c72e'])
   ```
