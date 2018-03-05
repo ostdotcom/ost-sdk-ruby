@@ -105,7 +105,7 @@
 * Transfer Branded Token by transaction kind
 
   ```
-    ostTransactionObject.execute(from_uuid: '1234-1928-1081dsds-djhksjd', to_uuid: '1234-1928-1081-1223232', transaction_kind: 'Purchase', token_symbol: 'ACME')
+    ostTransactionObject.execute(from_uuid: '1234-1928-1081dsds-djhksjd', to_uuid: '1234-1928-1081-1223232', transaction_kind: 'Purchase')
   ```
 
 * Get transaction status
