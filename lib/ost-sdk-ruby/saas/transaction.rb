@@ -13,10 +13,10 @@ module OSTSdk
       #
       def initialize(environment, credentials, api_spec = false)
         super
-        @url_prefix = '/transaction'
+        @url_prefix = '/transfer'
       end
 
-      # Execute a transaction
+      # Execute transfer BT by tx kind
       #
       # Arguments:
       #   params: (Hash)
@@ -24,8 +24,32 @@ module OSTSdk
       # Returns:
       #   response: (OSTSdk::Util::Result)
       #
-      def execute(params)
-        http_helper.send_post_request("#{@url_prefix}/execute", params)
+      def transfer_bt_by_transaction_kind(params)
+        http_helper.send_post_request("#{@url_prefix}/bt-by-tx-kind", params)
+      end
+
+      # Execute transfer BT by tx kind
+      #
+      # Arguments:
+      #   params: (Hash)
+      #
+      # Returns:
+      #   response: (OSTSdk::Util::Result)
+      #
+      def transfer_bt_by_value(params)
+        http_helper.send_post_request("#{@url_prefix}/bt-by-value", params)
+      end
+
+      # Execute transfer ST Prime by value
+      #
+      # Arguments:
+      #   params: (Hash)
+      #
+      # Returns:
+      #   response: (OSTSdk::Util::Result)
+      #
+      def transfer_st_prime_by_value(params)
+        http_helper.send_post_request("#{@url_prefix}/st-prime-by-value", params)
       end
 
       # Get details of a transaction(s)
