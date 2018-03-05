@@ -28,6 +28,18 @@ module OSTSdk
         http_helper.send_post_request("#{@url_prefix}/execute", params)
       end
 
+      # Get details of a transaction(s)
+      #
+      # Arguments:
+      #   params: (Hash)
+      #
+      # Returns:
+      #   response: (OSTSdk::Util::Result)
+      #
+      def get_details(params)
+        http_helper.send_post_request("#{@url_prefix}/fetch_details", params)
+      end
+
     end
 
   end

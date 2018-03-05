@@ -55,6 +55,7 @@
   ```
     ostTransactionKindObject.edit(client_transaction_id: '12', name: 'New Transaction Kind')
   ```
+  
 #### User Module
 
 ##### Create user module object to perform user specific actions
