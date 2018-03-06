@@ -9,6 +9,7 @@ module OSTSdk
       require "openssl"
       require "net/http"
       require "json"
+      require 'rack'
 
       # Initialize
       #
@@ -39,10 +40,12 @@ module OSTSdk
           uri = post_api_uri(endpoint)
           http = setup_request(uri)
           r_params = base_params.merge(request_params)
+          query_string = Rack::Utils.build_nested_query(r_params)
+          escaped_query_string = URI.escape(query_string, '*')
           if @api_spec
-            return OSTSdk::Util::Result.success({data: {request_uri: uri.to_s, request_type: 'POST', request_params: hash_to_query_string(r_params)}})
+            return OSTSdk::Util::Result.success({data: {request_uri: uri.to_s, request_type: 'POST', request_params: escaped_query_string}})
           else
-            result = http.post(uri.path, hash_to_query_string(r_params))
+            result = http.post(uri.path, escaped_query_string)
             return format_response(result)
           end
         end
@@ -61,12 +64,17 @@ module OSTSdk
         perform_and_handle_exceptions('u_hh_2', 'GET request Failed') do
           base_params = get_base_params(endpoint, request_params)
           r_params = base_params.merge(request_params)
-          uri = URI(get_api_url(endpoint))
-          uri.query = URI.encode_www_form(r_params)
+          query_string = Rack::Utils.build_nested_query(r_params)
+          escaped_query_string = URI.escape(query_string, '*')
+          raw_url = get_api_url(endpoint) + "?" + escaped_query_string
+          uri = URI(raw_url)
           if @api_spec
-            return OSTSdk::Util::Result.success({data: {request_uri: uri.to_s.split("?")[0], request_type: 'GET', request_params: hash_to_query_string(r_params)}})
+            return OSTSdk::Util::Result.success({data: {request_uri: uri.to_s.split("?")[0], request_type: 'GET', request_params: escaped_query_string}})
           else
-            result = Net::HTTP.get_response(uri)
+            result = {}
+            Timeout.timeout(5) do
+              result = Net::HTTP.get_response(uri)
+            end
             return format_response(result)
           end
         end
@@ -77,7 +85,7 @@ module OSTSdk
       def set_api_base_url(env)
         ost_sdk_saas_api_endpoint = ENV['CA_SAAS_API_ENDPOINT']
         if !ost_sdk_saas_api_endpoint.nil?
-          @api_base_url =  ost_sdk_saas_api_endpoint
+          @api_base_url = ost_sdk_saas_api_endpoint
         else
           case env
             when 'sandbox'
@@ -103,14 +111,21 @@ module OSTSdk
 
       def get_base_params(endpoint, request_params)
         request_timestamp = Time.now.to_i.to_s
-        str = endpoint + '::' + request_timestamp + '::' + format_request_params(request_params).to_json
+        request_params = request_params.merge("request_timestamp" => request_timestamp, "api_key" => @api_key)
+
+        sorted_request_params = sort_param(request_params)
+        request_params_str = Rack::Utils.build_nested_query(sorted_request_params)
+        request_params_escaped_str = URI.escape(request_params_str, "*")
+
+        str = endpoint + '?' + request_params_escaped_str
         signature = generate_signature(str)
-        {"request-timestamp" => request_timestamp, "signature" => signature, "api-key" => @api_key}
+        {"request_timestamp" => request_timestamp, "signature" => signature, "api_key" => @api_key}
       end
 
       def generate_signature(string_to_sign)
         digest = OpenSSL::Digest.new('sha256')
-        OpenSSL::HMAC.hexdigest(digest, @api_secret, string_to_sign)
+        signature = OpenSSL::HMAC.hexdigest(digest, @api_secret, string_to_sign)
+        signature
       end
 
       def post_api_uri(endpoint)
@@ -131,23 +146,40 @@ module OSTSdk
         end
       end
 
-      def format_request_params(request_params)
-        sorted_array = request_params.sort {|a, b| a[0].downcase <=> b[0].downcase}
-        sorted_hash = {}
-        sorted_array.each do |element|
-          value = element[1]
-          value = value.to_s
-          sorted_hash[element[0].to_s] = value
+      def sort_param(params)
+        if [Hash, Array].include?(params.class)
+          params = JSON.parse(params.to_json)
+        else
+          params = params.to_s
         end
-        sorted_hash
-      end
 
-      def hash_to_query_string(hash)
-        str_array = []
-        hash.each do |k, v|
-          str_array << "#{k}=#{v.to_s}"
+        res = {}
+        if params.class == Array
+          data = []
+          params.each do |ele|
+            if [Hash, Array].include?(ele.class)
+              data << sort_param(ele)
+            else
+              data << ele.to_s
+            end
+          end
+          return data
         end
-        str_array.join('&')
+
+        params.sort.each do |ele|
+          key = ele[0]
+          val = ele[1]
+          sorted_val = val
+
+          if [Hash, Array].include?(val.class)
+            sorted_val = sort_param(val)
+          else
+            sorted_val = sorted_val.to_s
+          end
+
+          res[key] = sorted_val
+        end
+        return res
       end
 
       def format_response(response)
