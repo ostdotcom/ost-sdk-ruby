@@ -36,7 +36,6 @@ module OSTSdk
       #
       def send_post_request(endpoint, request_params)
         perform_and_handle_exceptions('u_hh_1', 'POST request failed') do
-          puts "request_params: #{request_params}"
           base_params = get_base_params(endpoint, request_params)
           uri = post_api_uri(endpoint)
           http = setup_request(uri)
@@ -119,7 +118,6 @@ module OSTSdk
         request_params_escaped_str = URI.escape(request_params_str, "*")
 
         str = endpoint + '?' + request_params_escaped_str
-        puts "str: #{str}"
         signature = generate_signature(str)
         {"request_timestamp" => request_timestamp, "signature" => signature, "api_key" => @api_key}
       end
@@ -149,8 +147,8 @@ module OSTSdk
       end
 
       def sort_param(params)
-        puts "sort_param: #{params}"
-        if [Hash, Array].include?(params.class)
+
+        if [Hash, Array, ActiveSupport::HashWithIndifferentAccess].include?(params.class)
           params = JSON.parse(params.to_json)
         else
           params = params.to_s
@@ -160,7 +158,7 @@ module OSTSdk
         if params.class == Array
           data = []
           params.each do |ele|
-            if [Hash, Array].include?(ele.class)
+            if [Hash, Array, ActiveSupport::HashWithIndifferentAccess].include?(ele.class)
               data << sort_param(ele)
             else
               data << ele.to_s
@@ -174,7 +172,7 @@ module OSTSdk
           val = ele[1]
           sorted_val = val
 
-          if [Hash, Array].include?(val.class)
+          if [Hash, Array, ActiveSupport::HashWithIndifferentAccess].include?(val.class)
             sorted_val = sort_param(val)
           else
             sorted_val = sorted_val.to_s
