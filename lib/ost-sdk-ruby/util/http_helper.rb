@@ -36,6 +36,7 @@ module OSTSdk
       #
       def send_post_request(endpoint, request_params)
         perform_and_handle_exceptions('u_hh_1', 'POST request failed') do
+          puts "request_params: #{request_params}"
           base_params = get_base_params(endpoint, request_params)
           uri = post_api_uri(endpoint)
           http = setup_request(uri)
@@ -118,6 +119,7 @@ module OSTSdk
         request_params_escaped_str = URI.escape(request_params_str, "*")
 
         str = endpoint + '?' + request_params_escaped_str
+        puts "str: #{str}"
         signature = generate_signature(str)
         {"request_timestamp" => request_timestamp, "signature" => signature, "api_key" => @api_key}
       end
@@ -147,6 +149,7 @@ module OSTSdk
       end
 
       def sort_param(params)
+        puts "sort_param: #{params}"
         if [Hash, Array].include?(params.class)
           params = JSON.parse(params.to_json)
         else
