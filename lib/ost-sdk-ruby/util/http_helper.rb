@@ -148,7 +148,7 @@ module OSTSdk
 
       def sort_param(params)
 
-        if [Hash, Array, ActiveSupport::HashWithIndifferentAccess].include?(params.class)
+        if [Hash, Array].include?(params.class)
           params = JSON.parse(params.to_json)
         else
           params = params.to_s
@@ -158,7 +158,7 @@ module OSTSdk
         if params.class == Array
           data = []
           params.each do |ele|
-            if [Hash, Array, ActiveSupport::HashWithIndifferentAccess].include?(ele.class)
+            if [Hash, Array].include?(ele.class)
               data << sort_param(ele)
             else
               data << ele.to_s
@@ -172,7 +172,7 @@ module OSTSdk
           val = ele[1]
           sorted_val = val
 
-          if [Hash, Array, ActiveSupport::HashWithIndifferentAccess].include?(val.class)
+          if [Hash, Array].include?(val.class)
             sorted_val = sort_param(val)
           else
             sorted_val = sorted_val.to_s
