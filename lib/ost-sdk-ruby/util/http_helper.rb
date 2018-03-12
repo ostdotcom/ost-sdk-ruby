@@ -89,7 +89,7 @@ module OSTSdk
         else
           case env
             when 'sandbox'
-              @api_base_url = 'https://sandboxapi.ost.com'
+              @api_base_url = 'https://playgroundapi.ost.com'
             when 'main'
               @api_base_url = 'https://api.ost.com'
             else
