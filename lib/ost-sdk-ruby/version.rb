@@ -1,5 +1,5 @@
 module OSTSdk
 
-  VERSION = "0.0.21"
+  VERSION = "0.9.2"
 
 end
