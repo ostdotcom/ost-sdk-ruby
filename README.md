@@ -134,5 +134,3 @@ And then call a method:
 > ostTransactionKindObject.list()
 => #<OSTSdk::Util::Result:0x007ffccab36c98 @error=nil, @error_message=nil, @error_data=nil, @error_display_text=nil, @error_display_heading=nil, @message=nil, @http_code=200, @data={:request_uri=>"https://sandboxapi.ost.com/transaction-types/list", :request_type=>"GET", :request_params=>"request_timestamp=<request_epoch_timestamp>&signature=<signature>&api_key=<api_key>"}>
 ```
-
-For further usage details, please refer to the [API documentation](#documentation).
