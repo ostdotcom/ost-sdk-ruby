@@ -9,17 +9,20 @@ module OSTSdk
       require "openssl"
       require "net/http"
       require "json"
+      require 'rack'
 
       # Initialize
       #
       # Arguments:
       #   environment: (String)
       #   credentials: (OSTSdk::Util::APICredentials)
+      #   api_spec: (Boolean)
       #
-      def initialize(environment, credentials)
+      def initialize(environment, credentials, api_spec)
         set_api_base_url(environment)
         @api_key = credentials.api_key
         @api_secret = credentials.api_secret
+        @api_spec = api_spec
       end
 
       # Send POST requests
@@ -37,8 +40,14 @@ module OSTSdk
           uri = post_api_uri(endpoint)
           http = setup_request(uri)
           r_params = base_params.merge(request_params)
-          result = http.post(uri.path, hash_to_query_string(r_params))
-          format_response(result)
+          query_string = Rack::Utils.build_nested_query(r_params)
+          escaped_query_string = URI.escape(query_string, '*')
+          if @api_spec
+            return OSTSdk::Util::Result.success({data: {request_uri: uri.to_s, request_type: 'POST', request_params: escaped_query_string}})
+          else
+            result = http.post(uri.path, escaped_query_string)
+            return format_response(result)
+          end
         end
       end
 
@@ -55,23 +64,37 @@ module OSTSdk
         perform_and_handle_exceptions('u_hh_2', 'GET request Failed') do
           base_params = get_base_params(endpoint, request_params)
           r_params = base_params.merge(request_params)
-          uri = URI(get_api_url(endpoint))
-          uri.query = URI.encode_www_form(r_params)
-          result = Net::HTTP.get_response(uri)
-          format_response(result)
+          query_string = Rack::Utils.build_nested_query(r_params)
+          escaped_query_string = URI.escape(query_string, '*')
+          raw_url = get_api_url(endpoint) + "?" + escaped_query_string
+          uri = URI(raw_url)
+          if @api_spec
+            return OSTSdk::Util::Result.success({data: {request_uri: uri.to_s.split("?")[0], request_type: 'GET', request_params: escaped_query_string}})
+          else
+            result = {}
+            Timeout.timeout(5) do
+              result = Net::HTTP.get_response(uri)
+            end
+            return format_response(result)
+          end
         end
       end
 
       private
 
       def set_api_base_url(env)
-        case env
-          when 'sandbox'
-            @api_base_url = 'http://localhost:4001'
-          when 'main'
-            @api_base_url = 'http://localhost:4001'
-          else
-            fail "unrecognized ENV #{env}"
+        ost_sdk_saas_api_endpoint = ENV['CA_SAAS_API_ENDPOINT']
+        if !ost_sdk_saas_api_endpoint.nil?
+          @api_base_url = ost_sdk_saas_api_endpoint
+        else
+          case env
+            when 'sandbox'
+              @api_base_url = 'https://playgroundapi.ost.com'
+            when 'main'
+              @api_base_url = 'https://api.ost.com'
+            else
+              fail "unrecognized ENV #{env}"
+          end
         end
       end
 
@@ -88,14 +111,21 @@ module OSTSdk
 
       def get_base_params(endpoint, request_params)
         request_timestamp = Time.now.to_i.to_s
-        str = endpoint + '::' + request_timestamp + '::' + format_request_params(request_params).to_json
-        signature = generate_signature(@api_secret, str)
-        {"request-timestamp" => request_timestamp, "signature" => signature, "api-key" => @api_key}
+        request_params = request_params.merge("request_timestamp" => request_timestamp, "api_key" => @api_key)
+
+        sorted_request_params = sort_param(request_params)
+        request_params_str = Rack::Utils.build_nested_query(sorted_request_params)
+        request_params_escaped_str = URI.escape(request_params_str, "*")
+
+        str = endpoint + '?' + request_params_escaped_str
+        signature = generate_signature(str)
+        {"request_timestamp" => request_timestamp, "signature" => signature, "api_key" => @api_key}
       end
 
-      def generate_signature(api_secret, string_to_sign)
+      def generate_signature(string_to_sign)
         digest = OpenSSL::Digest.new('sha256')
-        OpenSSL::HMAC.hexdigest(digest, @api_secret, string_to_sign)
+        signature = OpenSSL::HMAC.hexdigest(digest, @api_secret, string_to_sign)
+        signature
       end
 
       def post_api_uri(endpoint)
@@ -112,27 +142,45 @@ module OSTSdk
         begin
           yield if block_given?
         rescue StandardError => se
-          OSTSdk::Util::Result.exception(se, {error: err_code, error_message: err_message} )
+          OSTSdk::Util::Result.exception(se, {error: err_code, error_message: err_message})
         end
       end
 
-      def format_request_params(request_params)
-        sorted_array = request_params.sort {|a,b| a[0].downcase<=>b[0].downcase}
-        sorted_hash = {}
-        sorted_array.each do |element|
-          value = element[1]
-          value = value.to_s if [Float,Fixnum].include?(element[1].class)
-          sorted_hash[element[0].to_s] = value
-        end
-        sorted_hash
-      end
+      def sort_param(params)
 
-      def hash_to_query_string(hash)
-        str_array = []
-        hash.each do |k,v|
-          str_array << "#{k}=#{v.to_s}"
+        if [Hash, Array].include?(params.class)
+          params = JSON.parse(params.to_json)
+        else
+          params = params.to_s
         end
-        str_array.join('&')
+
+        res = {}
+        if params.class == Array
+          data = []
+          params.each do |ele|
+            if [Hash, Array].include?(ele.class)
+              data << sort_param(ele)
+            else
+              data << ele.to_s
+            end
+          end
+          return data
+        end
+
+        params.sort.each do |ele|
+          key = ele[0]
+          val = ele[1]
+          sorted_val = val
+
+          if [Hash, Array].include?(val.class)
+            sorted_val = sort_param(val)
+          else
+            sorted_val = sorted_val.to_s
+          end
+
+          res[key] = sorted_val
+        end
+        return res
       end
 
       def format_response(response)

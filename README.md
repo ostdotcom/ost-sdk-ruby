@@ -1,59 +1,136 @@
 # Ost::Sdk::Ruby
 
+A Ruby wrapper for the [OST Developers API](https://dev.ost.com/).
+
+## Requirements
+
+To use this gem, developers will need to:
+1. Sign-up on [https://kit.ost.com](https://kit.ost.com).
+2. Launch a branded token economy with the OST KIT Economy Planner.
+3. Obtain an API Key and API Secret from [https://kit.ost.com/developer-api-console](https://kit.ost.com/developer-api-console).
+
+## Documentation
+
+[https://dev.ost.com/](https://dev.ost.com/)
+
 ## Installation
 
-Add this line to your application's Gemfile:
+Install OST Ruby SDK
 
-    gem 'ost-sdk-ruby'
+```bash
+> gem install ost-sdk-ruby
+```
 
-And then execute:
+## Example Usage
 
-    $ bundle
+Require the OST Ruby SDK:
 
-Or install it yourself as:
+```ruby
+require('ost-sdk-ruby')
+```
 
-    $ gem install ost-sdk-ruby
+Set variables for initializing SDK objects:
 
-## Usage
+```ruby
+environment = 'sandbox'
+credentials = OSTSdk::Util::APICredentials.new(<api_key>, <api_secret>)
+```
 
-1. TransactionKind Module 
+### Transaction Kind Module 
 
-    environment = 'sandbox' # possible values sandbox / production
-    
-    credentials = OSTSdk::Util::APICredentials.new('2fb1cd4ff54f8d842805', '018215e8eeda1084ebcf1fefb5b702799a2d52d0cda955209d98e65bd55a69e0')
-    
-    obj = OSTSdk::Saas::TransactionKind.new(environment, credentials)
-    
-    obj.list()
-    
-    obj.create(name: 'ABC', kind: 'user_to_user', value_currency_type: 'usd', value_in_usd: '1.1', value_in_bt: '1.1', commission_percent: '0.0')
+Initialize a `TransactionKind` object to perform transaction-related actions:
 
-    obj.edit(client_transaction_id: '12', name: 'test_1_1_1')
-    
-2. Address Module
+```ruby
+ostTransactionKindObject = OSTSdk::Saas::TransactionKind.new(environment, credentials)
+```
 
-    environment = 'sandbox' # possible values sandbox / production
-    
-    credentials = OSTSdk::Util::APICredentials.new('2fb1cd4ff54f8d842805', '018215e8eeda1084ebcf1fefb5b702799a2d52d0cda955209d98e65bd55a69e0')
-    
-    obj = OSTSdk::Saas::Addresses.new(environment, credentials)
-    
-    obj.fetch_balances(balance_types: ['ost', 'ostPrime', 'eth', 'FRC'], address_uuid: '0xddA2cB099235F657b77b8ABf055725c88cbc6112')
-    
-3. User Module
- 
-    obj = OSTSdk::Saas::Users.new(environment, credentials)
-    
-    obj.create(name: 'test test')
-    
-    obj.edit(name: 'test test', address_uuid: '0xddA2cB099235F657b77b8ABf055725c88cbc6112')
-    
-    obj.list()
-    
-## Contributing
+Create new transaction kinds:
 
-1. Fork it ( https://github.com/[my-github-username]/ost-sdk-ruby/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+```ruby
+ostTransactionKindObject.create(name: 'Like', kind: 'user_to_user', currency_type: 'usd', currency_value: '1.25', commission_percent: '12')
+```
+
+```ruby
+ostTransactionKindObject.create(name: 'Grant', kind: 'company_to_user', currency_type: 'bt', currency_value: '12', commission_percent: '0')
+```
+
+```ruby
+ostTransactionKindObject.create(name: 'Buy', kind: 'user_to_company', currency_type: 'bt', currency_value: '100', commission_percent: '0')
+```
+
+Get a list of existing transaction kinds and other data:
+
+```ruby
+ostTransactionKindObject.list()
+```
+
+Edit an existing transaction kind:
+
+```ruby
+ostTransactionKindObject.edit(client_transaction_id: '12', name: 'New Transaction Kind')
+```
+
+Execute a branded token transfer by transaction kind:
+
+```ruby
+ostTransactionKindObject.execute(from_uuid: '1234-1928-1081dsds-djhksjd', to_uuid: '1234-1928-1081-1223232', transaction_kind: 'Purchase')
+```
+
+Get the status of an executed transaction:
+  
+```ruby
+ostTransactionKindObject.status(transaction_uuids: ['5f79063f-e22a-4d28-99d7-dd095f02c72e'])
+```
+
+### Users Module
+
+Initialize a `Users` object to perform user specific actions:
+
+```ruby
+ostUsersObject = OSTSdk::Saas::Users.new(environment, credentials)
+```
+
+Create a new user:
+
+```ruby
+ostUsersObject.create(name: 'Alice')
+```
+
+Get a list of users and other data:
+
+```ruby
+ostUsersObject.list()
+```
+
+Edit an existing user:
+
+```ruby
+ostUsersObject.edit(uuid: '1234-1928-1081dsds-djhksjd', name: 'Bob')
+```
+
+Airdrop branded tokens to users:
+
+```ruby
+ostUsersObject.airdrop_tokens(amount: 100, list_type: 'all')
+```
+
+As airdropping tokens is an asynchronous task, you can check the airdrop's status:
+
+```ruby
+ostUsersObject.get_airdrop_status(airdrop_uuid: '1234-1928-1081dsds-djhksjd')
+```
+
+### Request Specs
+
+To obtain request/API specification, pass in `true` for the optional `api_spec` parameter when initializing a `TransactionKind` or `Users` module object:
+
+```ruby
+ostTransactionKindObject = OSTSdk::Saas::TransactionKind.new(environment, credentials, true)
+```
+
+And then call a method:
+
+```ruby
+> ostTransactionKindObject.list()
+=> #<OSTSdk::Util::Result:0x007ffccab36c98 @error=nil, @error_message=nil, @error_data=nil, @error_display_text=nil, @error_display_heading=nil, @message=nil, @http_code=200, @data={:request_uri=>"https://sandboxapi.ost.com/transaction-types/list", :request_type=>"GET", :request_params=>"request_timestamp=<request_epoch_timestamp>&signature=<signature>&api_key=<api_key>"}>
+```
