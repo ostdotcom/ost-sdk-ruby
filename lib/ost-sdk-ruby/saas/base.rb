@@ -11,17 +11,20 @@ module OSTSdk
       # Initialize
       #
       # Arguments:
-      #   environment: (String)
-      #   credentials: (OSTSdk::Util::APICredentials)
+      #   api_base_url: (String)
+      #   api_key: (String)
+      #   api_secret: (String)
       #   api_spec: (Boolean)
       #
-      def initialize(environment, credentials, api_spec)
+      def initialize(params)
 
-        fail 'missing param environment' if environment.nil?
-        fail 'missing/invalid param credentials' if credentials.nil? ||
-            credentials.class != OSTSdk::Util::APICredentials
+        fail 'missing API Base URL' if params[:api_base_url].nil?
+        fail 'missing API Key' if params[:api_key].nil?
+        fail 'missing API Secret' if params[:api_secret].nil?
 
-        @http_helper = OSTSdk::Util::HTTPHelper.new(environment, credentials, api_spec)
+        params[:api_base_url].gsub!(/\/$/, '') # remove trailing slash
+
+        @http_helper = OSTSdk::Util::HTTPHelper.new(params)
 
       end
 

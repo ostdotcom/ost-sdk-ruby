@@ -59,10 +59,12 @@ module OSTSdk
       #   e: (Exception)
       def set_exception(e)
         @exception = e
-        @error_data = {
-            msg: e.message,
-            trace: e.backtrace
-        }
+        @error_data = [
+            {
+                msg: e.message,
+                trace: e.backtrace
+            }
+        ]
       end
 
       # is valid?
@@ -232,7 +234,7 @@ module OSTSdk
                   msg: hash[:error_message],
                   display_text: hash[:error_display_text].to_s,
                   display_heading: hash[:error_display_heading].to_s,
-                  error_data: hash[:error_data] || {}
+                  error_data: hash[:error_data] || []
               },
               data: hash[:data]
           }
