@@ -6,7 +6,7 @@ module OSTSdk
 
       class Manifest
 
-        attr_reader :users, :token
+        attr_reader :users, :token, :actions, :airdrops, :transactions, :transfers
 
         # Initialize
         #
@@ -20,6 +20,10 @@ module OSTSdk
 
           @users = OSTSdk::Saas::V1::Users.new(params)
           @token = OSTSdk::Saas::V1::Token.new(params)
+          @actions = OSTSdk::Saas::V1::Actions.new(params)
+          @airdrops = OSTSdk::Saas::V1::Airdrops.new(params)
+          @transactions = OSTSdk::Saas::V1::Transactions.new(params)
+          @transfers = OSTSdk::Saas::V1::Transfers.new(params)
 
         end
 

@@ -4,7 +4,7 @@ module OSTSdk
 
     module V1
 
-      class Users < OSTSdk::Saas::Base
+      class Transfers < OSTSdk::Saas::Base
 
         # Initialize
         #
@@ -16,43 +16,34 @@ module OSTSdk
         #
         def initialize(params)
           super
-          @url_prefix = '/users'
+          @url_prefix = '/transfers'
         end
 
-        # Create a new user
+        # Execute a transfer
         #
         # Returns:
         #   response: (OSTSdk::Util::Result)
         #
-        def create(params = {})
+        def execute(params = {})
           http_helper.send_post_request("#{@url_prefix}/", params)
         end
 
-        # Edit an existing user
-        #
-        # Returns:
-        #   response: (OSTSdk::Util::Result)
-        #
-        def edit(params = {})
-          http_helper.send_post_request("#{@url_prefix}/#{params.delete(:id)}", params)
-        end
-
-        # Fetches the list of users (with or without filters)
-        #
-        # Returns:
-        #   response: (OSTSdk::Util::Result)
-        #
-        def list(params = {})
-          http_helper.send_get_request("#{@url_prefix}/", params)
-        end
-
-        # Get details about a user
+        # Get details about a transfer
         #
         # Returns:
         #   response: (OSTSdk::Util::Result)
         #
         def get(params = {})
           http_helper.send_get_request("#{@url_prefix}/#{params.delete(:id)}", params)
+        end
+
+        # Fetches the list of transfers (with or without filters)
+        #
+        # Returns:
+        #   response: (OSTSdk::Util::Result)
+        #
+        def list(params = {})
+          http_helper.send_get_request("#{@url_prefix}/", params)
         end
 
       end

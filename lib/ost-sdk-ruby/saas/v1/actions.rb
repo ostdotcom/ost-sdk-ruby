@@ -4,7 +4,7 @@ module OSTSdk
 
     module V1
 
-      class Users < OSTSdk::Saas::Base
+      class Actions < OSTSdk::Saas::Base
 
         # Initialize
         #
@@ -16,10 +16,10 @@ module OSTSdk
         #
         def initialize(params)
           super
-          @url_prefix = '/users'
+          @url_prefix = '/actions'
         end
 
-        # Create a new user
+        # Create a new action
         #
         # Returns:
         #   response: (OSTSdk::Util::Result)
@@ -28,7 +28,7 @@ module OSTSdk
           http_helper.send_post_request("#{@url_prefix}/", params)
         end
 
-        # Edit an existing user
+        # Edit an existing action
         #
         # Returns:
         #   response: (OSTSdk::Util::Result)
@@ -37,7 +37,7 @@ module OSTSdk
           http_helper.send_post_request("#{@url_prefix}/#{params.delete(:id)}", params)
         end
 
-        # Fetches the list of users (with or without filters)
+        # Fetches the list of actions (with or without filters)
         #
         # Returns:
         #   response: (OSTSdk::Util::Result)
@@ -46,7 +46,7 @@ module OSTSdk
           http_helper.send_get_request("#{@url_prefix}/", params)
         end
 
-        # Get details about a user
+        # Get details about a action
         #
         # Returns:
         #   response: (OSTSdk::Util::Result)

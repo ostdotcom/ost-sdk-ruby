@@ -9,6 +9,10 @@ require_relative 'saas/v0/users'
 require_relative 'saas/v1/manifest'
 require_relative 'saas/v1/users'
 require_relative 'saas/v1/token'
+require_relative 'saas/v1/actions'
+require_relative 'saas/v1/airdrops'
+require_relative 'saas/v1/transfers'
+require_relative 'saas/v1/transactions'
 
 module OSTSdk
 
