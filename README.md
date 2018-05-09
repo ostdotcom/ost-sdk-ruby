@@ -65,6 +65,29 @@ Get a list of users and other data:
 ost_users_object.list()
 ```
 
+### Airdrops Module 
+
+```ruby
+ost_airdrop_object = ost_sdk.manifest.airdrops
+```
+
+Execute Airdrop:
+
+```ruby
+ost_airdrop_object.execute({amount: 1, airdropped: 'true', user_ids: 'f87346e4-61f6-4d55-8cb8-234c65437b01'})
+```
+
+Get Airdrop Status:
+```ruby
+ost_airdrop_object.get({id: 'ecd9b0b2-a0f4-422c-95a4-f25f8fc88334'})
+```
+
+List Airdrop
+```ruby
+ost_airdrop_object.list({page_no: 1, limit: 50, current_status: 'processing,complete'})
+```
+
+
 ### Token Module 
 
 ```ruby

@@ -120,6 +120,23 @@ As airdropping tokens is an asynchronous task, you can check the airdrop's statu
 ostUsersObject.get_airdrop_status(airdrop_uuid: '1234-1928-1081dsds-djhksjd')
 ```
 
+### Airdrops Module 
+
+```ruby
+ost_airdrop_object = ost_sdk.manifest.users
+```
+
+Execute Airdrop:
+
+```ruby
+ost_airdrop_object.airdrop_tokens({amount: 1, list_type: 'all'})
+```
+
+Get Airdrop Status:
+```ruby
+ost_airdrop_object.get({id: 'ecd9b0b2-a0f4-422c-95a4-f25f8fc88334'})
+```
+
 ### Request Specs
 
 To obtain request/API specification, pass in `true` for the optional `api_spec` parameter when initializing a `TransactionKind` or `Users` module object:
