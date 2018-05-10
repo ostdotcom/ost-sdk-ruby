@@ -99,3 +99,34 @@ Get details:
 ```ruby
 ost_token_object.get({})
 ```
+
+### Actions Module 
+
+
+```ruby
+ost_token_object = ost_sdk.manifest.actions
+```
+
+Create a new action:
+
+```ruby
+ost_token_object.create({}) 
+```
+
+Edit an action:
+
+```ruby
+ost_token_object.edit({})
+```
+
+Get an action:
+
+```ruby
+ost_token_object.get(id: 1234)
+```
+
+List actions:
+
+```ruby
+ost_token_object.list()
+```
