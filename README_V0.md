@@ -151,3 +151,16 @@ And then call a method:
 ostTransactionKindObject.list()
 #<OSTSdk::Util::Result:0x007ffccab36c98 @error=nil, @error_message=nil, @error_data=nil, @error_display_text=nil, @error_display_heading=nil, @message=nil, @http_code=200, @data={:request_uri=>"https://sandboxapi.ost.com/transaction-types/list", :request_type=>"GET", :request_params=>"request_timestamp=<request_epoch_timestamp>&signature=<signature>&api_key=<api_key>"}>
 ```
+
+
+### Transaction Module 
+
+```ruby
+ost_transaction_object = ost_sdk.manifest.transaction_kind
+```
+
+Execute Airdrop:
+
+```ruby
+ost_airdrop_object.execute({from_uuid:'f87346e4-61f6-4d55-8cb8-234c65437b01', to_uuid:'c07bd853-e893-4400-b7e8-c358cfa05d85', transaction_kind:'Upvote'})
+```

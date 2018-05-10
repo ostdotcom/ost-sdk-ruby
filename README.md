@@ -130,3 +130,26 @@ List actions:
 ```ruby
 ost_token_object.list()
 ```
+
+### Transaction Module 
+
+```ruby
+ost_transaction_object = ost_sdk.manifest.transactions
+```
+
+Execute Transaction:
+
+```ruby
+ost_transaction_object.execute({from_user_id:'f87346e4-61f6-4d55-8cb8-234c65437b01', to_user_id:'c07bd853-e893-4400-b7e8-c358cfa05d85', action_id:'20145'})
+```
+
+Get Transaction Status:
+```ruby
+ost_transaction_object.get({id: 'ecd9b0b2-a0f4-422c-95a4-f25f8fc88334'})
+```
+
+List Transactions
+```ruby
+ost_transaction_object.list({page_no: 1, limit: 50})
+```
+
