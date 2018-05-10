@@ -28,6 +28,29 @@ module OSTSdk
 
       end
 
+      private
+
+      # Get id key from params hash and delete it
+      #
+      # Arguments:
+      #   params: (Hash)
+      #
+      # Returns:
+      #   id: (Integer)
+      #
+      def get_id!(params)
+        if params.has_key?(:id)
+          id = params[:id]
+          params.delete(:id)
+        elsif params.has_key?('id')
+          id = params['id']
+          params.delete('id')
+        else
+          fail "id missing in request params"
+        end
+        id
+      end
+
     end
 
   end

@@ -34,7 +34,7 @@ module OSTSdk
         #   response: (OSTSdk::Util::Result)
         #
         def edit(params = {})
-          http_helper.send_post_request("#{@url_prefix}/#{params.delete(:id)}", params)
+          http_helper.send_post_request("#{@url_prefix}/#{get_id!(params)}", params)
         end
 
         # Fetches the list of users (with or without filters)
@@ -52,7 +52,7 @@ module OSTSdk
         #   response: (OSTSdk::Util::Result)
         #
         def get(params = {})
-          http_helper.send_get_request("#{@url_prefix}/#{params.delete(:id)}", params)
+          http_helper.send_get_request("#{@url_prefix}/#{get_id!(params)}", params)
         end
 
       end
