@@ -153,3 +153,25 @@ List Transactions
 ost_transaction_object.list({page_no: 1, limit: 50})
 ```
 
+### Transfer Module 
+
+```ruby
+ost_transfer_object = ost_sdk.manifest.transfers
+```
+
+Execute Transfer:
+
+```ruby
+ost_transfer_object.execute({to_address:'0xd2b789293674faEE51bEb2d0338d15401dEbfdE3', amount:1})
+```
+
+Get Transfer Status:
+```ruby
+ost_transfer_object.get({id: 'd0589dc5-d0a0-4996-b9f8-847295fd2c3b'})
+```
+
+List Transfers
+```ruby
+ost_transfer_object.list({id: 'ff9ed3ff-9125-4e49-8cc2-174fd0fd3c30,e5c24167-a3b2-4073-a064-6a7fcdb13be8'})
+```
+
