@@ -110,13 +110,14 @@ ost_token_object = ost_sdk.manifest.actions
 Create a new action:
 
 ```ruby
-ost_token_object.create({}) 
+ost_token_object.create({name: 'Upvote', kind: 'user_to_user', currency: 'USD', arbitrary_amount: false, amount: 1.01, 
+                          arbitrary_commission: false})
 ```
 
 Edit an action:
 
 ```ruby
-ost_token_object.edit({})
+ost_token_object.edit({id: 1234, amount: 2})
 ```
 
 Get an action:
