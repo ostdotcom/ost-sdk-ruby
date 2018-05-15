@@ -104,32 +104,32 @@ ost_token_object.get({})
 
 
 ```ruby
-ost_token_object = ost_sdk.manifest.actions
+ost_action_object = ost_sdk.manifest.actions
 ```
 
 Create a new action:
 
 ```ruby
-ost_token_object.create({name: 'Upvote', kind: 'user_to_user', currency: 'USD', arbitrary_amount: false, amount: 1.01, 
+ost_action_object.create({name: 'Upvote', kind: 'user_to_user', currency: 'USD', arbitrary_amount: false, amount: 1.01, 
                           arbitrary_commission: false})
 ```
 
 Edit an action:
 
 ```ruby
-ost_token_object.edit({id: 1234, amount: 2})
+ost_action_object.edit({id: 1234, amount: 2})
 ```
 
 Get an action:
 
 ```ruby
-ost_token_object.get(id: 1234)
+ost_action_object.get(id: 1234)
 ```
 
 List actions:
 
 ```ruby
-ost_token_object.list()
+ost_action_object.list()
 ```
 
 ### Transaction Module 
