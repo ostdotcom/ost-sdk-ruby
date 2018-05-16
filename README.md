@@ -111,7 +111,7 @@ Create a new action:
 
 ```ruby
 ost_action_object.create({name: 'Upvote', kind: 'user_to_user', currency: 'USD', arbitrary_amount: false, amount: 1.01, 
-                          arbitrary_commission: false})
+                          arbitrary_commission: false, commission_percent: 1})
 ```
 
 Edit an action:
