@@ -50,7 +50,11 @@ module OSTSdk
       # Arguments:
       #   msg: (String)
       def set_http_code(h_c)
-        @http_code = h_c || 200
+        if h_c.nil?
+          @http_code = 200
+        else
+          @http_code = h_c.to_i
+        end
       end
 
       # Set Exception

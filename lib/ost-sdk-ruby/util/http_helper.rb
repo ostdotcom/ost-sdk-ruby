@@ -181,7 +181,12 @@ module OSTSdk
       def format_internal_response(response)
         json_raw_response = JSON.parse(response.body)
         if json_raw_response['success']
-          OSTSdk::Util::Result.success({data: json_raw_response['data']})
+          OSTSdk::Util::Result.success(
+              {
+                  data: json_raw_response['data'],
+                  http_code: response.code
+              }
+          )
         else
           err_data = json_raw_response['err']
           OSTSdk::Util::Result.error(
