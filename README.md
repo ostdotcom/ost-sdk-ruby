@@ -32,105 +32,162 @@ require('ost-sdk-ruby')
 Set variables for initializing SDK objects:
 
 ```ruby
-environment = 'sandbox'
-credentials = OSTSdk::Util::APICredentials.new(<api_key>, <api_secret>)
+ost_sdk = OSTSdk::Saas::Services.new({api_key: <api_key>, api_secret: <api_secret>, api_base_url: <api_base_url>})
 ```
 
-### Transaction Kind Module 
-
-Initialize a `TransactionKind` object to perform transaction-related actions:
+### Users Module 
 
 ```ruby
-ostTransactionKindObject = OSTSdk::Saas::TransactionKind.new(environment, credentials)
-```
-
-Create new transaction kinds:
-
-```ruby
-ostTransactionKindObject.create(name: 'Like', kind: 'user_to_user', currency_type: 'usd', currency_value: '1.25', commission_percent: '12')
-```
-
-```ruby
-ostTransactionKindObject.create(name: 'Grant', kind: 'company_to_user', currency_type: 'bt', currency_value: '12', commission_percent: '0')
-```
-
-```ruby
-ostTransactionKindObject.create(name: 'Buy', kind: 'user_to_company', currency_type: 'bt', currency_value: '100', commission_percent: '0')
-```
-
-Get a list of existing transaction kinds and other data:
-
-```ruby
-ostTransactionKindObject.list()
-```
-
-Edit an existing transaction kind:
-
-```ruby
-ostTransactionKindObject.edit(client_transaction_id: '12', name: 'New Transaction Kind')
-```
-
-Execute a branded token transfer by transaction kind:
-
-```ruby
-ostTransactionKindObject.execute(from_uuid: '1234-1928-1081dsds-djhksjd', to_uuid: '1234-1928-1081-1223232', transaction_kind: 'Purchase')
-```
-
-Get the status of an executed transaction:
-  
-```ruby
-ostTransactionKindObject.status(transaction_uuids: ['5f79063f-e22a-4d28-99d7-dd095f02c72e'])
-```
-
-### Users Module
-
-Initialize a `Users` object to perform user specific actions:
-
-```ruby
-ostUsersObject = OSTSdk::Saas::Users.new(environment, credentials)
+ost_users_object = ost_sdk.services.users
 ```
 
 Create a new user:
 
 ```ruby
-ostUsersObject.create(name: 'Alice')
-```
-
-Get a list of users and other data:
-
-```ruby
-ostUsersObject.list()
+ost_users_object.create(name: 'Alice').to_json
 ```
 
 Edit an existing user:
 
 ```ruby
-ostUsersObject.edit(uuid: '1234-1928-1081dsds-djhksjd', name: 'Bob')
+ost_users_object.edit(id: 'e55feef0-26e6-438a-9f1a-f348ce2e3c44', name: 'Bob').to_json
 ```
 
-Airdrop branded tokens to users:
+Get an existing user:
 
 ```ruby
-ostUsersObject.airdrop_tokens(amount: 100, list_type: 'all')
+ost_users_object.get(id: 'e55feef0-26e6-438a-9f1a-f348ce2e3c44').to_json
 ```
 
-As airdropping tokens is an asynchronous task, you can check the airdrop's status:
+Get a list of users and other data:
 
 ```ruby
-ostUsersObject.get_airdrop_status(airdrop_uuid: '1234-1928-1081dsds-djhksjd')
+ost_users_object.list({page_no: 1, limit: 5}).to_json
+```
+
+### Airdrops Module 
+
+```ruby
+ost_airdrop_object = ost_sdk.services.airdrops
+```
+
+Execute Airdrop:
+
+```ruby
+ost_airdrop_object.execute({amount: 1, user_ids: 'e55feef0-26e6-438a-9f1a-f348ce2e3c44'}).to_json
+```
+
+Get Airdrop Status:
+```ruby
+ost_airdrop_object.get({id: 'ecd9b0b2-a0f4-422c-95a4-f25f8fc88334'}).to_json
+```
+
+List Airdrop
+```ruby
+ost_airdrop_object.list({page_no: 1, limit: 50, current_status: 'processing,complete'}).to_json
+```
+
+
+### Token Module 
+
+```ruby
+ost_token_object = ost_sdk.services.token
+```
+
+Get details:
+
+```ruby
+ost_token_object.get({}).to_json
+```
+
+### Actions Module 
+
+
+```ruby
+ost_action_object = ost_sdk.services.actions
+```
+
+Create a new action:
+
+```ruby
+ost_action_object.create({name: 'Test', kind: 'user_to_user', currency: 'USD', arbitrary_amount: false, amount: 1.01, 
+                          arbitrary_commission: true}).to_json
+```
+
+Edit an action:
+
+```ruby
+ost_action_object.edit({id: 1234, amount: 2}).to_json
+```
+
+Get an action:
+
+```ruby
+ost_action_object.get(id: 1234).to_json
+```
+
+List actions:
+
+```ruby
+ost_action_object.list(page_no: 1).to_json
+```
+
+### Transaction Module 
+
+```ruby
+ost_transaction_object = ost_sdk.services.transactions
+```
+
+Execute Transaction:
+
+```ruby
+ost_transaction_object.execute({from_user_id:'f87346e4-61f6-4d55-8cb8-234c65437b01', to_user_id:'c07bd853-e893-4400-b7e8-c358cfa05d85', action_id:'20145'}).to_json
+```
+
+Get Transaction Status:
+```ruby
+ost_transaction_object.get({id: '0ab712ec-dc41-4e31-ac31-c93bc148bbb9'}).to_json
+```
+
+List Transactions
+```ruby
+ost_transaction_object.list({page_no: 1, limit: 50}).to_json
+```
+
+### Transfer Module 
+
+```ruby
+ost_transfer_object = ost_sdk.services.transfers
+```
+
+Execute Transfer:
+
+```ruby
+ost_transfer_object.execute({to_address:'0xd2b789293674faEE51bEb2d0338d15401dEbfdE3', amount:1}).to_json
+```
+
+Get Transfer Status:
+```ruby
+ost_transfer_object.get({id: 'd0589dc5-d0a0-4996-b9f8-847295fd2c3b'}).to_json
+```
+
+List Transfers
+```ruby
+ost_transfer_object.list().to_json
 ```
 
 ### Request Specs
 
-To obtain request/API specification, pass in `true` for the optional `api_spec` parameter when initializing a `TransactionKind` or `Users` module object:
+To obtain request/API specification, pass in `true` for the optional `api_spec` parameter when initializing SDK object:
 
 ```ruby
-ostTransactionKindObject = OSTSdk::Saas::TransactionKind.new(environment, credentials, true)
+ost_sdk = OSTSdk::Saas::Services.new({api_key: <api_key>, api_secret: <api_secret>, api_base_url: <api_base_url>, api_spec: true})
+ost_action_object = ost_sdk.services.actions
 ```
 
 And then call a method:
 
 ```ruby
-> ostTransactionKindObject.list()
-=> #<OSTSdk::Util::Result:0x007ffccab36c98 @error=nil, @error_message=nil, @error_data=nil, @error_display_text=nil, @error_display_heading=nil, @message=nil, @http_code=200, @data={:request_uri=>"https://sandboxapi.ost.com/transaction-types/list", :request_type=>"GET", :request_params=>"request_timestamp=<request_epoch_timestamp>&signature=<signature>&api_key=<api_key>"}>
-```
+ost_action_object.list().to_json
+ {:success=>true, :data=>{:request_uri=>"https://playground2api.stagingost.com/v1/actions/", :request_type=>"GET", :request_params=>"request_timestamp=1526541627&signature=410f6fef1ab2ad34e74caef589a15b56490b63a316fc46509d31bb133bf11678&api_key=7cad25e082390a90114e"}} 
+ ```
