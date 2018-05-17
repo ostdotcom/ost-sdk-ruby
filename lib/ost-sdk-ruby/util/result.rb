@@ -6,8 +6,7 @@ module OSTSdk
 
       attr_accessor :error,
                     :error_message,
-                    :error_display_text,
-                    :error_display_heading,
+                    :internal_id,
                     :error_data,
                     :message,
                     :data,
@@ -33,8 +32,7 @@ module OSTSdk
         @error = params[:error] if params.key?(:error)
         @error_message = params[:error_message] if params.key?(:error_message)
         @error_data = params[:error_data] if params.key?(:error_data)
-        @error_display_text = params[:error_display_text] if params.key?(:error_display_text)
-        @error_display_heading = params[:error_display_heading] if params.key?(:error_display_heading)
+        @internal_id = params[:internal_id] if params.key?(:internal_id)
       end
 
       # Set Message
@@ -63,12 +61,6 @@ module OSTSdk
       #   e: (Exception)
       def set_exception(e)
         @exception = e
-        @error_data = [
-            {
-                msg: e.message,
-                trace: e.backtrace
-            }
-        ]
       end
 
       # is valid?
@@ -104,11 +96,10 @@ module OSTSdk
       # @return [Boolean] returns True / False
       #
       def errors_present?
-        @error ||
+        @internal_id ||
+            @error ||
             @error_message ||
             @error_data ||
-            @error_display_text ||
-            @error_display_heading ||
             @exception
       end
 
@@ -175,8 +166,7 @@ module OSTSdk
             error: nil,
             error_message: nil,
             error_data: nil,
-            error_display_text: nil,
-            error_display_heading: nil
+            internal_id: nil
         }
       end
 
@@ -199,8 +189,7 @@ module OSTSdk
             :error,
             :error_message,
             :error_data,
-            :error_display_text,
-            :error_display_heading
+            :internal_id
         ]
       end
 
@@ -234,13 +223,11 @@ module OSTSdk
           {
               success: false,
               err: {
+                  internal_id: hash[:internal_id] || 'SDK',
                   code: hash[:error],
                   msg: hash[:error_message],
-                  display_text: hash[:error_display_text].to_s,
-                  display_heading: hash[:error_display_heading].to_s,
                   error_data: hash[:error_data] || []
-              },
-              data: hash[:data]
+              }
           }
         end
 

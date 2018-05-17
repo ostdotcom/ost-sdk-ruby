@@ -192,6 +192,7 @@ module OSTSdk
           OSTSdk::Util::Result.error(
               {
                   error: err_data['code'],
+                  internal_id: err_data['internal_id'],
                   error_message: err_data['msg'],
                   error_data: err_data['error_data'],
                   http_code: response.code
@@ -201,10 +202,33 @@ module OSTSdk
       end
 
       def format_external_response(response_code)
+        case response_code.to_i
+          when 429
+            code = 'TOO_MANY_REQUESTS'
+            internal_id = 'SDK(TOO_MANY_REQUESTS)'
+            message = 'Too many requests have been received in a minute.'
+          when 502
+            code = 'BAD_GATEWAY'
+            internal_id = 'SDK(BAD_GATEWAY)'
+            message = 'Something went wrong.'
+          when 503
+            code = 'SERVICE_UNAVAILABLE'
+            internal_id = 'SDK(SERVICE_UNAVAILABLE)'
+            message = 'API under maintenance.'
+          when 504
+            code = 'GATEWAY_TIMEOUT'
+            internal_id = 'SDK(GATEWAY_TIMEOUT)'
+            message = 'Request timed out.'
+          else
+            code = 'SOMETHING_WENT_WRONG'
+            internal_id = 'SDK(SOMETHING_WENT_WRONG)'
+            message = 'Something went wrong.'
+        end
         OSTSdk::Util::Result.error(
             {
-                error: response_code,
-                error_message: 'Non 200 HTTP Status',
+                error: code,
+                internal_id: internal_id,
+                error_message: message,
                 http_code: response_code
             }
         )
