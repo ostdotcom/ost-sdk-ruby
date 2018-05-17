@@ -14,15 +14,16 @@ module OSTSdk
       # Initialize
       #
       # Arguments:
-      #   environment: (String)
-      #   credentials: (OSTSdk::Util::APICredentials)
+      #   api_base_url: (String)
+      #   api_key: (String)
+      #   api_secret: (String)
       #   api_spec: (Boolean)
       #
-      def initialize(environment, credentials, api_spec)
-        set_api_base_url(environment)
-        @api_key = credentials.api_key
-        @api_secret = credentials.api_secret
-        @api_spec = api_spec
+      def initialize(params)
+        @api_base_url = params[:api_base_url]
+        @api_key = params[:api_key]
+        @api_secret = params[:api_secret]
+        @api_spec = params[:api_spec]
       end
 
       # Send POST requests
@@ -81,22 +82,6 @@ module OSTSdk
       end
 
       private
-
-      def set_api_base_url(env)
-        ost_sdk_saas_api_endpoint = ENV['CA_SAAS_API_ENDPOINT']
-        if !ost_sdk_saas_api_endpoint.nil?
-          @api_base_url = ost_sdk_saas_api_endpoint
-        else
-          case env
-            when 'sandbox'
-              @api_base_url = 'https://playgroundapi.ost.com'
-            when 'main'
-              @api_base_url = 'https://api.ost.com'
-            else
-              fail "unrecognized ENV #{env}"
-          end
-        end
-      end
 
       def setup_request(uri)
         http = Net::HTTP.new(uri.host, uri.port)
@@ -184,30 +169,66 @@ module OSTSdk
       end
 
       def format_response(response)
-        response.code == '200' ? format_success_response(response.body) : format_failure_response(response.code)
+        json_raw_response = JSON.parse(response.body)
+        # If internal response
+        if json_raw_response.has_key?('success') || json_raw_response.has_key?('err')
+          format_internal_response(response)
+        else
+          format_external_response(response.code)
+        end
       end
 
-      def format_success_response(raw_response)
-        json_raw_response = JSON.parse(raw_response)
+      def format_internal_response(response)
+        json_raw_response = JSON.parse(response.body)
         if json_raw_response['success']
-          OSTSdk::Util::Result.success({data: json_raw_response['data']})
+          OSTSdk::Util::Result.success(
+              {
+                  data: json_raw_response['data'],
+                  http_code: response.code
+              }
+          )
         else
           err_data = json_raw_response['err']
           OSTSdk::Util::Result.error(
               {
                   error: err_data['code'],
+                  internal_id: err_data['internal_id'],
                   error_message: err_data['msg'],
-                  error_data: err_data['error_data']
+                  error_data: err_data['error_data'],
+                  http_code: response.code
               }
           )
         end
       end
 
-      def format_failure_response(response_code)
+      def format_external_response(response_code)
+        case response_code.to_i
+          when 429
+            code = 'TOO_MANY_REQUESTS'
+            internal_id = 'SDK(TOO_MANY_REQUESTS)'
+            message = 'Too many requests have been received in a minute.'
+          when 502
+            code = 'BAD_GATEWAY'
+            internal_id = 'SDK(BAD_GATEWAY)'
+            message = 'Something went wrong.'
+          when 503
+            code = 'SERVICE_UNAVAILABLE'
+            internal_id = 'SDK(SERVICE_UNAVAILABLE)'
+            message = 'API under maintenance.'
+          when 504
+            code = 'GATEWAY_TIMEOUT'
+            internal_id = 'SDK(GATEWAY_TIMEOUT)'
+            message = 'Request timed out.'
+          else
+            code = 'SOMETHING_WENT_WRONG'
+            internal_id = 'SDK(SOMETHING_WENT_WRONG)'
+            message = 'Something went wrong.'
+        end
         OSTSdk::Util::Result.error(
             {
-                error: response_code,
-                error_message: 'Non 200 HTTP Status',
+                error: code,
+                internal_id: internal_id,
+                error_message: message,
                 http_code: response_code
             }
         )
