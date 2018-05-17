@@ -4,7 +4,7 @@ module OSTSdk
 
     module V1
 
-      class Manifest
+      class Services
 
         attr_reader :users, :token, :actions, :airdrops, :transactions, :transfers
 

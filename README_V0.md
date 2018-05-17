@@ -39,7 +39,7 @@ ost_sdk = OSTSdk::Saas::Services.new({api_key: <api_key>, api_secret: <api_secre
 
 
 ```ruby
-ost_transaction_object = ost_sdk.manifest.transaction_kind
+ost_transaction_object = ost_sdk.services.transaction_kind
 ```
 
 Create new transaction kinds:
@@ -83,7 +83,7 @@ ost_transaction_object.status(transaction_uuids: ['b6f099a3-2a65-431e-b3ec-54056
 ### Users Module
 
 ```ruby
-ost_users_object = ost_sdk.manifest.users
+ost_users_object = ost_sdk.services.users
 ```
 
 Create a new user:
@@ -122,7 +122,7 @@ To obtain request/API specification, pass in `true` for the optional `api_spec` 
 
 ```ruby
 ost_sdk = OSTSdk::Saas::Services.new({api_key: <api_key>, api_secret: <api_secret>, api_base_url: <api_base_url>, api_spec: true})
-ost_transaction_object = ost_sdk.manifest.transaction_kind
+ost_transaction_object = ost_sdk.services.transaction_kind
 ```
 
 And then call a method:

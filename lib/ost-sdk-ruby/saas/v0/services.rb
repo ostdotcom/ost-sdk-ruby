@@ -4,7 +4,7 @@ module OSTSdk
 
     module V0
 
-      class Manifest
+      class Services
 
         attr_reader :transaction_kind, :users
 

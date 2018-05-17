@@ -38,7 +38,7 @@ ost_sdk = OSTSdk::Saas::Services.new({api_key: <api_key>, api_secret: <api_secre
 ### Users Module 
 
 ```ruby
-ost_users_object = ost_sdk.manifest.users
+ost_users_object = ost_sdk.services.users
 ```
 
 Create a new user:
@@ -68,7 +68,7 @@ ost_users_object.list({page_no: 1, limit: 5}).to_json
 ### Airdrops Module 
 
 ```ruby
-ost_airdrop_object = ost_sdk.manifest.airdrops
+ost_airdrop_object = ost_sdk.services.airdrops
 ```
 
 Execute Airdrop:
@@ -91,7 +91,7 @@ ost_airdrop_object.list({page_no: 1, limit: 50, current_status: 'processing,comp
 ### Token Module 
 
 ```ruby
-ost_token_object = ost_sdk.manifest.token
+ost_token_object = ost_sdk.services.token
 ```
 
 Get details:
@@ -104,7 +104,7 @@ ost_token_object.get({}).to_json
 
 
 ```ruby
-ost_action_object = ost_sdk.manifest.actions
+ost_action_object = ost_sdk.services.actions
 ```
 
 Create a new action:
@@ -135,7 +135,7 @@ ost_action_object.list(page_no: 1).to_json
 ### Transaction Module 
 
 ```ruby
-ost_transaction_object = ost_sdk.manifest.transactions
+ost_transaction_object = ost_sdk.services.transactions
 ```
 
 Execute Transaction:
@@ -157,7 +157,7 @@ ost_transaction_object.list({page_no: 1, limit: 50}).to_json
 ### Transfer Module 
 
 ```ruby
-ost_transfer_object = ost_sdk.manifest.transfers
+ost_transfer_object = ost_sdk.services.transfers
 ```
 
 Execute Transfer:
@@ -182,7 +182,7 @@ To obtain request/API specification, pass in `true` for the optional `api_spec` 
 
 ```ruby
 ost_sdk = OSTSdk::Saas::Services.new({api_key: <api_key>, api_secret: <api_secret>, api_base_url: <api_base_url>, api_spec: true})
-ost_action_object = ost_sdk.manifest.actions
+ost_action_object = ost_sdk.services.actions
 ```
 
 And then call a method:

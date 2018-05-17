@@ -4,7 +4,7 @@ module OSTSdk
 
     class Services
 
-      attr_reader :manifest
+      attr_reader :services
 
       # Initialize
       #
@@ -36,9 +36,9 @@ module OSTSdk
         # Provide access to version specific API endpoints
         if api_version == ''
           # puts("You are using an deprecated version of OST API. Please update to the latest version.")
-          @manifest = OSTSdk::Saas::V0::Manifest.new(params)
+          @services = OSTSdk::Saas::V0::Services.new(params)
         elsif api_version == 'v1'
-          @manifest = OSTSdk::Saas::V1::Manifest.new(params)
+          @services = OSTSdk::Saas::V1::Services.new(params)
         else
           fail 'Api endpoint is invalid'
         end
@@ -53,7 +53,6 @@ module OSTSdk
         return api_major_version
 
       end
-
 
     end
 
