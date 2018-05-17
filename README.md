@@ -44,25 +44,25 @@ ost_users_object = ost_sdk.manifest.users
 Create a new user:
 
 ```ruby
-ost_users_object.create(name: 'Alice')
+ost_users_object.create(name: 'Alice').to_json
 ```
 
 Edit an existing user:
 
 ```ruby
-ost_users_object.edit(id: '1234-1928-1081dsds-djhksjd', name: 'Bob')
+ost_users_object.edit(id: 'e55feef0-26e6-438a-9f1a-f348ce2e3c44', name: 'Bob').to_json
 ```
 
 Get an existing user:
 
 ```ruby
-ost_users_object.get(id: '1234-1928-1081dsds-djhksjd')
+ost_users_object.get(id: 'e55feef0-26e6-438a-9f1a-f348ce2e3c44').to_json
 ```
 
 Get a list of users and other data:
 
 ```ruby
-ost_users_object.list()
+ost_users_object.list({page_no: 1, limit: 5}).to_json
 ```
 
 ### Airdrops Module 
@@ -74,17 +74,17 @@ ost_airdrop_object = ost_sdk.manifest.airdrops
 Execute Airdrop:
 
 ```ruby
-ost_airdrop_object.execute({amount: 1, airdropped: 'true', user_ids: 'f87346e4-61f6-4d55-8cb8-234c65437b01'})
+ost_airdrop_object.execute({amount: 1, user_ids: 'e55feef0-26e6-438a-9f1a-f348ce2e3c44'}).to_json
 ```
 
 Get Airdrop Status:
 ```ruby
-ost_airdrop_object.get({id: 'ecd9b0b2-a0f4-422c-95a4-f25f8fc88334'})
+ost_airdrop_object.get({id: 'ecd9b0b2-a0f4-422c-95a4-f25f8fc88334'}).to_json
 ```
 
 List Airdrop
 ```ruby
-ost_airdrop_object.list({page_no: 1, limit: 50, current_status: 'processing,complete'})
+ost_airdrop_object.list({page_no: 1, limit: 50, current_status: 'processing,complete'}).to_json
 ```
 
 
@@ -97,7 +97,7 @@ ost_token_object = ost_sdk.manifest.token
 Get details:
 
 ```ruby
-ost_token_object.get({})
+ost_token_object.get({}).to_json
 ```
 
 ### Actions Module 
@@ -110,26 +110,26 @@ ost_action_object = ost_sdk.manifest.actions
 Create a new action:
 
 ```ruby
-ost_action_object.create({name: 'Upvote', kind: 'user_to_user', currency: 'USD', arbitrary_amount: false, amount: 1.01, 
-                          arbitrary_commission: false, commission_percent: 1})
+ost_action_object.create({name: 'Test', kind: 'user_to_user', currency: 'USD', arbitrary_amount: false, amount: 1.01, 
+                          arbitrary_commission: true}).to_json
 ```
 
 Edit an action:
 
 ```ruby
-ost_action_object.edit({id: 1234, amount: 2})
+ost_action_object.edit({id: 1234, amount: 2}).to_json
 ```
 
 Get an action:
 
 ```ruby
-ost_action_object.get(id: 1234)
+ost_action_object.get(id: 1234).to_json
 ```
 
 List actions:
 
 ```ruby
-ost_action_object.list()
+ost_action_object.list(page_no: 1).to_json
 ```
 
 ### Transaction Module 
@@ -141,17 +141,17 @@ ost_transaction_object = ost_sdk.manifest.transactions
 Execute Transaction:
 
 ```ruby
-ost_transaction_object.execute({from_user_id:'f87346e4-61f6-4d55-8cb8-234c65437b01', to_user_id:'c07bd853-e893-4400-b7e8-c358cfa05d85', action_id:'20145'})
+ost_transaction_object.execute({from_user_id:'f87346e4-61f6-4d55-8cb8-234c65437b01', to_user_id:'c07bd853-e893-4400-b7e8-c358cfa05d85', action_id:'20145'}).to_json
 ```
 
 Get Transaction Status:
 ```ruby
-ost_transaction_object.get({id: 'ecd9b0b2-a0f4-422c-95a4-f25f8fc88334'})
+ost_transaction_object.get({id: '0ab712ec-dc41-4e31-ac31-c93bc148bbb9'}).to_json
 ```
 
 List Transactions
 ```ruby
-ost_transaction_object.list({page_no: 1, limit: 50})
+ost_transaction_object.list({page_no: 1, limit: 50}).to_json
 ```
 
 ### Transfer Module 
@@ -163,16 +163,16 @@ ost_transfer_object = ost_sdk.manifest.transfers
 Execute Transfer:
 
 ```ruby
-ost_transfer_object.execute({to_address:'0xd2b789293674faEE51bEb2d0338d15401dEbfdE3', amount:1})
+ost_transfer_object.execute({to_address:'0xd2b789293674faEE51bEb2d0338d15401dEbfdE3', amount:1}).to_json
 ```
 
 Get Transfer Status:
 ```ruby
-ost_transfer_object.get({id: 'd0589dc5-d0a0-4996-b9f8-847295fd2c3b'})
+ost_transfer_object.get({id: 'd0589dc5-d0a0-4996-b9f8-847295fd2c3b'}).to_json
 ```
 
 List Transfers
 ```ruby
-ost_transfer_object.list({id: 'ff9ed3ff-9125-4e49-8cc2-174fd0fd3c30,e5c24167-a3b2-4073-a064-6a7fcdb13be8'})
+ost_transfer_object.list().to_json
 ```
 
