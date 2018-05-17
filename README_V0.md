@@ -65,7 +65,7 @@ ost_transaction_object.list().to_json
 Edit an existing transaction kind:
 
 ```ruby
-ost_transaction_object.edit(client_transaction_id: '22598', name: 'New Transaction Kind').to_json
+ost_transaction_object.edit(client_transaction_id: '21728', name: 'New Transaction Kind').to_json
 ```
 
 Execute a branded token transfer by transaction kind:
@@ -118,10 +118,10 @@ ost_users_object.get_airdrop_status(airdrop_uuid: 'd2b8714d-cc2e-46ba-beca-313de
 
 ### Request Specs
 
-To obtain request/API specification, pass in `true` for the optional `api_spec` parameter when initializing a `TransactionKind` or `Users` module object:
+To obtain request/API specification, pass in `true` for the optional `api_spec` parameter when initializing SDK object:
 
 ```ruby
-ost_sdk = OSTSdk::Saas::Services.new({api_key: <api_key>, api_secret: <api_secret>, api_base_url: <api_base_url>})
+ost_sdk = OSTSdk::Saas::Services.new({api_key: <api_key>, api_secret: <api_secret>, api_base_url: <api_base_url>, api_spec: true})
 ost_transaction_object = ost_sdk.manifest.transaction_kind
 ```
 

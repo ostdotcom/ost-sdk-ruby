@@ -176,3 +176,18 @@ List Transfers
 ost_transfer_object.list().to_json
 ```
 
+### Request Specs
+
+To obtain request/API specification, pass in `true` for the optional `api_spec` parameter when initializing SDK object:
+
+```ruby
+ost_sdk = OSTSdk::Saas::Services.new({api_key: <api_key>, api_secret: <api_secret>, api_base_url: <api_base_url>, api_spec: true})
+ost_action_object = ost_sdk.manifest.actions
+```
+
+And then call a method:
+
+```ruby
+ost_action_object.list().to_json
+ {:success=>true, :data=>{:request_uri=>"https://playground2api.stagingost.com/v1/actions/", :request_type=>"GET", :request_params=>"request_timestamp=1526541627&signature=410f6fef1ab2ad34e74caef589a15b56490b63a316fc46509d31bb133bf11678&api_key=7cad25e082390a90114e"}} 
+ ```
