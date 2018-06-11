@@ -1,3 +1,8 @@
+[OST Ruby SDK v1.0.1](https://github.com/OpenSTFoundation/ost-sdk-ruby/tree/v1.0.1) June 20 2018
+---
+
+* Added balances module to V1 API's
+
 [OST Ruby SDK v1.0.0](https://github.com/OpenSTFoundation/ost-sdk-ruby/tree/v1.0.0) May 17 2018
 ---
 
