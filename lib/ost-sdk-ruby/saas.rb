@@ -14,6 +14,7 @@ require_relative 'saas/v1/airdrops'
 require_relative 'saas/v1/transfers'
 require_relative 'saas/v1/transactions'
 require_relative 'saas/v1/balances'
+require_relative 'saas/v1/ledger'
 
 module OSTSdk
 

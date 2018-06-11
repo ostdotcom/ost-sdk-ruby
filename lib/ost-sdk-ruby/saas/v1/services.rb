@@ -6,7 +6,7 @@ module OSTSdk
 
       class Services
 
-        attr_reader :users, :token, :actions, :airdrops, :transactions, :transfers, :balances
+        attr_reader :users, :token, :actions, :airdrops, :transactions, :transfers, :balances, :ledger
 
         # Initialize
         #
@@ -25,6 +25,7 @@ module OSTSdk
           @transactions = OSTSdk::Saas::V1::Transactions.new(params)
           @transfers = OSTSdk::Saas::V1::Transfers.new(params)
           @balances = OSTSdk::Saas::V1::Balances.new(params)
+          @ledger = OSTSdk::Saas::V1::Ledger.new(params)
 
         end
 

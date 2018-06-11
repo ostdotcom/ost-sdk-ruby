@@ -187,6 +187,18 @@ Get balance of user:
 ost_balance_object.get({id: 'd0589dc5-d0a0-4996-b9f8-847295fd2c3b'}).to_json
 ```
 
+### Transaction Ledger Module 
+
+```ruby
+ost_ledger_object = ost_sdk.services.ledger
+```
+
+Get balance of user:
+```ruby
+ost_ledger_object.get({id: 'd0589dc5-d0a0-4996-b9f8-847295fd2c3b'}).to_json
+```
+
+
 ### Request Specs
 
 To obtain request/API specification, pass in `true` for the optional `api_spec` parameter when initializing SDK object:
