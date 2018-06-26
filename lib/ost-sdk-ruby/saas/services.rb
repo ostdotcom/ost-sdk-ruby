@@ -34,15 +34,15 @@ module OSTSdk
         int_api_version = extract_integer_api_version(params[:api_base_url])
 
         # Provide access to version specific API endpoints
-        if int_api_version == v0_int_api_version
+        if int_api_version >= v1dot2_int_api_version
+          fail 'Unsupported API Version. Please check for new versions of SDK.'
+        elsif int_api_version >= v1dot1_int_api_version
+          @services = OSTSdk::Saas::V1Dot1::Services.new(params)
+        elsif int_api_version >= v1_int_api_version
+          @services = OSTSdk::Saas::V1::Services.new(params)
+        else
           # puts("You are using an deprecated version of OST API. Please update to the latest version.")
           @services = OSTSdk::Saas::V0::Services.new(params)
-        elsif int_api_version == v1_int_api_version
-          @services = OSTSdk::Saas::V1::Services.new(params)
-        elsif int_api_version < v2_int_api_version
-          @services = OSTSdk::Saas::V1Dot1::Services.new(params)
-        else
-          fail 'Api endpoint is invalid'
         end
 
       end
@@ -58,15 +58,21 @@ module OSTSdk
         # exclude 'v'
         str_api_version = api_version[1..-1]
 
-        # if str_api_version doesn't start with a integer value fail
-        fail "invalid version string #{api_version}" if str_api_version.to_i == 0
+        regex_match_rsp = /^(\d{1,3})\.?(\d{0,3})\.?(\*|\d{0,3})$/.match(str_api_version)
+        fail "invalid version string #{api_version}" if regex_match_rsp.nil?
 
-        buffer = str_api_version.split('.')
+        int_api_version = 0
 
-        # version can not have more than 2 '.' ie 1.1.1.2 is not allowed
-        fail "invalid version string #{api_version}" if buffer.length > 3
+        # add API major version
+        int_api_version += regex_match_rsp[1].to_i * 1000000
 
-        buffer[0].to_i * 100 + (buffer[1] || 0).to_i * 10 + (buffer[2] || 0).to_i
+        # add API minor version
+        int_api_version += (regex_match_rsp[2] == '' ? 0 : regex_match_rsp[2].to_i * 1000)
+
+        # add API Patch Version
+        int_api_version += (regex_match_rsp[3] == '' ? 0 : regex_match_rsp[3].to_i)
+
+        return int_api_version
 
       end
 
@@ -75,11 +81,15 @@ module OSTSdk
       end
 
       def v1_int_api_version
-        100
+        1000000
       end
 
-      def v2_int_api_version
-        200
+      def v1dot1_int_api_version
+        1001000
+      end
+
+      def v1dot2_int_api_version
+        1002000
       end
 
     end
