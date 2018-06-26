@@ -63,16 +63,6 @@ module OSTSdk
 
         api_base_url = api_base_url.gsub(/\/$/, '') # remove trailing slash
 
-        version_str = api_base_url.split('/')[-1]
-
-        return api_base_url unless version_str.include?('v')
-
-        buffer = version_str.split('.')
-        if buffer.length == 3 # dot count in version == 2 ie. version had a patch version ex. v1.0.0
-          regex_match_rsp = /^(.+)(\.\d{1,3})(\/{0,1})$/.match(api_base_url)
-          api_base_url = regex_match_rsp[1]
-        end
-
         return api_base_url
 
       end
