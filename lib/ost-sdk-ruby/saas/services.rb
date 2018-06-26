@@ -52,13 +52,7 @@ module OSTSdk
         api_version = ((api_base_url || '').split("/")[3] || '').downcase
         return v0_int_api_version if api_version == ''
 
-        # version if passed should always start with 'v'
-        fail "invalid version string #{api_version}" if api_version[0] != 'v'
-
-        # exclude 'v'
-        str_api_version = api_version[1..-1]
-
-        regex_match_rsp = /^(\d{1,3})\.?(\d{0,3})\.?(\*|\d{0,3})$/.match(str_api_version)
+        regex_match_rsp = /^v(\d{1,3})\.?(\d{0,3})\.?(\*|\d{0,3})$/.match(api_version)
         fail "invalid version string #{api_version}" if regex_match_rsp.nil?
 
         int_api_version = 0
