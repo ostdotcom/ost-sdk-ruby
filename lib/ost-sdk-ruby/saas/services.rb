@@ -50,9 +50,8 @@ module OSTSdk
       def extract_api_version(api_base_url)
 
         api_version = ((api_base_url || '').split("/")[3] || '').downcase
-        api_major_version = (api_version.split('.')[0] || '')
 
-        return api_major_version
+        return api_version
 
       end
 
