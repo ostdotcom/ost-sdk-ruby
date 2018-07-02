@@ -20,7 +20,7 @@ module OSTSdk
         fail 'missing API Key' if params[:api_key].nil?
         fail 'missing API Secret' if params[:api_secret].nil?
 
-        params[:api_base_url].gsub!(/\/$/, '') # remove trailing slash
+        params[:api_base_url] = params[:api_base_url].gsub(/\/$/, '') # remove trailing slash
         params[:api_spec] = false if params[:api_spec].nil?
 
         set_manifest(params)
@@ -39,6 +39,8 @@ module OSTSdk
           @services = OSTSdk::Saas::V0::Services.new(params)
         elsif api_version == 'v1'
           @services = OSTSdk::Saas::V1::Services.new(params)
+        elsif api_version == 'v1.1'
+          @services = OSTSdk::Saas::V1Dot1::Services.new(params)
         else
           fail 'Api endpoint is invalid'
         end
@@ -48,9 +50,8 @@ module OSTSdk
       def extract_api_version(api_base_url)
 
         api_version = ((api_base_url || '').split("/")[3] || '').downcase
-        api_major_version = (api_version.split('.')[0] || '')
 
-        return api_major_version
+        return api_version
 
       end
 

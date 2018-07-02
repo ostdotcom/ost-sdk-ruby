@@ -176,29 +176,6 @@ List Transfers
 ost_transfer_object.list().to_json
 ```
 
-### Balances Module 
-
-```ruby
-ost_balance_object = ost_sdk.services.balances
-```
-
-Get balance of user:
-```ruby
-ost_balance_object.get({id: 'd0589dc5-d0a0-4996-b9f8-847295fd2c3b'}).to_json
-```
-
-### Transaction Ledger Module 
-
-```ruby
-ost_ledger_object = ost_sdk.services.ledger
-```
-
-Get balance of user:
-```ruby
-ost_ledger_object.get({id: 'd0589dc5-d0a0-4996-b9f8-847295fd2c3b'}).to_json
-```
-
-
 ### Request Specs
 
 To obtain request/API specification, pass in `true` for the optional `api_spec` parameter when initializing SDK object:
@@ -212,5 +189,5 @@ And then call a method:
 
 ```ruby
 ost_action_object.list().to_json
- {:success=>true, :data=>{:request_uri=>"https://sandboxapi.ost.com/v1.1/actions/", :request_type=>"GET", :request_params=>"request_timestamp=1526541627&signature=410f6fef1ab2ad34e74caef589a15b56490b63a316fc46509d31bb133bf11678&api_key=7cad25e082390a90114e"}} 
+ {:success=>true, :data=>{:request_uri=>"https://sandboxapi.ost.com/v1/actions/", :request_type=>"GET", :request_params=>"request_timestamp=1526541627&signature=410f6fef1ab2ad34e74caef589a15b56490b63a316fc46509d31bb133bf11678&api_key=7cad25e082390a90114e"}} 
  ```

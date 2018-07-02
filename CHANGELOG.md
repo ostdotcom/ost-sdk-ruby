@@ -1,3 +1,9 @@
+[OST Ruby SDK v1.1.0](https://github.com/OpenSTFoundation/ost-sdk-ruby/tree/v1.1.0) July 2 2018
+---
+
+* Added user balances module to V1 API's
+* Added transaction ledger module to V1 API's
+
 [OST Ruby SDK v1.0.0](https://github.com/OpenSTFoundation/ost-sdk-ruby/tree/v1.0.0) May 17 2018
 ---
 
