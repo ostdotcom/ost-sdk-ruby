@@ -129,5 +129,5 @@ And then call a method:
 
 ```ruby
 ost_transaction_object.list().to_json
- {:success=>true, :data=>{:request_uri=>"https://playground2api.stagingost.com/transaction-types/list", :request_type=>"GET", :request_params=>"request_timestamp=1526540175&signature=6c2819714cd184fbb3ff5f495724bea3737679074055a5c90698d6a317515323&api_key=7cad25e082390a90114e"}} 
+ {:success=>true, :data=>{:request_uri=>"https://sandboxapi.ost.com/transaction-types/", :request_type=>"GET", :request_params=>"request_timestamp=1526540175&signature=6c2819714cd184fbb3ff5f495724bea3737679074055a5c90698d6a317515323&api_key=7cad25e082390a90114e"}} 
  ```
