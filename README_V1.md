@@ -189,5 +189,5 @@ And then call a method:
 
 ```ruby
 ost_action_object.list().to_json
- {:success=>true, :data=>{:request_uri=>"https://playground2api.stagingost.com/v1/actions/", :request_type=>"GET", :request_params=>"request_timestamp=1526541627&signature=410f6fef1ab2ad34e74caef589a15b56490b63a316fc46509d31bb133bf11678&api_key=7cad25e082390a90114e"}} 
+ {:success=>true, :data=>{:request_uri=>"https://sandboxapi.ost.com/v1/actions/", :request_type=>"GET", :request_params=>"request_timestamp=1526541627&signature=410f6fef1ab2ad34e74caef589a15b56490b63a316fc46509d31bb133bf11678&api_key=7cad25e082390a90114e"}} 
  ```
