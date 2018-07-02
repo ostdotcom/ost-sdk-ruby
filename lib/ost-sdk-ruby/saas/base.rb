@@ -22,7 +22,7 @@ module OSTSdk
         fail 'missing API Key' if params[:api_key].nil?
         fail 'missing API Secret' if params[:api_secret].nil?
 
-        params[:api_base_url].gsub!(/\/$/, '') # remove trailing slash
+        params[:api_base_url] = sanitize_api_base_url(params[:api_base_url])
 
         @http_helper = OSTSdk::Util::HTTPHelper.new(params)
 
@@ -49,6 +49,22 @@ module OSTSdk
           fail "id missing in request params"
         end
         id
+      end
+
+      # Sanitize API Base URL
+      #
+      # Arguments:
+      #   params: (String)
+      #
+      # Returns:
+      #   api_base_url: (String)
+      #
+      def sanitize_api_base_url(api_base_url)
+
+        api_base_url = api_base_url.gsub(/\/$/, '') # remove trailing slash
+
+        return api_base_url
+
       end
 
     end

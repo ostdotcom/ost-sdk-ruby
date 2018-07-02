@@ -2,9 +2,9 @@ module OSTSdk
 
   module Saas
 
-    module V1
+    module V1Dot1
 
-      class Ledger < OSTSdk::Saas::Base
+      class Balances < OSTSdk::Saas::Base
 
         # Initialize
         #
@@ -16,10 +16,10 @@ module OSTSdk
         #
         def initialize(params)
           super
-          @url_prefix = '/ledger'
+          @url_prefix = '/balances'
         end
 
-        # Get transactions ledger of user
+        # Get balances details of user
         #
         # Returns:
         # response: (OSTSdk::Util::Result)

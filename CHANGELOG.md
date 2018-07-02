@@ -1,4 +1,4 @@
-[OST Ruby SDK v1.0.1](https://github.com/OpenSTFoundation/ost-sdk-ruby/tree/v1.0.1) June 20 2018
+[OST Ruby SDK v1.1.0](https://github.com/OpenSTFoundation/ost-sdk-ruby/tree/v1.1.0) July 2 2018
 ---
 
 * Added user balances module to V1 API's
