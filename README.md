@@ -32,172 +32,132 @@ require('ost-sdk-ruby')
 Set variables for initializing SDK objects:
 
 ```ruby
-ost_sdk = OSTSdk::Saas::Services.new({api_key: <api_key>, api_secret: <api_secret>, api_base_url: <api_base_url>})
+# The config field is optional
+ost_sdk = OSTSdk::Saas::Services.new({api_key: <api_key>, api_secret: <api_secret>, api_base_url: <api_base_url>, config: {timeout: <timeout_in_seconds>}})
+```
+
+### Tokens Module 
+
+```ruby
+tokens_service = ost_sdk.services.tokens
+```
+
+Get Token Detail:
+
+```ruby
+getParams = {}
+response = tokens_service.get(getParams)
 ```
 
 ### Users Module 
 
 ```ruby
-ost_users_object = ost_sdk.services.users
+users_service = ost_sdk.services.users
 ```
 
-Create a new user:
+Create User:
 
 ```ruby
-ost_users_object.create(name: 'Alice').to_json
+createParams = {}
+response = users_service.create(createParams)
 ```
 
-Edit an existing user:
+Get User Detail:
 
 ```ruby
-ost_users_object.edit(id: 'e55feef0-26e6-438a-9f1a-f348ce2e3c44', name: 'Bob').to_json
+getParams = {}
+getParams[:id] = '91263ebd-6b2d-4001-b732-4024430ca758'
+response = users_service.get(getParams)
+
 ```
 
-Get an existing user:
+Get User List:
 
 ```ruby
-ost_users_object.get(id: 'e55feef0-26e6-438a-9f1a-f348ce2e3c44').to_json
+getParams = {}
+response = users_service.get_list(getParams)
+
 ```
 
-Get a list of users and other data:
+### Devices Module 
 
 ```ruby
-ost_users_object.list({page_no: 1, limit: 5}).to_json
+devices_service = ost_sdk.services.devices
 ```
 
-### Airdrops Module 
+Create a device for User:
 
 ```ruby
-ost_airdrop_object = ost_sdk.services.airdrops
+createParams = {}
+createParams[:user_id] = 'd194aa75-acd5-4f40-b3fb-e73a7cf7c0d9'
+createParams[:address] = '0x1Ea365269A3e6c8fa492eca9A531BFaC8bA1649E'
+createParams[:api_signer_address] = '0x5F860598383868e8E8Ee0ffC5ADD92369Db37455'
+createParams[:device_uuid] = '593a967f-87bd-49a6-976c-52edf46c4df4'
+createParams[:device_name] = 'Iphone S'
+response = devices_service.create(createParams)
+
 ```
 
-Execute Airdrop:
+Get User Device(s) List:
 
 ```ruby
-ost_airdrop_object.execute({amount: 1, user_ids: 'e55feef0-26e6-438a-9f1a-f348ce2e3c44'}).to_json
+getParams = {}
+getParams[:user_id] = 'd194aa75-acd5-4f40-b3fb-e73a7cf7c0d9'
+response = devices_service.get_list(getParams)
+
 ```
 
-Get Airdrop Status:
-```ruby
-ost_airdrop_object.get({id: 'ecd9b0b2-a0f4-422c-95a4-f25f8fc88334'}).to_json
-```
-
-List Airdrop
-```ruby
-ost_airdrop_object.list({page_no: 1, limit: 50, current_status: 'processing,complete'}).to_json
-```
-
-
-### Token Module 
+Get User Device:
 
 ```ruby
-ost_token_object = ost_sdk.services.token
+getParams = {}
+getParams[:user_id] = 'd194aa75-acd5-4f40-b3fb-e73a7cf7c0d9'
+getParams[:device_address] = '0x1Ea365269A3e6c8fa492eca9A531BFaC8bA1649E'
+response = devices_service.get_device(getParams)
+
 ```
 
-Get details:
+### Session Module
 
 ```ruby
-ost_token_object.get({}).to_json
+sessions_service = ost_sdk.services.sessions
 ```
 
-### Actions Module 
-
+Get User Session(s) List:
 
 ```ruby
-ost_action_object = ost_sdk.services.actions
+getParams = {}
+getParams[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
+response = sessions_service.get_list(getParams)
 ```
 
-Create a new action:
+### Price Points Module 
 
 ```ruby
-ost_action_object.create({name: 'Test', kind: 'user_to_user', currency: 'USD', arbitrary_amount: false, amount: 1.01, 
-                          arbitrary_commission: true}).to_json
+price_points_service = ost_sdk.services.price_points
 ```
 
-Edit an action:
+Get 
 
 ```ruby
-ost_action_object.edit({id: 1234, amount: 2}).to_json
+getParams = {}
+response = price_points_service.get(getParams)
+
 ```
 
-Get an action:
+### Chains Module 
 
 ```ruby
-ost_action_object.get(id: 1234).to_json
+chains_service = ost_sdk.services.chains
 ```
 
-List actions:
+Get 
 
 ```ruby
-ost_action_object.list(page_no: 1).to_json
+getParams = {}
+getParams[:chain_id] = '2000'
+response = chains_service.get(getParams)
 ```
-
-### Transaction Module 
-
-```ruby
-ost_transaction_object = ost_sdk.services.transactions
-```
-
-Execute Transaction:
-
-```ruby
-ost_transaction_object.execute({from_user_id:'f87346e4-61f6-4d55-8cb8-234c65437b01', to_user_id:'c07bd853-e893-4400-b7e8-c358cfa05d85', action_id:'20145'}).to_json
-```
-
-Get Transaction Status:
-```ruby
-ost_transaction_object.get({id: '0ab712ec-dc41-4e31-ac31-c93bc148bbb9'}).to_json
-```
-
-List Transactions
-```ruby
-ost_transaction_object.list({page_no: 1, limit: 50}).to_json
-```
-
-### Transfer Module 
-
-```ruby
-ost_transfer_object = ost_sdk.services.transfers
-```
-
-Execute Transfer:
-
-```ruby
-ost_transfer_object.execute({to_address:'0xd2b789293674faEE51bEb2d0338d15401dEbfdE3', amount:1}).to_json
-```
-
-Get Transfer Status:
-```ruby
-ost_transfer_object.get({id: 'd0589dc5-d0a0-4996-b9f8-847295fd2c3b'}).to_json
-```
-
-List Transfers
-```ruby
-ost_transfer_object.list().to_json
-```
-
-### Balances Module 
-
-```ruby
-ost_balance_object = ost_sdk.services.balances
-```
-
-Get balance of user:
-```ruby
-ost_balance_object.get({id: 'd0589dc5-d0a0-4996-b9f8-847295fd2c3b'}).to_json
-```
-
-### Transaction Ledger Module 
-
-```ruby
-ost_ledger_object = ost_sdk.services.ledger
-```
-
-Get balance of user:
-```ruby
-ost_ledger_object.get({id: 'd0589dc5-d0a0-4996-b9f8-847295fd2c3b'}).to_json
-```
-
 
 ### Request Specs
 
@@ -205,12 +165,12 @@ To obtain request/API specification, pass in `true` for the optional `api_spec` 
 
 ```ruby
 ost_sdk = OSTSdk::Saas::Services.new({api_key: <api_key>, api_secret: <api_secret>, api_base_url: <api_base_url>, api_spec: true})
-ost_action_object = ost_sdk.services.actions
+tokens_service = ost_sdk.services.tokens
 ```
 
 And then call a method:
 
 ```ruby
-ost_action_object.list().to_json
- {:success=>true, :data=>{:request_uri=>"https://sandboxapi.ost.com/v1.1/actions/", :request_type=>"GET", :request_params=>"request_timestamp=1526541627&signature=410f6fef1ab2ad34e74caef589a15b56490b63a316fc46509d31bb133bf11678&api_key=7cad25e082390a90114e"}} 
- ```
+tokens_service.get(getParams)
+{:request_uri=>"https://s5-api.stagingost.com/testnet/v2/tokens", :request_type=>"GET", :request_params=>"api_key=2de530542a37b1bb7c6d36efd21997ad&api_request_timestamp=1550499761&api_signature_kind=OST1-HMAC-SHA256&api_signature=2c13637d4b39cf0fb5034b73fb8335ec7bdce948ce0eaf6923f9f29cef8693bf"}
+``` 

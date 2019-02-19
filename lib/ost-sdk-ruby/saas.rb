@@ -1,22 +1,12 @@
 require_relative 'saas/services'
-
 require_relative 'saas/base'
-
-require_relative 'saas/v0/services'
-require_relative 'saas/v0/transaction_kind'
-require_relative 'saas/v0/users'
-
-require_relative 'saas/v1/services'
-require_relative 'saas/v1/users'
-require_relative 'saas/v1/token'
-require_relative 'saas/v1/actions'
-require_relative 'saas/v1/airdrops'
-require_relative 'saas/v1/transfers'
-require_relative 'saas/v1/transactions'
-
-require_relative 'saas/v1.1/services'
-require_relative 'saas/v1.1/balances'
-require_relative 'saas/v1.1/ledger'
+require_relative 'saas/chains'
+require_relative 'saas/devices'
+require_relative 'saas/manifest'
+require_relative 'saas/price_points'
+require_relative 'saas/sessions'
+require_relative 'saas/tokens'
+require_relative 'saas/users'
 
 module OSTSdk
 

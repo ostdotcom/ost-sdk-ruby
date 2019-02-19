@@ -1,12 +1,11 @@
 PATH
   remote: .
   specs:
-    ost-sdk-ruby (0.0.1)
+    ost-sdk-ruby (2.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    rake (10.5.0)
 
 PLATFORMS
   ruby
@@ -14,4 +13,6 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.6)
   ost-sdk-ruby!
-  rake
+
+BUNDLED WITH
+   1.16.2

@@ -36,7 +36,7 @@ module OSTSdk
       #   params: (Hash)
       #
       # Returns:
-      #   id: (Integer)
+      #   id: (String)
       #
       def get_id!(params)
         if params.has_key?(:id)
@@ -51,6 +51,69 @@ module OSTSdk
         id
       end
 
+      # Get user_id key from params hash and delete it
+      #
+      # Arguments:
+      #   params: (Hash)
+      #
+      # Returns:
+      #   user_id: (String)
+      #
+      def get_user_id!(params)
+        if params.has_key?(:user_id)
+          user_id = params[:user_id]
+          params.delete(:user_id)
+        elsif params.has_key?('user_id')
+          user_id = params['user_id']
+          params.delete('user_id')
+        else
+          fail "user_id missing in request params"
+        end
+        user_id
+      end
+
+      # Get chain_id key from params hash and delete it
+      #
+      # Arguments:
+      #   params: (Hash)
+      #
+      # Returns:
+      #   chain_id: (String)
+      #
+      def get_chain_id!(params)
+        if params.has_key?(:chain_id)
+          chain_id = params[:chain_id]
+          params.delete(:chain_id)
+        elsif params.has_key?('chain_id')
+          chain_id = params['chain_id']
+          params.delete('chain_id')
+        else
+          fail "chain_id missing in request params"
+        end
+        chain_id
+      end
+
+      # Get chain_id key from params hash and delete it
+      #
+      # Arguments:
+      #   params: (Hash)
+      #
+      # Returns:
+      #   device_address: (String)
+      #
+      def get_device_address!(params)
+        if params.has_key?(:device_address)
+          device_address = params[:device_address]
+          params.delete(:device_address)
+        elsif params.has_key?('device_address')
+          device_address = params['device_address']
+          params.delete('device_address')
+        else
+          fail "device_address missing in request params"
+        end
+        device_address
+      end
+
       # Sanitize API Base URL
       #
       # Arguments:
@@ -60,9 +123,7 @@ module OSTSdk
       #   api_base_url: (String)
       #
       def sanitize_api_base_url(api_base_url)
-
         api_base_url = api_base_url.gsub(/\/$/, '') # remove trailing slash
-
         return api_base_url
 
       end
