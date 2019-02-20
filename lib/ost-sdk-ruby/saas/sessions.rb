@@ -19,13 +19,22 @@ module OSTSdk
         @url_suffix = '/sessions'
       end
 
+      # Get session of a user
+      #
+      # Returns:
+      #   response: (Hash)
+      #
+      def get(params = {})
+        http_helper.send_get_request("#{@url_prefix}/#{get_user_id!(params)}#{@url_suffix}/#{get_session_address!(params)}", params)
+      end
+
       # List sessions of a user
       #
       # Returns:
       #   response: (Hash)
       #
       def get_list(params = {})
-        http_helper.send_get_request("#{@url_prefix}/#{get_user_id!(params)}/#{@url_suffix}", params)
+        http_helper.send_get_request("#{@url_prefix}/#{get_user_id!(params)}#{@url_suffix}", params)
       end
 
     end

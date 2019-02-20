@@ -93,7 +93,7 @@ module OSTSdk
         chain_id
       end
 
-      # Get chain_id key from params hash and delete it
+      # Get device_address key from params hash and delete it
       #
       # Arguments:
       #   params: (Hash)
@@ -112,6 +112,27 @@ module OSTSdk
           fail "device_address missing in request params"
         end
         device_address
+      end
+
+      # Get session_address key from params hash and delete it
+      #
+      # Arguments:
+      #   params: (Hash)
+      #
+      # Returns:
+      #   session_address: (String)
+      #
+      def get_session_address!(params)
+        if params.has_key?(:session_address)
+          session_address = params[:session_address]
+          params.delete(:session_address)
+        elsif params.has_key?('session_address')
+          session_address = params['session_address']
+          params.delete('session_address')
+        else
+          fail "session_address missing in request params"
+        end
+        session_address
       end
 
       # Sanitize API Base URL

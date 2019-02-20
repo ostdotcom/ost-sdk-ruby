@@ -25,7 +25,7 @@ module OSTSdk
       #   response: (Hash)
       #
       def create(params = {})
-        http_helper.send_post_request("#{@url_prefix}/#{get_user_id!(params)}/#{@url_suffix}", params)
+        http_helper.send_post_request("#{@url_prefix}/#{get_user_id!(params)}#{@url_suffix}", params)
       end
 
       # List devices of a user
@@ -34,7 +34,7 @@ module OSTSdk
       #   response: (Hash)
       #
       def get_list(params = {})
-        http_helper.send_get_request("#{@url_prefix}/#{get_user_id!(params)}/#{@url_suffix}", params)
+        http_helper.send_get_request("#{@url_prefix}/#{get_user_id!(params)}#{@url_suffix}", params)
       end
 
       # Get device of a user
@@ -43,7 +43,7 @@ module OSTSdk
       #   response: (Hash)
       #
       def get_device(params = {})
-        http_helper.send_get_request("#{@url_prefix}/#{get_user_id!(params)}/#{@url_suffix}/#{get_device_address!(params)}",
+        http_helper.send_get_request("#{@url_prefix}/#{get_user_id!(params)}#{@url_suffix}/#{get_device_address!(params)}",
                                      params)
       end
 

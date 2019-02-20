@@ -16,7 +16,6 @@ module OSTSdk
       def initialize(params)
         super
         @url_prefix = '/users'
-        @url_suffix = '/activate-user'
       end
 
       # Create a User
