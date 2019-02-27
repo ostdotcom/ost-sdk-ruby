@@ -135,6 +135,49 @@ module OSTSdk
         session_address
       end
 
+
+      # Get transaction_id key from params hash and delete it
+      #
+      # Arguments:
+      #   params: (Hash)
+      #
+      # Returns:
+      #   transaction_id: (String)
+      #
+      def get_transaction_id!(params)
+        if params.has_key?(:transaction_id)
+          transaction_id = params[:transaction_id]
+          params.delete(:transaction_id)
+        elsif params.has_key?('transaction_id')
+          transaction_id = params['transaction_id']
+          params.delete('transaction_id')
+        else
+          fail "transaction_id missing in request params"
+        end
+        transaction_id
+      end
+
+      # Get user_id key from params hash and delete it
+      #
+      # Arguments:
+      #   params: (Hash)
+      #
+      # Returns:
+      #   user_id: (String)
+      #
+      def get_recovery_owner_address!(params)
+        if params.has_key?(:recovery_owner_address)
+          recovery_owner_address = params[:recovery_owner_address]
+          params.delete(:recovery_owner_address)
+        elsif params.has_key?('recovery_owner_address')
+          recovery_owner_address = params['recovery_owner_address']
+          params.delete('recovery_owner_address')
+        else
+          fail "recovery_owner_address missing in request params"
+        end
+        recovery_owner_address
+      end
+
       # Sanitize API Base URL
       #
       # Arguments:

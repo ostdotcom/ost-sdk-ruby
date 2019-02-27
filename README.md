@@ -36,47 +36,46 @@ Set variables for initializing SDK objects:
 ost_sdk = OSTSdk::Saas::Services.new({api_key: <api_key>, api_secret: <api_secret>, api_base_url: <api_base_url>, config: {timeout: <timeout_in_seconds>}})
 ```
 
-### Tokens Module 
+### Balance Module 
 
 ```ruby
-tokens_service = ost_sdk.services.tokens
+balance_service = ost_sdk.services.balance
 ```
 
-Get Token Detail:
+Get Balance of user:
 
 ```ruby
 getParams = {}
-response = tokens_service.get(getParams)
+getParams[:user_id] = '91263ebd-6b2d-4001-b732-4024430ca758'
+response = balance_service.get(getParams)
 ```
 
-### Users Module 
+### Chains Module 
 
 ```ruby
-users_service = ost_sdk.services.users
+chains_service = ost_sdk.services.chains
 ```
 
-Create User:
-
-```ruby
-createParams = {}
-response = users_service.create(createParams)
-```
-
-Get User Detail:
+Get 
 
 ```ruby
 getParams = {}
-getParams[:id] = '91263ebd-6b2d-4001-b732-4024430ca758'
-response = users_service.get(getParams)
-
+getParams[:chain_id] = '2000'
+response = chains_service.get(getParams)
 ```
 
-Get User List:
+### Device Managers Module 
+
+```ruby
+device_managers_service = ost_sdk.services.device_managers
+```
+
+Get 
 
 ```ruby
 getParams = {}
-response = users_service.get_list(getParams)
-
+getParams[:user_id] = '91263ebd-6b2d-4001-b732-4024430ca758'
+response = device_managers_service.get(getParams)
 ```
 
 ### Devices Module 
@@ -117,20 +116,6 @@ response = devices_service.get_device(getParams)
 
 ```
 
-### Session Module
-
-```ruby
-sessions_service = ost_sdk.services.sessions
-```
-
-Get User Session(s) List:
-
-```ruby
-getParams = {}
-getParams[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
-response = sessions_service.get_list(getParams)
-```
-
 ### Price Points Module 
 
 ```ruby
@@ -141,22 +126,135 @@ Get
 
 ```ruby
 getParams = {}
+getParams[:chain_id] = '2000'
 response = price_points_service.get(getParams)
 
 ```
 
-### Chains Module 
+### Recovery Owners Module 
 
 ```ruby
-chains_service = ost_sdk.services.chains
+recovery_owners_service = ost_sdk.services.recovery_owners
 ```
 
 Get 
 
 ```ruby
 getParams = {}
-getParams[:chain_id] = '2000'
-response = chains_service.get(getParams)
+getParams[:user_id] = '91263ebd-6b2d-4001-b732-4024430ca758'
+getParams[:recovery_owner_address] = '0x...'
+response = recovery_owners_service.get(getParams)
+
+```
+
+### Rules Module 
+
+```ruby
+rules_service = ost_sdk.services.rules
+```
+
+Get 
+
+```ruby
+getParams = {}
+response = rules_service.get_list(getParams)
+```
+
+### Session Module
+
+```ruby
+sessions_service = ost_sdk.services.sessions
+```
+
+Get User Session:
+
+```ruby
+getParams = {}
+getParams[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
+getParams[:session_address] = '0x...'
+response = sessions_service.get(getParams)
+```
+
+Get User Session(s) List:
+
+```ruby
+getParams = {}
+getParams[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
+response = sessions_service.get_list(getParams)
+```
+
+### Tokens Module 
+
+```ruby
+tokens_service = ost_sdk.services.tokens
+```
+
+Get Token Detail:
+
+```ruby
+getParams = {}
+response = tokens_service.get(getParams)
+```
+
+### Transactions Module 
+
+```ruby
+transactions_service = ost_sdk.services.transactions
+```
+
+Execute transaction:
+
+```ruby
+executeParams = {}
+executeParams[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
+response = transactions_service.execute(executeParams)
+```
+
+Get transaction detail:
+
+```ruby
+executeParams = {}
+executeParams[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
+executeParams[:transaction_id] = 't43g990c-32wa-ff3r-n553-9f1ew2t32rt1'
+response = transactions_service.get(executeParams)
+```
+
+List transactions of a user:
+
+```ruby
+executeParams = {}
+executeParams[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
+response = transactions_service.get_list(executeParams)
+```
+
+### Users Module 
+
+```ruby
+users_service = ost_sdk.services.users
+```
+
+Create User:
+
+```ruby
+createParams = {}
+response = users_service.create(createParams)
+```
+
+Get User Detail:
+
+```ruby
+getParams = {}
+getParams[:id] = '91263ebd-6b2d-4001-b732-4024430ca758'
+response = users_service.get(getParams)
+
+```
+
+Get User List:
+
+```ruby
+getParams = {}
+response = users_service.get_list(getParams)
+
 ```
 
 ### Request Specs

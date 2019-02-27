@@ -124,7 +124,7 @@ module OSTSdk
           when Array
             value.map {|v|
               build_nested_query(v, "#{prefix}[]")
-            }.join("&")
+            }.reject(&:empty?).join("&")
           when Hash
             value.map {|k, v|
               build_nested_query(v, prefix ? "#{prefix}[#{k}]" : k)

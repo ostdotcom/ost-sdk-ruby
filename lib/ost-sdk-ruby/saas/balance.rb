@@ -2,7 +2,7 @@ module OSTSdk
 
   module Saas
 
-    class PricePoints < OSTSdk::Saas::Base
+    class Balance < OSTSdk::Saas::Base
 
       # Initialize
       #
@@ -15,17 +15,17 @@ module OSTSdk
       #
       def initialize(params)
         super
-        @url_prefix = '/chains'
-        @url_suffix = '/price-points'
+        @url_prefix = '/users'
+        @url_suffix = '/balance'
       end
 
-      # Get Chain Price Points
+      # Get User's Balance
       #
       # Returns:
       #   response: (Hash)
       #
       def get(params = {})
-        http_helper.send_get_request("#{@url_prefix}/#{get_chain_id!(params)}#{@url_suffix}", params)
+        http_helper.send_get_request("#{@url_prefix}/#{get_user_id!(params)}#{@url_suffix}", params)
       end
 
     end
