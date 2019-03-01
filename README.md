@@ -142,7 +142,7 @@ Get
 ```ruby
 getParams = {}
 getParams[:user_id] = '91263ebd-6b2d-4001-b732-4024430ca758'
-getParams[:recovery_owner_address] = '0x...'
+getParams[:recovery_owner_address] = '0x5F860598383868e8E8Ee0ffC5ADD92369Db37455'
 response = recovery_owners_service.get(getParams)
 
 ```
@@ -171,7 +171,7 @@ Get User Session:
 ```ruby
 getParams = {}
 getParams[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
-getParams[:session_address] = '0x...'
+getParams[:session_address] = '0x5F860598383868e8E8Ee0ffC5ADD92369Db37455'
 response = sessions_service.get(getParams)
 ```
 
@@ -207,6 +207,11 @@ Execute transaction:
 ```ruby
 executeParams = {}
 executeParams[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
+executeParams[:to] = '0x4e9314f004026F89Fc52790c3357b2D34FBA93b0'
+raw_calldata = {}
+raw_calldata[:method] = "directTransfers" 
+raw_calldata[:parameters] = [["0x4e9314f004026F89Fc52790c3357b2D34FBA93b0", "0xe37906219ad67cc1301b970539c9860f9ce8d991"],[1,1]] 
+executeParams[:raw_calldata] = raw_calldata.to_json
 response = transactions_service.execute(executeParams)
 ```
 
