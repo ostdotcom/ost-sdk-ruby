@@ -42,7 +42,7 @@ module OSTSdk
       # Returns:
       #   response: (Hash)
       #
-      def get_device(params = {})
+      def get(params = {})
         http_helper.send_get_request("#{@url_prefix}/#{get_user_id!(params)}#{@url_suffix}/#{get_device_address!(params)}",
                                      params)
       end

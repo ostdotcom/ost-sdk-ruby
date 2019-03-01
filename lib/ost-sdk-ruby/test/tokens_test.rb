@@ -11,7 +11,7 @@ class TokensTest < Test::Unit::TestCase
 
   def test_tokens_get
     result = tokens_service.get()
-    assert_equal(result.success?, true )
+    assert_equal(result["success"], true )
   end
 
 end

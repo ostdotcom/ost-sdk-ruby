@@ -29,7 +29,7 @@ class SignatureGenerationTest < Test::Unit::TestCase
     }
     test_endpoint = "/users"
     signature = signature_test_obj.get_signature_for_test(test_endpoint,test_obj_for_signature)
-    assert_equal(signature, "c42188c53bfdf84e542a0a9c0a78d19c9f497c61e816f169e1907bc98477eb82")
+    assert_equal(signature, "ccd833cc3b1f191e9bfdbfdda92e1b4fd561ab6ef79ba04d31e2d85fc640b98e")
   end
 
 end

@@ -19,8 +19,4 @@ branches:
   - master
   - develop
 script:
-  - ruby lib/ost-sdk-ruby/test/user_test.rb
-  - ruby lib/ost-sdk-ruby/test/user_kyc_test.rb
-  - ruby lib/ost-sdk-ruby/test/user_kyc_detail_test.rb
-  - ruby lib/ost-sdk-ruby/test/validators_test.rb
-  - ruby lib/ost-sdk-ruby/test/signature_generation_test.rb
+  - find lib/ost-sdk-ruby/test -name '*_test.rb' | xargs -n1 -I{} bundle exec ruby -Itest {}

@@ -10,8 +10,8 @@ class BalanceTest < Test::Unit::TestCase
   end
 
   def test_balance_get
-    result = balance_service.get(user_id: Config::OST_SDK::USER_ID)
-    assert_equal(result.success?, true )
+    result = balance_service.get(user_id: Config::OST_KIT_COMPANY_USER_ID)
+    assert_equal(result["success"], true )
   end
 
 end

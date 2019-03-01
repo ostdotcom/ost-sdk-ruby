@@ -11,17 +11,17 @@ class SessionsTest < Test::Unit::TestCase
 
   def test_sessions_get
     result = sessions_service.get({
-                                     user_id: Config::OST_SDK::USER_ID,
-                                     session_address: Config::OST_SDK::SESSION_ADDRESS
+                                     user_id: Config::OST_KIT_USER_ID,
+                                     session_address: Config::OST_KIT_SESSION_ADDRESS
                                  })
-    assert_equal(result.success?, true)
+    assert_equal(result["success"], true)
   end
 
   def test_sessions_get_list
-    result = sessions_service.get({
-                                     user_id: Config::OST_SDK::USER_ID
+    result = sessions_service.get_list({
+                                     user_id: Config::OST_KIT_COMPANY_USER_ID
                                  })
-    assert_equal(result.success?, true)
+    assert_equal(result["success"], true)
   end
 
 end

@@ -9,9 +9,9 @@ class RulesTest < Test::Unit::TestCase
     @rules_service ||= Config::OST_SDK.services.rules
   end
 
-  def test_rules_get
-    result = rules_service.get()
-    assert_equal(result.success?, true )
+  def test_rules_get_list
+    result = rules_service.get_list()
+    assert_equal(result["success"], true )
   end
 
 end

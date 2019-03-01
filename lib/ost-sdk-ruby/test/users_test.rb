@@ -11,19 +11,19 @@ class UsersTest < Test::Unit::TestCase
 
   def test_users_create
     result = users_service.create()
-    assert_equal(result.success?, true)
+    assert_equal(result["success"], true)
   end
 
   def test_users_get
     result = users_service.get({
-                                   id: Config::OST_SDK::USER_ID
+                                   id: Config::OST_KIT_COMPANY_USER_ID
                                })
-    assert_equal(result.success?, true)
+    assert_equal(result["success"], true)
   end
 
   def test_users_get_list
-    result = users_service.get()
-    assert_equal(result.success?, true)
+    result = users_service.get_list()
+    assert_equal(result["success"], true)
   end
 
 end

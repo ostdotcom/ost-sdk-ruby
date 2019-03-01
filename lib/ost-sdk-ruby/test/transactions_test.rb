@@ -11,28 +11,30 @@ class TransactionsTest < Test::Unit::TestCase
 
   def test_transactions_execute
     result = transactions_service.execute({
-                                     user_id: Config::OST_SDK::USER_ID,
-                                     address: '0x1Ea365269A3e6c8fa492eca9A531BFaC8bA1649E',
-                                     api_signer_address: '0x5F860598383868e8E8Ee0ffC5ADD92369Db37455',
-                                     device_uuid: '593a967f-87bd-49a6-976c-52edf46c4df4',
-                                     device_name: 'Iphone S'
+                                     user_id: Config::OST_KIT_COMPANY_USER_ID,
+                                     to: Config::OST_KIT_RULE_ADDRESS,
+                                     raw_calldata: {
+                                         method: "directTransfers",
+                                         parameters: [[Config::OST_KIT_USER2_TOKEN_HOLDER_ADDRESS],[1]]
+                                     }.to_json
                                  })
-    assert_equal(result.success?, true)
+
+    assert_equal(result["success"], true)
   end
 
   def test_transactions_get
     result = transactions_service.get({
-                                     user_id: Config::OST_SDK::USER_ID,
-                                     transaction_id: Config::OST_SDK::TRANSACTION_ID
+                                     user_id: Config::OST_KIT_USER_ID,
+                                     transaction_id: Config::OST_KIT_TRANSACTION_ID
                                  })
-    assert_equal(result.success?, true)
+    assert_equal(result["success"], true)
   end
 
   def test_transactions_get_list
-    result = transactions_service.get({
-                                     user_id: Config::OST_SDK::USER_ID
+    result = transactions_service.get_list({
+                                     user_id: Config::OST_KIT_COMPANY_USER_ID
                                  })
-    assert_equal(result.success?, true)
+    assert_equal(result["success"], true)
   end
 
 end

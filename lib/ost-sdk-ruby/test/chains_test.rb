@@ -10,8 +10,8 @@ class ChainsTest < Test::Unit::TestCase
   end
 
   def test_chains_get
-    result = chains_service.get(chain_id: Config::OST_SDK::CHAIN_ID)
-    assert_equal(result.success?, true )
+    result = chains_service.get(chain_id: Config::OST_KIT_AUX_CHAIN_ID)
+    assert_equal(result["success"], true )
   end
 
 end
