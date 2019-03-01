@@ -1,0 +1,26 @@
+language: ruby
+before_install:
+  - gem uninstall -v '>= 2' -i $(rvm gemdir)@global -ax bundler || true
+  - gem install bundler -v '< 2'
+rvm:
+  - 2.2
+  - 2.3
+  - 2.4
+  - 2.5
+  - 2.5.3
+notifications:
+  email:
+    recipients:
+    - ci.report@ost.com
+    on_success: always
+    on_failure: always
+branches:
+  only:
+  - master
+  - develop
+script:
+  - ruby lib/ost-sdk-ruby/test/user_test.rb
+  - ruby lib/ost-sdk-ruby/test/user_kyc_test.rb
+  - ruby lib/ost-sdk-ruby/test/user_kyc_detail_test.rb
+  - ruby lib/ost-sdk-ruby/test/validators_test.rb
+  - ruby lib/ost-sdk-ruby/test/signature_generation_test.rb

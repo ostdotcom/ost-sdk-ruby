@@ -81,6 +81,21 @@ module OSTSdk
         end
       end
 
+      # Generate a signature for test case. It only creates a signature for a given Hash
+      #
+      # Arguments:
+      #   end_point: (String)
+      #   request_params: (Hash)
+      #
+      # Returns:
+      #   response: (String)
+      #
+      def get_signature_for_test(endpoint, request_params)
+        escaped_query_string = get_escaped_query_string(request_params)
+        string_to_sign = "#{endpoint}?#{escaped_query_string}"
+        generate_signature(string_to_sign)
+      end
+
       private
 
       def setup_request(uri)
