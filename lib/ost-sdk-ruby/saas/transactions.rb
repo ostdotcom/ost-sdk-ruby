@@ -19,7 +19,7 @@ module OSTSdk
           @url_suffix = '/transactions'
         end
 
-        # Execute transaction
+        # Execute company to user transaction
         #
         # Returns:
         #   response: (Hash)
