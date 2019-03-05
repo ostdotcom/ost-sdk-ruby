@@ -154,7 +154,13 @@ module OSTSdk
 
       def escape(s)
         s = URI.encode_www_form_component(s)
-        URI.escape(s, "*")
+
+        # escape [*] if not escaped by ruby
+        s = URI.escape(s, "*")
+
+        # unescape [~] if escaped by ruby
+        s = URI.unescape(s, "%7E")
+        s
       end
 
       # Method which is called in service perform and handle exceptions

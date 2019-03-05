@@ -19,7 +19,7 @@ module OSTSdk
           @url_suffix = '/device-managers'
         end
 
-        # Get chain details
+        # Get Device Manager Detail
         #
         # Returns:
         #   response: (Hash)

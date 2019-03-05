@@ -88,6 +88,7 @@ Get rules:
 
 ```ruby
 getParams = {}
+# getParams[:limit] = 10
 response = rules_service.get_list(getParams)
 ```
 
@@ -116,6 +117,7 @@ Get list of users:
 
 ```ruby
 getParams = {}
+# getParams[:limit] = 10
 response = users_service.get_list(getParams)
 ```
 
@@ -142,6 +144,9 @@ Get devices of an existing user:
 ```ruby
 getParams = {}
 getParams[:user_id] = 'd194aa75-acd5-4f40-b3fb-e73a7cf7c0d9'
+# getParams[:pagination_identifier] = "eyJsYXN0RXZhbHVhdGVkS2V5Ijp7InVpZCI6eyJTIjoiZDE5NGFhNzUtYWNkNS00ZjQwLWIzZmItZTczYTdjZjdjMGQ5In0sIndhIjp7IlMiOiIweDU4YjQxMDY0NzQ4OWI4ODYzNTliNThmZTIyMjYwZWIxOTYwN2IwZjYifX19"
+# getParams[:addresses] = ["0x5906ae461eb6283cf15b0257d3206e74d83a6bd4","0xab248ef66ee49f80e75266595aa160c8c1abdd5a"]
+# getParams[:limit] = 10
 response = devices_service.get_list(getParams)
 ```
 
@@ -188,6 +193,7 @@ Get sessions of an existing user:
 ```ruby
 getParams = {}
 getParams[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
+# getParams[:limit] = 10
 response = sessions_service.get_list(getParams)
 ```
 
@@ -234,24 +240,42 @@ executeParams[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
 executeParams[:to] = '0x4e9314f004026F89Fc52790c3357b2D34FBA93b0'
 raw_calldata = {}
 raw_calldata[:method] = "directTransfers" 
-raw_calldata[:parameters] = [["0x4e9314f004026F89Fc52790c3357b2D34FBA93b0", "0xe37906219ad67cc1301b970539c9860f9ce8d991"],[1,1]] 
+raw_calldata[:parameters] = [["0x4e9314f004026F89Fc52790c3357b2D34FBA93b0", "0xe37906219ad67cc1301b970539c9860f9ce8d991"],['1','1']] 
 executeParams[:raw_calldata] = raw_calldata.to_json
+
+meta_property = {
+      name: "transaction_name" ,
+      type: "user_to_user",
+      details: ""
+    }
+
+# executeParams[:meta_property] = meta_property
 response = transactions_service.execute(executeParams)
 ```
 
 Get transaction of an exiting user:
 
 ```ruby
-executeParams = {}
-executeParams[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
-executeParams[:transaction_id] = 't43g990c-32wa-ff3r-n553-9f1ew2t32rt1'
-response = transactions_service.get(executeParams)
+getParams = {}
+getParams[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
+getParams[:transaction_id] = 't43g990c-32wa-ff3r-n553-9f1ew2t32rt1'
+response = transactions_service.get(getParams)
 ```
 
 Get transactions of an exiting user:
 
 ```ruby
-executeParams = {}
-executeParams[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
-response = transactions_service.get_list(executeParams)
+getParams = {}
+getParams[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
+
+meta_property = {
+      name: "transaction_name" ,
+      type: "user_to_user",
+      details: ""
+    }
+# getParams[:status] = ["CREATED", "SUBMITTED", "SUCCESS", "FAILED"]
+# getParams[:meta_property] meta_property.to_json
+# getParams[:limit] = 10
+ 
+response = transactions_service.get_list(getParams)
 ```
