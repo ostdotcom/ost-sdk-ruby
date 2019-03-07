@@ -260,7 +260,7 @@ executeParams = {}
 executeParams[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
 executeParams[:to] = '0x4e9314f004026F89Fc52790c3357b2D34FBA93b0'
 raw_calldata = {}
-raw_calldata[:method] = "directTransfers" 
+raw_calldata[:method] = "pay" 
 raw_calldata[:parameters] = ["0xa9632350057c2226c5a10418b1c3bc9acdf7e2ee", ["0x4e9314f004026F89Fc52790c3357b2D34FBA93b0", "0xe37906219ad67cc1301b970539c9860f9ce8d991"],['1','1'], "USD", "23757000000000000"] 
 executeParams[:raw_calldata] = raw_calldata.to_json
 
