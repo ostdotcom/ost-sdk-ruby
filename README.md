@@ -232,7 +232,7 @@ response = balance_service.get(getParams)
 transactions_service = ost_sdk.services.transactions
 ```
 
-Execute company to user transaction:
+Execute company to user transaction [directTransfers method]:
 
 ```ruby
 executeParams = {}
@@ -241,6 +241,27 @@ executeParams[:to] = '0x4e9314f004026F89Fc52790c3357b2D34FBA93b0'
 raw_calldata = {}
 raw_calldata[:method] = "directTransfers" 
 raw_calldata[:parameters] = [["0x4e9314f004026F89Fc52790c3357b2D34FBA93b0", "0xe37906219ad67cc1301b970539c9860f9ce8d991"],['1','1']] 
+executeParams[:raw_calldata] = raw_calldata.to_json
+
+meta_property = {
+      name: "transaction_name" ,
+      type: "user_to_user",
+      details: ""
+    }
+
+# executeParams[:meta_property] = meta_property
+response = transactions_service.execute(executeParams)
+```
+
+Execute company to user transaction [pay method]:
+
+```ruby
+executeParams = {}
+executeParams[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
+executeParams[:to] = '0x4e9314f004026F89Fc52790c3357b2D34FBA93b0'
+raw_calldata = {}
+raw_calldata[:method] = "directTransfers" 
+raw_calldata[:parameters] = ["0xa9632350057c2226c5a10418b1c3bc9acdf7e2ee", ["0x4e9314f004026F89Fc52790c3357b2D34FBA93b0", "0xe37906219ad67cc1301b970539c9860f9ce8d991"],['1','1'], "USD", "23757000000000000"] 
 executeParams[:raw_calldata] = raw_calldata.to_json
 
 meta_property = {
