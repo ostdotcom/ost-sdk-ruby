@@ -42,7 +42,7 @@ module OSTSdk
       #   response: (Hash)
       #
       def get(params = {})
-        http_helper.send_get_request("#{@url_prefix}/#{get_id!(params)}", params)
+        http_helper.send_get_request("#{@url_prefix}/#{get_user_id!(params)}", params)
       end
 
     end
