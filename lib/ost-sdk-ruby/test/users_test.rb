@@ -16,7 +16,7 @@ class UsersTest < Test::Unit::TestCase
 
   def test_users_get
     result = users_service.get({
-                                   id: Config::OST_KIT_COMPANY_USER_ID
+                                   user_id: Config::OST_KIT_COMPANY_USER_ID
                                })
     assert_equal(result["success"], true)
   end
