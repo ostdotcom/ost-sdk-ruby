@@ -99,7 +99,7 @@ Get an existing user:
 
 ```ruby
 getParams = {}
-getParams[:id] = '91263ebd-6b2d-4001-b732-4024430ca758'
+getParams[:user_id] = '91263ebd-6b2d-4001-b732-4024430ca758'
 response = users_service.get(getParams)
 ```
 
@@ -107,6 +107,7 @@ Get list of users:
 
 ```ruby
 getParams = {}
+# getParams[:ids] = ['91263ebd-6b2d-4001-b732-4024430ca758', '45673ebd-6b2d-4001-b732-4024430ca758']
 # getParams[:limit] = 10
 response = users_service.get_list(getParams)
 ```
