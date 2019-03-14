@@ -15,7 +15,7 @@ class TransactionsTest < Test::Unit::TestCase
                                      to: Config::OST_KIT_RULE_ADDRESS,
                                      raw_calldata: {
                                          method: "directTransfers",
-                                         parameters: [[Config::OST_KIT_USER2_TOKEN_HOLDER_ADDRESS],[1]]
+                                         parameters: [[Config::OST_KIT_USER2_TOKEN_HOLDER_ADDRESS],["1"]]
                                      }.to_json
                                  })
 

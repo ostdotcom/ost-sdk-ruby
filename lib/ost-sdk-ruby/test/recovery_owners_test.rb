@@ -11,7 +11,7 @@ class RecoveryOwnersTest < Test::Unit::TestCase
 
   def test_recovery_owners_get
     result = recovery_owners_service.get({
-                                             user_id: Config::OST_KIT_COMPANY_USER_ID,
+                                             user_id: Config::OST_KIT_USER_ID,
                                              recovery_owner_address: Config::OST_KIT_RECOVERY_OWNER_ADDRESS
                                          })
     assert_equal(result["success"], true )
