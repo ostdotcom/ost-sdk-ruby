@@ -1,43 +1,35 @@
-# Ost Ruby SDK
+# OST Ruby SDK
 [![Build Status](https://travis-ci.org/ostdotcom/ost-sdk-ruby.svg?branch=master)](https://travis-ci.org/ostdotcom/ost-sdk-ruby)
 
-The official [OST Ruby SDK](https://dev.ost.com/).
+The official [OST](https://dev.ost.com/) Ruby SDK.
 
 ## Introduction
 
 OST is a complete technology solution enabling mainstream businesses 
-to easily launch blockchain-based economies at low risk and without 
+to easily launch blockchain-based economies without 
 requiring blockchain development.
 
 At the core of OST is the concept of OST-powered Brand Tokens (BTs). 
-BTs are white-label cryptocurrency tokens running on highly scalable 
-Ethereum-based side blockchains, backed by staking OST Tokens into smart 
-contracts on Ethereum mainnet. BTs can only be transferred to whitelisted 
-user addresses within a business's community. This ensures that they stay 
-within a specific BT community.
+BTs are white-label cryptocurrency tokens with utility representations 
+running on highly-scalable Ethereum-based side blockchains, 
+backed by OST tokens staked on Ethereum mainnet. Within a business’s 
+token economy, BTs can only be transferred to whitelisted user addresses. 
+This ensures that they stay within the token economy.
 
 The OST technology stack is designed to give businesses everything they need 
-to integrate, test, and deploy BTs.Within the OST suite of products developers 
-can use OST KIT to create, test and launch Branded Tokens backed by OST. 
+to integrate, test, and deploy BTs. Within the OST suite of products, developers 
+can use OST KIT to create, test, and launch Brand Tokens backed by OST. 
 
-OST APIs and Server Side SDKs make it simple and easy for developers to 
+OST APIs and server-side SDKs make it simple and easy for developers to 
 integrate blockchain tokens into their apps.
-
-## Advantages
-
-Using the OST SDKs provides a number of advantages
-* Simplicity: The SDKs reduce the complexity of integration by handling multiple authentication scenarios automatically. This means that the appropriate method call will be to minimize the end-user interactions.
-* Performance: Caching, key management and nonce management ensure that end-users overall experience is improved.
-* Security: Separating the Server Side API interactions from the client ensures that user's private keys are generated and stored securely on the user's device and not shared across the network.
-
 
 ## Requirements
 
-Integrating OST SDK into your application can begin as soon as you create an account, with OST KIT. It is a three step process:
-Sign-up on [https://kit.ost.com](https://kit.ost.com).
-Create your branded token in OST KIT.
-Obtain an API Key and API Secret from [https://kit.ost.com/mainnet/developer](https://kit.ost.com/mainnet/developer).
-
+Integrating an OST SDK into your application can begin as soon as you create an account 
+with OST KIT, requiring only three steps:
+1. Sign-up on [https://kit.ost.com](https://kit.ost.com).
+2. Create your Brand Token in OST KIT.
+3. Obtain an API Key and API Secret from [https://kit.ost.com/mainnet/developer](https://kit.ost.com/mainnet/developer).
 
 ## Documentation
 
@@ -51,7 +43,7 @@ Install OST Ruby SDK
 > gem install ost-sdk-ruby
 ```
 
-## Example Usage
+## Getting Started
 
 Require the OST Ruby SDK:
 
@@ -67,35 +59,36 @@ Set variables for initializing SDK objects:
 ost_sdk = OSTSdk::Saas::Services.new({api_key: <api_key>, api_secret: <api_secret>, api_base_url: <api_base_url>, config: {timeout: <timeout_in_seconds>}})
 ```
 
+## SDK Modules
+
+If a user's private key is lost, they could lose access 
+to their tokens. To tackle this risk, OST promotes a 
+mobile-first approach and provides mobile (client) and server SDKs. 
+
+
+* The server SDKs enable you to register users with KIT.
+* The client SDKs provide the additional support required for 
+the ownership and management of Brand Tokens by users so 
+that they can create keys and control their tokens. 
 
 ### Users Module 
 
+To register users with KIT, you can use the services provided in the Users module. 
 
-Given that Brand Tokens are valuable to users, if their private keys are compromised it could 
-result in the user being unable to access their tokens. To tackle this OST promotes a mobile-first 
-approach and provides mobile(client) and server SDKs. 
-
-* The server SDKs enable you to register users with KIT server.
-* The client SDKs provides the additional support required for the ownership and management of Brand Tokens by end users so that they can 
-   create keys and control their tokens. 
-
-To register user with KIT you can use the services provided in user module. 
-
-Initialize a Users object to perform user specific actions, like creating users:
-``
+Initialize a Users object to perform user-specific actions, like creating users:
 
 ```ruby
 users_service = ost_sdk.services.users
 ```
 
-Create a new user:
+Create a User with KIT:
 
 ```ruby
 create_params = {}
 response = users_service.create(create_params)
 ```
 
-Get an existing user:
+Get User Detail:
 
 ```ruby
 get_params = {}
@@ -103,7 +96,7 @@ get_params[:user_id] = '91263ebd-6b2d-4001-b732-4024430ca758'
 response = users_service.get(get_params)
 ```
 
-Get list of users:
+Get Users List:
 
 ```ruby
 get_params = {}
@@ -115,17 +108,18 @@ response = users_service.get_list(get_params)
 
 ### Devices Module 
 
-
-Once a user is created via API, partner company should register user’s device with KIT.  
-Post which they can activate user’s wallet on their device. Partner company can register multiple devices per user. 
+Once a user is created via the API, you can register the 
+user’s device with KIT. Next, activate the user’s 
+wallet on the user's device. Multiple devices can be 
+registered per user. 
  
-Initialize a Device object to perform device specific actions, like registering devices:
+Initialize a Devices object to perform device-specific actions, like registering devices:
 
 ```ruby
 devices_service = ost_sdk.services.devices
 ```
 
-Create a new device for an existing user:
+Create a Device for User:
 
 ```ruby
 create_params = {}
@@ -137,7 +131,16 @@ create_params[:device_name] = 'Iphone S'
 response = devices_service.create(create_params)
 ```
 
-Get devices of an existing user:
+Get User Device Detail:
+
+```ruby
+get_params = {}
+get_params[:user_id] = 'd194aa75-acd5-4f40-b3fb-e73a7cf7c0d9'
+get_params[:device_address] = '0x1Ea365269A3e6c8fa492eca9A531BFaC8bA1649E'
+response = devices_service.get(get_params)
+```
+
+Get User Devices List:
 
 ```ruby
 get_params = {}
@@ -148,35 +151,31 @@ get_params[:user_id] = 'd194aa75-acd5-4f40-b3fb-e73a7cf7c0d9'
 response = devices_service.get_list(get_params)
 ```
 
-Get device of an existing user:
-
-```ruby
-get_params = {}
-get_params[:user_id] = 'd194aa75-acd5-4f40-b3fb-e73a7cf7c0d9'
-get_params[:device_address] = '0x1Ea365269A3e6c8fa492eca9A531BFaC8bA1649E'
-response = devices_service.get(get_params)
-```
-
 
 
 ### Device Managers Module 
 
 
-After  user is created and their device is registered via API,  a wallet can be activated. 
-Activating a wallet involves the deployment of :
-* TokenHolder contract - each user in the economy is be represented by this smart contract on blockchain.  It holde the user's balances,
-* Device Manager (Multisig contract) - This contract is configured to control the user's TokenHolder contract, and 
-* DelayedRecoveryModule contract - that supports recovery via a 6 digit PIN.
- 
-In order to enable user to access their tokens i.e their TokenHolder contract from multiple devices without having to share private keys across devices we came up with a multi-signature contract. 
-We refer to this entity as device manager in OST APIs.  
-To get information about user’s device manager use services provided in device manager module. 
+After a user is created and their device is registered via the API, 
+their wallet can be activated. Activating a wallet involves the deployment of the following contracts:
+
+* TokenHolder - each user in the economy is represented by a TokenHolder that holds the user's token balance.
+* Device Manager (multi-signature) - this contract is configured to control the user's TokenHolder contract.
+* DelayedRecoveryModule - this contract enables recovery in the event a key is lost.
+
+In order to enable a user to access their tokens, i.e., interact 
+with their TokenHolder contract, from multiple devices without 
+having to share private keys across devices, a multi-signature 
+contract is employed. We refer to this entity as the Device 
+Manager in OST APIs.
+
+To get information about a user’s Device Manager, use services provided in the Device Managers module.
 
 ```ruby
 device_managers_service = ost_sdk.services.device_managers
 ```
 
-Get device manager details of an existing user:
+Get Device Manager Detail:
 
 ```ruby
 get_params = {}
@@ -186,20 +185,24 @@ response = device_managers_service.get(get_params)
 
 
 
-### Session Module
+### Sessions Module
 
-In order to create a seamless user experience so that users don't have to sign a new transaction at every move in the application we came up with the concept of sessionKeys. 
-These keys are used to sign messages on user's behalf for a predetermined amount of time and with a defined maximum spending limit per-transaction. 
-These keys are created on the mobile device from where the end user participates in the economy. Each key has a corresponding public key, which in-turn has a corresponding public address. 
-User’s TokenHolder contract can have multiple sessionKeys for signing messages on user’s behalf. 
+In order to create a more seamless user experience, so that users don't have to 
+sign a new transaction at every move in the application, we use session keys. 
+These keys are authorized to sign transactions on the user's behalf 
+for a predetermined amount of time and with a defined maximum spending 
+limit per transaction.
 
-To get information about user’s session keys use services provided in session module. 
+These session keys are created in a user's wallet. A user’s TokenHolder 
+contract can have multiple authorized session keys.
+
+To get information about a user’s session keys, use services provided in the Sessions module.
 
 ```ruby
 sessions_service = ost_sdk.services.sessions
 ```
 
-Get session of an existing user:
+Get User Session Detail:
 
 ```ruby
 get_params = {}
@@ -208,7 +211,7 @@ get_params[:session_address] = '0x5F860598383868e8E8Ee0ffC5ADD92369Db37455'
 response = sessions_service.get(get_params)
 ```
 
-Get sessions of an existing user:
+Get User Sessions List:
 
 ```ruby
 get_params = {}
@@ -220,43 +223,44 @@ response = sessions_service.get_list(get_params)
 ```
 
 
-## For executing transactions we need to understand 3 modules listed below: 
+### Executing Transactions
 
-To enable partner companies to design Rules that align with their economy goals and define the behavior of the token transfer, 
-they have the flexibility to write their custom rules contract. 
-OST has written one rule contract the [PricerRule Contract](https://github.com/OpenSTFoundation/openst-contracts/blob/develop/contracts/rules/PricerRule.sol)  for partner companies to use. 
-For executing a token transfer, end-user's TokenHolder contract interacts with Rules Contract.
+For executing transactions, you need to understand the 3 modules described below.
 
+#### Rules Module
 
+When executing a token transfer, a user's TokenHolder contract 
+interacts with a token rule contract. A token economy can have 
+multiple token rule contracts. To enable a user to execute a 
+token transfer, you need to start with fetching details of 
+registered rule contracts and understanding their methods and the 
+corresponding parameters passed in those methods.
 
-### Rules Module 
-
-So for executing a token transfer, partner company need to start with fetching details of deployed rules contract and understand 
-the methods written within them and the corresponding parameters passed in those methods.
-To get information about rules contracts deployed use services provided in rule module.  
+To get information about deployed rule contracts, use services provided in the Rules module.
 
 
 ```ruby
 rules_service = ost_sdk.services.rules
 ```
 
-List all rules:
+List Rules:
 
 ```ruby
 get_params = {}
 response = rules_service.get_list(get_params)
 ```
 
-### Transactions Module 
+#### Transactions Module
 
-Once you’ve fetched the rule method and rule parameters to be passed using services in rule module you can start with executing 
-the transfer using the services provided in transaction module.
+After reviewing the rules information received using services in the Rules 
+module, you will know what data is required to execute transfers 
+with a token rule using the services provided in the Transaction module.
 
 ```ruby
 transactions_service = ost_sdk.services.transactions
 ```
 
-Execute company to user transaction [directTransfers method]:
+Execute Transaction DIRECT-TRANSFERS:
 
 ```ruby
 execute_params = {}
@@ -277,7 +281,7 @@ meta_property = {
 response = transactions_service.execute(execute_params)
 ```
 
-Execute company to user transaction [pay method]:
+Execute Transaction PAY:
 
 ```ruby
 execute_params = {}
@@ -298,7 +302,7 @@ meta_property = {
 response = transactions_service.execute(execute_params)
 ```
 
-Get transaction of an exiting user:
+Get Transaction Detail:
 
 ```ruby
 get_params = {}
@@ -307,7 +311,7 @@ get_params[:transaction_id] = 't43g990c-32wa-ff3r-n553-9f1ew2t32rt1'
 response = transactions_service.get(get_params)
 ```
 
-Get transactions of an exiting user:
+Get User Transactions:
 
 ```ruby
 get_params = {}
@@ -326,12 +330,12 @@ response = transactions_service.get_list(get_params)
 ```
 
 
-### Balance Module 
+#### Balances Module
 
-Balance services offer the functionality to view user’s balances. 
+Balance services offer the functionality to view a user’s balances.
 
 ```ruby
-balance_service = ost_sdk.services.balance
+balances_service = ost_sdk.services.balance
 ```
 
 Get token balance of an existing user:
@@ -339,35 +343,29 @@ Get token balance of an existing user:
 ```ruby
 get_params = {}
 get_params[:user_id] = '91263ebd-6b2d-4001-b732-4024430ca758'
-response = balance_service.get(get_params)
+response = balances_service.get(get_params)
 ```
 
 
 ### Recovery Owners Module 
 
 
-End user’s brand tokens are held by a token holder contract that is controlled ("owned") by device manager; 
-the device manager is controlled ("owned") by device keys created and held by the user in their wallets; and if those keys are compromised, 
-the device manager (which is a multi-signature contract) is programmed to allow replacement of a key by a recovery key.
+A user’s Brand Tokens are held by a TokenHolder contract that is controlled ("owned") 
+by a Device Manager; the device manager is controlled ("owned") by device keys created 
+and held by the user in their wallets; and if any of those keys is lost, the Device 
+Manager (which is a multi-signature contract) is programmed to allow replacement of a 
+key by the recovery owner key for the user, via the DelayedRecoveryModule, which is deployed
+at the time of the creation of the user's initial wallet.
 
-The DelayedRecoveryModule is deployed at the time of the creation of the wallet. The recoveryOwner public-private key pair 
-is created using inputs from the Partner, OST and the user. The public addresse of the recoveryOwner is stored 
-on this DelayedRecoveryModule contract.
-
-Recovering access to tokens after the owner key becomes compromised
-
-User requests recovery from partner company application by entering their 6-digit recovery PIN. Once the request has 
-been raised user waits for defined delay which is 12 hours currently.
-
-OST wallet SDK Create the recoveryOwner private key using the inputs from the Partner, OST and the user.  This should exactly match the recoveryOwner that was made when the wallet was initially created. 
-
-To fetch the recoveryOwner address for a particular user services provided in Recovery Owner Module are used.
+To fetch the recovery owner address for a particular user, use services provided 
+in the Users module. To fetch that recovery owner's information, then services 
+provided in the Recovery Owners Module are used.
 
 ```ruby
 recovery_owners_service = ost_sdk.services.recovery_owners
 ```
 
-Get recovery owner of an existing user:
+Get Recovery Owner Detail:
 
 ```ruby
 get_params = {}
@@ -379,14 +377,15 @@ response = recovery_owners_service.get(get_params)
 
 ### Tokens Module 
 
-To get information about the token created on the OST KIT interface use services provided by token module. 
-Partner company can use this service to know the chain id , the auxiliary chain on which their economy is running apart from other information.
+To get information about the Brand Token created on the OST KIT interface, use services provided 
+by the Tokens module. You can use this service to obtain the chain ID of the auxiliary 
+chain on which the token economy is running, in addition to other information.
 
 ```ruby
 tokens_service = ost_sdk.services.tokens
 ```
 
-Get Token Details:
+Get Token Detail:
 
 ```ruby
 get_params = {}
@@ -397,13 +396,14 @@ response = tokens_service.get(get_params)
 
 ### Chains Module
 
-To get information about the auxiliary chain on which the token economy is running use services provided by chain module. 
+To get information about the auxiliary chain on which the token economy is running, use services 
+provided by the Chains module.
 
 ```ruby
 chains_service = ost_sdk.services.chains
 ```
 
-Get chain details:
+Get Chain Detail:
 
 ```ruby
 get_params = {}
@@ -413,13 +413,14 @@ response = chains_service.get(get_params)
 
 ### Price Points Module 
 
-To know the OST price point in USD and the last timestamp when it was updateds use  services provided by Price Point module.
+To know the OST price point in USD and when it was last updated, 
+use services provided by the Price Points module.
 
 ```ruby
 price_points_service = ost_sdk.services.price_points
 ```
 
-Get price points of an auxiliary chain:
+Get Price Points Detail:
 
 ```ruby
 get_params = {}
