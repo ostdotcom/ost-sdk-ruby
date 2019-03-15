@@ -225,7 +225,7 @@ response = sessions_service.get_list(get_params)
 
 ### Executing Transactions
 
-For executing transactions, you need to understand the 3 modules described below.
+For executing transactions, you need to understand the 4 modules described below.
 
 #### Rules Module
 
@@ -248,6 +248,23 @@ List Rules:
 ```ruby
 get_params = {}
 response = rules_service.get_list(get_params)
+```
+
+#### Price Points Module 
+
+To know the OST price point in USD and when it was last updated, 
+use services provided by the Price Points module.
+
+```ruby
+price_points_service = ost_sdk.services.price_points
+```
+
+Get Price Points Detail:
+
+```ruby
+get_params = {}
+get_params[:chain_id] = 2000
+response = price_points_service.get(get_params)
 ```
 
 #### Transactions Module
@@ -409,22 +426,5 @@ Get Chain Detail:
 get_params = {}
 get_params[:chain_id] = 2000
 response = chains_service.get(get_params)
-```
-
-### Price Points Module 
-
-To know the OST price point in USD and when it was last updated, 
-use services provided by the Price Points module.
-
-```ruby
-price_points_service = ost_sdk.services.price_points
-```
-
-Get Price Points Detail:
-
-```ruby
-get_params = {}
-get_params[:chain_id] = 2000
-response = price_points_service.get(get_params)
 ```
 
