@@ -7,10 +7,10 @@ Gem::Specification.new do |spec|
 
   spec.name          = "ost-sdk-ruby"
   spec.version       = OSTSdk::VERSION
-  spec.authors       = ['OST']
+  spec.authors       = ['OST.COM LTD.']
   spec.email         = []
   spec.summary       = 'OST Ruby SDK'
-  spec.description   = 'OST Ruby SDK provides easy integration with https://api.ost.com, the API for OST KIT, built on top of the OpenST Platform'
+  spec.description   = 'The official OST Ruby SDK'
   spec.homepage      = "https://kit.ost.com"
   spec.license       = "MIT"
   spec.metadata      = {

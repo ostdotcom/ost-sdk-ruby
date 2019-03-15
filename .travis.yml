@@ -19,6 +19,5 @@ branches:
   - master
   - develop
   - /^release-.*/
-  - v2
 script:
   - find lib/ost-sdk-ruby/test -name '*_test.rb' | xargs -n1 -I{} bundle exec ruby -Itest {}
