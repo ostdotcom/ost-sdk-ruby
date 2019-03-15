@@ -2,9 +2,7 @@ module OSTSdk
 
   module Saas
 
-    module V1
-
-      class Token < OSTSdk::Saas::Base
+      class DeviceManagers < OSTSdk::Saas::Base
 
         # Initialize
         #
@@ -13,25 +11,25 @@ module OSTSdk
         #   api_key: (String)
         #   api_secret: (String)
         #   api_spec: (Boolean)
+        #   config: (Hash)
         #
         def initialize(params)
           super
-          @url_prefix = '/token'
+          @url_prefix = '/users'
+          @url_suffix = '/device-managers'
         end
 
-        # fetch details of a token
+        # Get Device Manager Detail
         #
         # Returns:
-        #   response: (OSTSdk::Util::Result)
+        #   response: (Hash)
         #
         def get(params = {})
-          http_helper.send_get_request("#{@url_prefix}/", params)
+          http_helper.send_get_request("#{@url_prefix}/#{get_user_id!(params)}#{@url_suffix}", params)
         end
 
       end
 
     end
-
-  end
 
 end

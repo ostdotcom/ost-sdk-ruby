@@ -30,29 +30,15 @@ module OSTSdk
       private
 
       def set_manifest(params)
-
         api_version = extract_api_version(params[:api_base_url])
+        fail 'Api endpoint is invalid' if api_version != "v2"
 
-        # Provide access to version specific API endpoints
-        if api_version == ''
-          # puts("You are using an deprecated version of OST API. Please update to the latest version.")
-          @services = OSTSdk::Saas::V0::Services.new(params)
-        elsif api_version == 'v1'
-          @services = OSTSdk::Saas::V1::Services.new(params)
-        elsif api_version == 'v1.1'
-          @services = OSTSdk::Saas::V1Dot1::Services.new(params)
-        else
-          fail 'Api endpoint is invalid'
-        end
-
+        @services = OSTSdk::Saas::Manifest.new(params)
       end
 
       def extract_api_version(api_base_url)
-
-        api_version = ((api_base_url || '').split("/")[3] || '').downcase
-
+        api_version = ((api_base_url || '').split("/")[4] || '').downcase
         return api_version
-
       end
 
     end
