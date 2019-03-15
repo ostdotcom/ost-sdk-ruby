@@ -11,6 +11,7 @@ class RulesTest < Test::Unit::TestCase
 
   def test_rules_get_list
     result = rules_service.get_list()
+    puts "result=>#{result}" unless result["success"]
     assert_equal(result["success"], true )
   end
 

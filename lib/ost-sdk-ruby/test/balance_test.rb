@@ -11,6 +11,7 @@ class BalanceTest < Test::Unit::TestCase
 
   def test_balance_get
     result = balance_service.get(user_id: Config::OST_KIT_USER_ID)
+    puts "result=>#{result}" unless result["success"]
     assert_equal(result["success"], true )
   end
 

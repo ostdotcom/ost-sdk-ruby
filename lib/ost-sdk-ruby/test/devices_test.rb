@@ -17,6 +17,7 @@ class DevicesTest < Test::Unit::TestCase
                                      device_uuid: '593a967f-87bd-49a6-976c-52edf46c4df4',
                                      device_name: 'Iphone S'
                                  })
+    puts "result=>#{result}" unless result["success"]
     assert_equal(result["success"], true)
   end
 
@@ -25,6 +26,7 @@ class DevicesTest < Test::Unit::TestCase
                                      user_id: Config::OST_KIT_USER_ID,
                                      device_address: Config::OST_KIT_USER_DEVICE_ADDRESS
                                  })
+    puts "result=>#{result}" unless result["success"]
     assert_equal(result["success"], true)
   end
 
@@ -32,6 +34,7 @@ class DevicesTest < Test::Unit::TestCase
     result = devices_service.get_list({
                                      user_id: Config::OST_KIT_USER_ID
                                  })
+    puts "result=>#{result}" unless result["success"]
     assert_equal(result["success"], true)
   end
 

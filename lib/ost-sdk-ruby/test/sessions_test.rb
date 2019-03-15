@@ -14,6 +14,7 @@ class SessionsTest < Test::Unit::TestCase
                                      user_id: Config::OST_KIT_USER_ID,
                                      session_address: Config::OST_KIT_SESSION_ADDRESS
                                  })
+    puts "result=>#{result}" unless result["success"]
     assert_equal(result["success"], true)
   end
 

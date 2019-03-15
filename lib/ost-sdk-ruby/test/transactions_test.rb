@@ -18,6 +18,7 @@ class TransactionsTest < Test::Unit::TestCase
                                          parameters: [[Config::OST_KIT_USER2_TOKEN_HOLDER_ADDRESS],["1"]]
                                      }.to_json
                                  })
+    puts "result=>#{result}" unless result["success"]
 
     assert_equal(result["success"], true)
   end
@@ -27,6 +28,7 @@ class TransactionsTest < Test::Unit::TestCase
                                      user_id: Config::OST_KIT_USER_ID,
                                      transaction_id: Config::OST_KIT_TRANSACTION_ID
                                  })
+    puts "result=>#{result}" unless result["success"]
     assert_equal(result["success"], true)
   end
 
@@ -34,6 +36,7 @@ class TransactionsTest < Test::Unit::TestCase
     result = transactions_service.get_list({
                                      user_id: Config::OST_KIT_USER_ID
                                  })
+    puts "result=>#{result}" unless result["success"]
     assert_equal(result["success"], true)
   end
 

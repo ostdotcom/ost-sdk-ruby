@@ -11,6 +11,7 @@ class PricePointsTest < Test::Unit::TestCase
 
   def test_price_points_get
     result = price_points_service.get(chain_id: Config::OST_KIT_AUX_CHAIN_ID)
+    puts "result=>#{result}" unless result["success"]
     assert_equal(result["success"], true )
   end
 
