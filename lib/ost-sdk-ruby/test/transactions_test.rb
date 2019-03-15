@@ -32,7 +32,7 @@ class TransactionsTest < Test::Unit::TestCase
 
   def test_transactions_get_list
     result = transactions_service.get_list({
-                                     user_id: Config::OST_KIT_COMPANY_USER_ID
+                                     user_id: Config::OST_KIT_USER_ID
                                  })
     assert_equal(result["success"], true)
   end

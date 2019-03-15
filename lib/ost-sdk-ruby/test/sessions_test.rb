@@ -19,7 +19,7 @@ class SessionsTest < Test::Unit::TestCase
 
   def test_sessions_get_list
     result = sessions_service.get_list({
-                                     user_id: Config::OST_KIT_COMPANY_USER_ID
+                                     user_id: Config::OST_KIT_USER_ID
                                  })
     assert_equal(result["success"], true)
   end

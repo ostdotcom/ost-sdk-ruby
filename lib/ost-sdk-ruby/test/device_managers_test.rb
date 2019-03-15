@@ -10,7 +10,7 @@ class DeviceManagersTest < Test::Unit::TestCase
   end
 
   def test_device_managers_get
-    result = device_managers_service.get(user_id: Config::OST_KIT_COMPANY_USER_ID)
+    result = device_managers_service.get(user_id: Config::OST_KIT_USER_ID)
     assert_equal(result["success"], true )
   end
 
