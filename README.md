@@ -1,5 +1,5 @@
 # OST Ruby SDK
-[![Build Status](https://travis-ci.org/ostdotcom/ost-sdk-ruby.svg?branch=master)](https://travis-ci.org/ostdotcom/ost-sdk-ruby)
+[![Build Status](https://travis-ci.org/ostdotcom/ost-sdk-ruby.svg?branch=develop)](https://travis-ci.org/ostdotcom/ost-sdk-ruby)
 
 The official [OST](https://dev.ost.com/) Ruby SDK.
 
@@ -18,7 +18,7 @@ This ensures that they stay within the token economy.
 
 The OST technology stack is designed to give businesses everything they need 
 to integrate, test, and deploy BTs. Within the OST suite of products, developers 
-can use OST KIT to create, test, and launch Brand Tokens backed by OST. 
+can use OST Platform to create, test, and launch Brand Tokens backed by OST. 
 
 OST APIs and server-side SDKs make it simple and easy for developers to 
 integrate blockchain tokens into their apps.
@@ -26,10 +26,10 @@ integrate blockchain tokens into their apps.
 ## Requirements
 
 Integrating an OST SDK into your application can begin as soon as you create an account 
-with OST KIT, requiring only three steps:
-1. Sign-up on [https://kit.ost.com](https://kit.ost.com).
-2. Create your Brand Token in OST KIT.
-3. Obtain an API Key and API Secret from [https://kit.ost.com/mainnet/developer](https://kit.ost.com/mainnet/developer).
+with OST Platform, requiring only three steps:
+1. Sign-up on [https://platform.ost.com](https://platform.ost.com).
+2. Create your Brand Token in OST Platform.
+3. Obtain an API Key and API Secret from [https://platform.ost.com/mainnet/developer](https://platform.ost.com/mainnet/developer).
 
 ## Documentation
 
@@ -66,14 +66,14 @@ to their tokens. To tackle this risk, OST promotes a
 mobile-first approach and provides mobile (client) and server SDKs. 
 
 
-* The server SDKs enable you to register users with KIT.
+* The server SDKs enable you to register users with OST Platform.
 * The client SDKs provide the additional support required for 
 the ownership and management of Brand Tokens by users so 
 that they can create keys and control their tokens. 
 
 ### Users Module 
 
-To register users with KIT, you can use the services provided in the Users module. 
+To register users with OST Platform, you can use the services provided in the Users module. 
 
 Initialize a Users object to perform user-specific actions, like creating users:
 
@@ -81,7 +81,7 @@ Initialize a Users object to perform user-specific actions, like creating users:
 users_service = ost_sdk.services.users
 ```
 
-Create a User with KIT:
+Create a User with OST Platform:
 
 ```ruby
 create_params = {}
@@ -109,7 +109,7 @@ response = users_service.get_list(get_params)
 ### Devices Module 
 
 Once a user is created via the API, you can register the 
-user’s device with KIT. Next, activate the user’s 
+user’s device with OST Platform. Next, activate the user’s 
 wallet on the user's device. Multiple devices can be 
 registered per user. 
  
@@ -394,7 +394,7 @@ response = recovery_owners_service.get(get_params)
 
 ### Tokens Module 
 
-To get information about the Brand Token created on the OST KIT interface, use services provided 
+To get information about the Brand Token created on the OST Platform interface, use services provided 
 by the Tokens module. You can use this service to obtain the chain ID of the auxiliary 
 chain on which the token economy is running, in addition to other information.
 
