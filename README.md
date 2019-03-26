@@ -126,8 +126,6 @@ create_params = {}
 create_params[:user_id] = 'd194aa75-acd5-4f40-b3fb-e73a7cf7c0d9'
 create_params[:address] = '0x1Ea365269A3e6c8fa492eca9A531BFaC8bA1649E'
 create_params[:api_signer_address] = '0x5F860598383868e8E8Ee0ffC5ADD92369Db37455'
-create_params[:device_uuid] = '593a967f-87bd-49a6-976c-52edf46c4df4'
-create_params[:device_name] = 'Iphone S'
 response = devices_service.create(create_params)
 ```
 
