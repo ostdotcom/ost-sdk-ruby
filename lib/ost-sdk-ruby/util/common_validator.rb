@@ -4,6 +4,8 @@ module OSTSdk
 
     class CommonValidator
 
+      REGEX_FOR_UUID = /\A[0-9a-z\.\-]+\z/i
+
       # Check for numeric-ness of an input
       #
       # Arguments:
@@ -41,6 +43,18 @@ module OSTSdk
       #
       def self.is_a_hash?(obj)
         obj.is_a?(Hash) || obj.is_a?(ActionController::Parameters)
+      end
+
+      # Is the value is valid for given key
+      #
+      # Arguments:
+      #   object: (String)
+      #
+      # Returns:
+      #   Boolean
+      #
+      def self.is_valid_uuid_format?(value)
+        value =~ REGEX_FOR_UUID
       end
 
     end

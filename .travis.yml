@@ -1,0 +1,22 @@
+language: ruby
+before_install:
+  - gem uninstall -v '>= 2' -i $(rvm gemdir)@global -ax bundler || true
+  - gem install bundler -v '2.0.1'
+rvm:
+  - 2.3
+  - 2.4
+  - 2.5
+  - 2.5.3
+notifications:
+  email:
+    recipients:
+    - ci.report@ost.com
+    on_success: always
+    on_failure: always
+branches:
+  only:
+  - master
+  - develop
+  - /^release-.*/
+script:
+  - find lib/ost-sdk-ruby/test -name '*_test.rb' | xargs -n1 -I{} bundle exec ruby -Itest {}

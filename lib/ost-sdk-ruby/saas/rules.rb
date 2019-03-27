@@ -2,9 +2,7 @@ module OSTSdk
 
   module Saas
 
-    module V1Dot1
-
-      class Ledger < OSTSdk::Saas::Base
+      class Rules < OSTSdk::Saas::Base
 
         # Initialize
         #
@@ -13,25 +11,24 @@ module OSTSdk
         #   api_key: (String)
         #   api_secret: (String)
         #   api_spec: (Boolean)
+        #   config: (Hash)
         #
         def initialize(params)
           super
-          @url_prefix = '/ledger'
+          @url_prefix = '/rules'
         end
 
-        # Get transactions ledger of user
+        # List Rules
         #
         # Returns:
-        # response: (OSTSdk::Util::Result)
+        #   response: (Hash)
         #
-        def get(params = {})
-          http_helper.send_get_request("#{@url_prefix}/#{get_id!(params)}", params)
+        def get_list(params = {})
+          http_helper.send_get_request("#{@url_prefix}/", params)
         end
 
       end
 
     end
-
-  end
 
 end
