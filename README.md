@@ -1,7 +1,7 @@
 # OST Ruby SDK
 [![Build Status](https://travis-ci.org/ostdotcom/ost-sdk-ruby.svg?branch=develop)](https://travis-ci.org/ostdotcom/ost-sdk-ruby)
 
-The official [OST](https://dev.ost.com/) Ruby SDK.
+[OST](https://dev.ost.com/) Platform SDK for Ruby.
 
 ## Introduction
 
