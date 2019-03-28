@@ -15,7 +15,6 @@ notifications:
     on_failure: always
 branches:
   only:
-  - master
   - develop
   - /^release-.*/
 script:
