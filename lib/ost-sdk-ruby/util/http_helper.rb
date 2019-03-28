@@ -23,7 +23,7 @@ module OSTSdk
         @api_key = params[:api_key]
         @api_secret = params[:api_secret]
         @api_spec = params[:api_spec]
-        @timeout = 10
+        @timeout = 60
         if (params.key?(:config))
           config = params[:config]
           if (config.key?(:timeout))
