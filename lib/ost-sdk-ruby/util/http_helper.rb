@@ -169,8 +169,12 @@ module OSTSdk
         begin
           yield if block_given?
         rescue Timeout::Error => ex
+          puts "TimeoutError::message #{ex.message}"
+          puts "TimeoutError::backtrace #{ex.backtrace}"
           OSTSdk::Util::CustomErrorResponse.new({internal_id: internal_id, msg: msg}).timeout_error_response
         rescue StandardError => se
+          puts "StandardError::message #{se.message}"
+          puts "StandardError::backtrace #{se.backtrace}"
           OSTSdk::Util::CustomErrorResponse.new({internal_id: internal_id, msg: msg}).default_error_response
         end
       end
