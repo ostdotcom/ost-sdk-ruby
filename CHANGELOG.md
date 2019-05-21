@@ -1,3 +1,8 @@
+[OST JAVA SDK v2.1.0](https://github.com/ostdotcom/ost-sdk-java/tree/v2.1.0)
+---
+
+* Added base tokens module to V2 API's
+
 [OST Ruby SDK v2.0.0](https://github.com/ostdotcom/ost-sdk-ruby/tree/v2.0.0)
 ---
 

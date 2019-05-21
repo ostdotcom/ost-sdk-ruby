@@ -426,3 +426,20 @@ get_params[:chain_id] = 2000
 response = chains_service.get(get_params)
 ```
 
+
+### Base Tokens Module 
+
+To get information about the base tokens available on the OST Platform interface, use services
+provided by the Base Tokens module. You can use this service to obtain the base token details
+on OST Platform interface.
+
+```ruby
+base_tokens_service = ost_sdk.services.base_tokens
+```
+
+Get Base Token Detail:
+
+```ruby
+get_params = {}
+response = base_tokens_service.get(get_params)
+```
