@@ -250,7 +250,7 @@ response = rules_service.get_list(get_params)
 
 #### Price Points Module 
 
-To know the OST price point in USD and when it was last updated, 
+To know the base token price point in pay currency and when it was last updated, 
 use services provided by the Price Points module.
 
 ```ruby
