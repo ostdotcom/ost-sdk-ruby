@@ -9,16 +9,15 @@ OST is a complete technology solution enabling mainstream businesses
 to easily launch blockchain-based economies without 
 requiring blockchain development.
 
-At the core of OST is the concept of OST-powered Brand Tokens (BTs). 
-BTs are white-label cryptocurrency tokens with utility representations 
+Brand Tokens (BTs) are white-label cryptocurrency tokens with utility representations 
 running on highly-scalable Ethereum-based side blockchains, 
-backed by OST tokens staked on Ethereum mainnet. Within a business’s 
+backed by value token (such as OST, USDC) staked on Ethereum mainnet. Within a business’s 
 token economy, BTs can only be transferred to whitelisted user addresses. 
 This ensures that they stay within the token economy.
 
 The OST technology stack is designed to give businesses everything they need 
 to integrate, test, and deploy BTs. Within the OST suite of products, developers 
-can use OST Platform to create, test, and launch Brand Tokens backed by OST. 
+can use OST Platform to create, test, and launch Brand Tokens backed by value token (such as OST, USDC). 
 
 OST APIs and server-side SDKs make it simple and easy for developers to 
 integrate blockchain tokens into their apps.
@@ -250,7 +249,7 @@ response = rules_service.get_list(get_params)
 
 #### Price Points Module 
 
-To know the OST price point in USD and when it was last updated, 
+To know the value tokens (such as OST, USDC) price point in pay currency and when it was last updated, 
 use services provided by the Price Points module.
 
 ```ruby
@@ -426,3 +425,20 @@ get_params[:chain_id] = 2000
 response = chains_service.get(get_params)
 ```
 
+
+### Base Tokens Module 
+
+To get information about the value tokens (such as OST, USDC) available on the OST Platform interface, use services
+provided by the Base Tokens module. You can use this service to obtain the value token details
+on OST Platform interface.
+
+```ruby
+base_tokens_service = ost_sdk.services.base_tokens
+```
+
+Get Base Token Detail:
+
+```ruby
+get_params = {}
+response = base_tokens_service.get(get_params)
+```
