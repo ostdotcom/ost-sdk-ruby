@@ -12,6 +12,7 @@ require_relative 'saas/sessions'
 require_relative 'saas/tokens'
 require_relative 'saas/transactions'
 require_relative 'saas/users'
+require_relative 'saas/base_tokens'
 
 module OSTSdk
 

@@ -5,7 +5,7 @@ module OSTSdk
     class Manifest
 
       attr_reader :balance, :chains, :device_managers, :devices, :price_points, :recovery_owners, :rules,
-                  :sessions, :tokens, :transactions, :users
+                  :sessions, :tokens, :transactions, :users, :base_tokens
 
       # Initialize
       #
@@ -30,6 +30,7 @@ module OSTSdk
         @tokens = OSTSdk::Saas::Tokens.new(params)
         @transactions = OSTSdk::Saas::Transactions.new(params)
         @users = OSTSdk::Saas::Users.new(params)
+        @base_tokens = OSTSdk::Saas::BaseTokens.new(params)
 
       end
 
