@@ -81,6 +81,32 @@ module OSTSdk
         end
       end
 
+      # Send DELETE requests
+      #
+      # Arguments:
+      #   end_point: (String)
+      #   request_params: (Hash)
+      #
+      # Returns:
+      #   response: (Hash)
+      #
+      def send_delete_request(endpoint, request_params)
+        perform_and_handle_exceptions('u_hh_3', 'DELETE request Failed') do
+          escaped_query_string = get_query_string(endpoint, request_params)
+          raw_url = get_api_url(endpoint) + "?#{escaped_query_string}"
+          uri = URI(raw_url)
+          if @api_spec
+            return {request_uri: uri.to_s.split("?")[0], request_type: 'DELETE', request_params: escaped_query_string}
+          else
+            result = {}
+            Timeout.timeout(@timeout) do
+              result = Net::HTTP.get_response(uri)
+            end
+            return format_response(result)
+          end
+        end
+      end
+
       # Generate a signature for test case. It only creates a signature for a given Hash
       #
       # Arguments:
