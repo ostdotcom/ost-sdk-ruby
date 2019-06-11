@@ -95,12 +95,13 @@ module OSTSdk
           escaped_query_string = get_query_string(endpoint, request_params)
           raw_url = get_api_url(endpoint) + "?#{escaped_query_string}"
           uri = URI(raw_url)
+          http = setup_request(uri)
           if @api_spec
             return {request_uri: uri.to_s.split("?")[0], request_type: 'DELETE', request_params: escaped_query_string}
           else
             result = {}
             Timeout.timeout(@timeout) do
-              result = Net::HTTP.get_response(uri)
+              result = http.delete(uri)
             end
             return format_response(result)
           end
