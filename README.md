@@ -149,7 +149,6 @@ response = devices_service.get_list(get_params)
 ```
 
 
-
 ### Device Managers Module 
 
 
@@ -179,7 +178,6 @@ get_params = {}
 get_params[:user_id] = '91263ebd-6b2d-4001-b732-4024430ca758'
 response = device_managers_service.get(get_params)
 ```
-
 
 
 ### Sessions Module
@@ -224,6 +222,7 @@ response = sessions_service.get_list(get_params)
 
 For executing transactions, you need to understand the 4 modules described below.
 
+
 #### Rules Module
 
 When executing a token transfer, a user's TokenHolder contract 
@@ -247,6 +246,7 @@ get_params = {}
 response = rules_service.get_list(get_params)
 ```
 
+
 #### Price Points Module 
 
 To know the value tokens (such as OST, USDC) price point in pay currency and when it was last updated, 
@@ -263,6 +263,7 @@ get_params = {}
 get_params[:chain_id] = 2000
 response = price_points_service.get(get_params)
 ```
+
 
 #### Transactions Module
 
@@ -407,7 +408,6 @@ response = tokens_service.get(get_params)
 ```
 
 
-
 ### Chains Module
 
 To get information about the auxiliary chain on which the token economy is running, use services 
@@ -441,4 +441,73 @@ Get Base Token Detail:
 ```ruby
 get_params = {}
 response = base_tokens_service.get(get_params)
+```
+
+
+### Webhooks Module
+
+To manage webhooks on the OST Platform Interface, use services provided by the Webhooks module. You can
+use this service to create new webhooks and manage existing webhooks.
+
+```ruby
+webhooks_service = ost_sdk.services.webhooks
+```
+
+Create new webhook:
+
+```ruby
+create_params = {}
+create_params[:topics] = ['transactions/initiate', 'transactions/success']
+create_params[:url] =  'https://testingWebhooks.com'
+# create_params[:status] =  'inactive'
+response = webhooks_service.create(create_params)
+```
+
+List all webhooks:
+
+```ruby
+get_params = {}
+# get_params[:limit] = 1
+# get_params[:pagination_identifier] = 'eyJwYWdlIjoyLCJsaW1pdCI6MX0='
+response = webhooks_service.get_list(get_params)
+```
+
+Get a webhook:
+
+```ruby
+get_params = {}
+get_params[:webhook_id] = 'b036aff5-75a3-466d-a20c-a956b198fd14'
+response = webhooks_service.get(get_params)
+```
+
+Update a webhook:
+
+```ruby
+update_params = {}
+update_params[:webhook_id] = 'b036aff5-75a3-466d-a20c-a956b198fd14'
+update_params[:topics] =  ['transactions/initiate', 'transactions/success', 'transactions/failure']
+update_params[:status] =  'inactive'
+response = webhooks_service.update(update_params)
+```
+
+Delete a webhook:
+
+```ruby
+delete_params = {}
+delete_params[:webhook_id] = 'b036aff5-75a3-466d-a20c-a956b198fd14'
+response = webhooks_service.delete(delete_params)
+```
+
+Verify webhook request signature:
+
+```ruby
+signature_params = {}
+signature_params[:version] = "2"
+signature_params[:webhook_secret] = 'mySecret'
+data = {}
+data[:hello] = 'hello'
+signature_params[:stringified_data] = data.to_json
+signature_params[:request_timestamp] = '1559902637'
+signature_params[:signature] = '2c56c143550c603a6ff47054803f03ee4755c9c707986ae27f7ca1dd1c92a824'
+response = webhooks_service.verify_signature(signature_params)
 ```
