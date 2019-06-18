@@ -453,7 +453,7 @@ use this service to create new webhooks and manage existing webhooks.
 webhooks_service = ost_sdk.services.webhooks
 ```
 
-Create new webhook:
+Create Webhook:
 
 ```ruby
 create_params = {}
@@ -463,24 +463,7 @@ create_params[:url] =  'https://testingWebhooks.com'
 response = webhooks_service.create(create_params)
 ```
 
-List all webhooks:
-
-```ruby
-get_params = {}
-# get_params[:limit] = 1
-# get_params[:pagination_identifier] = 'eyJwYWdlIjoyLCJsaW1pdCI6MX0='
-response = webhooks_service.get_list(get_params)
-```
-
-Get a webhook:
-
-```ruby
-get_params = {}
-get_params[:webhook_id] = 'b036aff5-75a3-466d-a20c-a956b198fd14'
-response = webhooks_service.get(get_params)
-```
-
-Update a webhook:
+Update Webhook:
 
 ```ruby
 update_params = {}
@@ -490,7 +473,24 @@ update_params[:status] =  'inactive'
 response = webhooks_service.update(update_params)
 ```
 
-Delete a webhook:
+Get Webhook:
+
+```ruby
+get_params = {}
+get_params[:webhook_id] = 'b036aff5-75a3-466d-a20c-a956b198fd14'
+response = webhooks_service.get(get_params)
+```
+
+Get Webhook List:
+
+```ruby
+get_params = {}
+# get_params[:limit] = 1
+# get_params[:pagination_identifier] = 'eyJwYWdlIjoyLCJsaW1pdCI6MX0='
+response = webhooks_service.get_list(get_params)
+```
+
+Delete Webhook:
 
 ```ruby
 delete_params = {}
@@ -502,12 +502,15 @@ Verify webhook request signature:
 
 ```ruby
 signature_params = {}
+# Get webhoook version from webhook events data.
 signature_params[:version] = "2"
 signature_params[:webhook_secret] = 'mySecret'
 data = {}
 data[:hello] = 'hello'
 signature_params[:stringified_data] = data.to_json
+# Get ost-timestamp from the response received in event.
 signature_params[:request_timestamp] = '1559902637'
+# Get signature from the response received in event.
 signature_params[:signature] = '2c56c143550c603a6ff47054803f03ee4755c9c707986ae27f7ca1dd1c92a824'
 response = webhooks_service.verify_signature(signature_params)
 ```
