@@ -54,6 +54,18 @@ module OSTSdk
         get_value_for_key!(params, "user_id")
       end
 
+      # Get webhook_id key from params hash and delete it
+      #
+      # Arguments:
+      #   params: (Hash)
+      #
+      # Returns:
+      #   user_id: (String)
+      #
+      def get_webhook_id!(params)
+        get_value_for_key!(params, "webhook_id")
+      end
+
       # Get chain_id key from params hash and delete it
       #
       # Arguments:

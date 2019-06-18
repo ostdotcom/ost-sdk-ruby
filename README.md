@@ -149,7 +149,6 @@ response = devices_service.get_list(get_params)
 ```
 
 
-
 ### Device Managers Module 
 
 
@@ -179,7 +178,6 @@ get_params = {}
 get_params[:user_id] = '91263ebd-6b2d-4001-b732-4024430ca758'
 response = device_managers_service.get(get_params)
 ```
-
 
 
 ### Sessions Module
@@ -224,6 +222,7 @@ response = sessions_service.get_list(get_params)
 
 For executing transactions, you need to understand the 4 modules described below.
 
+
 #### Rules Module
 
 When executing a token transfer, a user's TokenHolder contract 
@@ -247,6 +246,7 @@ get_params = {}
 response = rules_service.get_list(get_params)
 ```
 
+
 #### Price Points Module 
 
 To know the value tokens (such as OST, USDC) price point in pay currency and when it was last updated, 
@@ -263,6 +263,7 @@ get_params = {}
 get_params[:chain_id] = 2000
 response = price_points_service.get(get_params)
 ```
+
 
 #### Transactions Module
 
@@ -407,7 +408,6 @@ response = tokens_service.get(get_params)
 ```
 
 
-
 ### Chains Module
 
 To get information about the auxiliary chain on which the token economy is running, use services 
@@ -441,4 +441,79 @@ Get Base Token Detail:
 ```ruby
 get_params = {}
 response = base_tokens_service.get(get_params)
+```
+
+
+### Webhooks Module
+
+To manage webhooks on the OST Platform Interface, use services provided by the Webhooks module. You can
+use this service to create new webhooks and manage existing webhooks.
+
+```ruby
+webhooks_service = ost_sdk.services.webhooks
+```
+
+Create Webhook:
+
+```ruby
+create_params = {}
+create_params[:topics] = ['transactions/initiate', 'transactions/success']
+create_params[:url] =  'https://testingWebhooks.com'
+# create_params[:status] =  'inactive'
+response = webhooks_service.create(create_params)
+```
+
+Update Webhook:
+
+```ruby
+update_params = {}
+update_params[:webhook_id] = 'b036aff5-75a3-466d-a20c-a956b198fd14'
+update_params[:topics] =  ['transactions/initiate', 'transactions/success', 'transactions/failure']
+update_params[:status] =  'inactive'
+response = webhooks_service.update(update_params)
+```
+
+Get Webhook:
+
+```ruby
+get_params = {}
+get_params[:webhook_id] = 'b036aff5-75a3-466d-a20c-a956b198fd14'
+response = webhooks_service.get(get_params)
+```
+
+Get Webhook List:
+
+```ruby
+get_params = {}
+# get_params[:limit] = 1
+# get_params[:pagination_identifier] = 'eyJwYWdlIjoyLCJsaW1pdCI6MX0='
+response = webhooks_service.get_list(get_params)
+```
+
+Delete Webhook:
+
+```ruby
+delete_params = {}
+delete_params[:webhook_id] = 'b036aff5-75a3-466d-a20c-a956b198fd14'
+response = webhooks_service.delete(delete_params)
+```
+
+Verify webhook request signature:
+
+```ruby
+signature_params = {}
+webhook_event_data = {"id":"54e3cd1c-afd7-4dcf-9c78-137c56a53582","topic":"transactions/success","created_at":1560838772,"webhook_id":"0823a4ea-5d87-44cf-8ca8-1e5a31bf8e46","version":"v2","data":{"result_type":"transaction","transaction":{"id":"ddebe817-b94f-4b51-9227-f543fae4715a","transaction_hash":"0x7ee737db22b58dc4da3f4ea4830ca709b388d84f31e77106cb79ee09fc6448f9","from":"0x69a581096dbddf6d1e0fff7ebc1254bb7a2647c6","to":"0xc2f0dde92f6f3a3cb13bfff43e2bd136f7dcfe47","nonce":3,"value":"0","gas_price":"1000000000","gas_used":120558,"transaction_fee":"120558000000000","block_confirmation":24,"status":"SUCCESS","updated_timestamp":1560838699,"block_timestamp":1560838698,"block_number":1554246,"rule_name":"Pricer","meta_property":{},"transfers":[{"from":"0xc2f0dde92f6f3a3cb13bfff43e2bd136f7dcfe47","from_user_id":"acfdea7d-278e-4ffc-aacb-4a21398a280c","to":"0x0a754aaab96d634337aac6556312de396a0ca46a","to_user_id":"7bc8e0bd-6761-4604-8f8e-e33f86f81309","amount":"112325386","kind":"transfer"}]}}}
+signature_params[:stringified_data] = webhook_event_data.to_json
+
+# Get webhoook version from webhook events data.
+signature_params[:version] = "v2"
+
+# Get ost-timestamp from the response received in event.
+signature_params[:request_timestamp] = '1559902637'
+
+# Get signature from the response received in event.
+signature_params[:signature] = '2c56c143550c603a6ff47054803f03ee4755c9c707986ae27f7ca1dd1c92a824'
+
+signature_params[:webhook_secret] = 'mySecret'
+response = webhooks_service.verify_signature(signature_params)
 ```
