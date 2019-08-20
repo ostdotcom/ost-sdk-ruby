@@ -324,8 +324,8 @@ For executing transactions, you need to understand the 4 modules described below
     # Token holder address of receiver.
     transfer_to_address = '0x4e___'
     
-    # Amount of tokens in weis to be transferred. 
-    transfer_amount = '1000000000000000000'
+    # Amount of tokens to be transferred. 
+    transfer_amount = '1'
      
     # Parameters required for rule execution.
     raw_calldata = {}
