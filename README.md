@@ -376,9 +376,6 @@ For executing transactions, you need to understand the 4 modules described below
     # Token holder address of receiver.
     transfer_to_address = '0x4e___'
     
-    # Amount of Fiat in atto units to be transferred. If 1 USD needs to be transferred, use 10^18, i.e. in atto units. 
-    transfer_amount_in_atto = '1000000000000000000'
-    
     # Company holder address of sender.
     company_token_holder_address= '0x34r___'
      
@@ -391,11 +388,20 @@ For executing transactions, you need to understand the 4 modules described below
     
     # Price point needs to be passed in atto. Also, this value should be a string.
     intended_price_point = (price_point * 10^18).to_s
+  
+    # Amount of Fiat to be transferred.
+    transfer_amount_in_fiat = 0.1
+      
+    # Decimal places obtained from the get price points API of Price Points module. Possible values: 6 and 18.
+    decimal_places = 6
+      
+    # Transfer amount in wei. Multiply the fiat transfer amount with 10^decimalPlaces. 
+    transfer_amount_in_wei = (transfer_amount_in_fiat * 10^decimal_places)
     
     # Parameters required for rule execution.
     raw_calldata = {}
     raw_calldata[:method] = 'pay' # Rule name which needs to be passed as-is.
-    raw_calldata[:parameters] = [company_token_holder_address, [transfer_to_address],[transfer_amount_in_atto], pay_currency_code, intended_price_point] 
+    raw_calldata[:parameters] = [company_token_holder_address, [transfer_to_address],[transfer_amount_in_wei], pay_currency_code, intended_price_point] 
      
     # Company userId.
     company_user_id = 'ee8___'
