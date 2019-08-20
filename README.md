@@ -387,16 +387,16 @@ For executing transactions, you need to understand the 4 modules described below
     price_point = 0.020606673
     
     # Price point needs to be passed in atto. Also, this value should be a string.
-    intended_price_point = (price_point * 10^18).to_s
+    intended_price_point = (price_point * 10**18).to_s
   
     # Amount of Fiat to be transferred.
     transfer_amount_in_fiat = 0.1
       
     # Decimal places obtained from the get price points API of Price Points module. Possible values: 6 and 18.
-    decimal_places = 6
+    decimal_places = 18
       
     # Transfer amount in wei. Multiply the fiat transfer amount with 10^decimalPlaces. 
-    transfer_amount_in_wei = (transfer_amount_in_fiat * 10^decimal_places)
+    transfer_amount_in_wei = (transfer_amount_in_fiat * 10**decimal_places)
     
     # Parameters required for rule execution.
     raw_calldata = {}
