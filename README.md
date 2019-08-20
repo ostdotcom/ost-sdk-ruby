@@ -62,10 +62,11 @@ The preferred way to install the OST Ruby SDK is to use the RubyGems package man
     
     # Optional API parameters.
     
-    # Connection timeout in seconds.
+    # This is the timeout in seconds for which the socket connection will remain open.
     timeout_in_seconds = ''
     options = {timeout: timeout_in_seconds}
     
+    # OST server side sdk object.
     ost_sdk = OSTSdk::Saas::Services.new({api_key: api_key, api_secret: api_secret, api_base_url: api_base_url, config: options})
     ```
 
@@ -396,7 +397,7 @@ For executing transactions, you need to understand the 4 modules described below
     decimal_places = 18
       
     # Transfer amount in wei. Multiply the fiat transfer amount with 10^decimalPlaces. 
-    transfer_amount_in_wei = (transfer_amount_in_fiat * 10**decimal_places)
+    transfer_amount_in_wei = (transfer_amount_in_fiat * 10**decimal_places).to_s
     
     # Parameters required for rule execution.
     raw_calldata = {}
