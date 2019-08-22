@@ -387,22 +387,21 @@ For executing transactions, you need to understand the 4 modules described below
     # into tokens. Use get price point detail API of Price Points module to get this value.
     price_point = 0.020606673
     
-    # Price point needs to be passed in atto. Also, this value should be a string.
-    intended_price_point = (price_point * 10**18).to_s
+    # Price point needs to be passed in atto. Also, this value should be a string. Multiply the price point with 10^18.
+    # You might need to use bignumber depending on your use case. 
+    intended_price_point_in_atto = (price_point * 10**18).to_s
   
     # Amount of Fiat to be transferred.
     transfer_amount_in_fiat = 0.1
       
-    # Decimal places obtained from the get price points API of Price Points module. Possible values: 6 and 18.
-    decimal_places = 18
-      
-    # Transfer amount in wei. Multiply the fiat transfer amount with 10^decimalPlaces. 
-    transfer_amount_in_wei = (transfer_amount_in_fiat * 10**decimal_places).to_s
+    # Transfer amount in wei needs to be passed in atto. Multiply the fiat transfer amount with 10^18. 
+    # You might need to use bignumber depending on your use case. 
+    transfer_amount_in_atto = (transfer_amount_in_fiat * 10**18).to_s
     
     # Parameters required for rule execution.
     raw_calldata = {}
     raw_calldata[:method] = 'pay' # Rule name which needs to be passed as-is.
-    raw_calldata[:parameters] = [company_token_holder_address, [transfer_to_address],[transfer_amount_in_wei], pay_currency_code, intended_price_point] 
+    raw_calldata[:parameters] = [company_token_holder_address, [transfer_to_address],[transfer_amount_in_atto], pay_currency_code, intended_price_point_in_atto] 
      
     # Company userId.
     company_user_id = 'ee8___'
