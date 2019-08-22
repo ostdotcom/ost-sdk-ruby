@@ -396,12 +396,12 @@ For executing transactions, you need to understand the 4 modules described below
       
     # Transfer amount in wei needs to be passed in atto. Multiply the fiat transfer amount with 10^18. 
     # You might need to use bignumber depending on your use case. 
-    transfer_amount_in_atto = (transfer_amount_in_fiat * 10**18).to_s
+    fiat_transfer_amount_in_atto = (transfer_amount_in_fiat * 10**18).to_s
     
     # Parameters required for rule execution.
     raw_calldata = {}
     raw_calldata[:method] = 'pay' # Rule name which needs to be passed as-is.
-    raw_calldata[:parameters] = [company_token_holder_address, [transfer_to_address],[transfer_amount_in_atto], pay_currency_code, intended_price_point_in_atto] 
+    raw_calldata[:parameters] = [company_token_holder_address, [transfer_to_address],[fiat_transfer_amount_in_atto], pay_currency_code, intended_price_point_in_atto] 
      
     # Company userId.
     company_user_id = 'ee8___'
