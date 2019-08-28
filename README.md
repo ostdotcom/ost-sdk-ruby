@@ -388,14 +388,12 @@ For executing transactions, you need to understand the 4 modules described below
     price_point = 0.020606673
     
     # Price point needs to be passed in atto. Multiply the price point with 10^18. Also, this value should be a string.
-    # You might need to use bignumber depending on your use case. 
     intended_price_point_in_atto = "%.f" % ((price_point * 10**18)
   
     # Amount of Fiat to be transferred.
     transfer_amount_in_fiat = 0.1
       
     # Transfer amount in wei needs to be passed in atto. Multiply the fiat transfer amount with 10^18. Also, this value should be a string.
-    # You might need to use bignumber depending on your use case. 
     fiat_transfer_amount_in_atto = "%.f" % (transfer_amount_in_fiat * 10**18)
     
     # Parameters required for rule execution.
