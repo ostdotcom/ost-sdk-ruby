@@ -1,4 +1,4 @@
-# OST Ruby SDK
+# OST Server-Side Ruby SDK
 [![Build Status](https://travis-ci.org/ostdotcom/ost-sdk-ruby.svg?branch=develop)](https://travis-ci.org/ostdotcom/ost-sdk-ruby)
 
 [OST](https://dev.ost.com/) Platform SDK for Ruby.
@@ -6,514 +6,721 @@
 ## Introduction
 
 OST is a complete technology solution enabling mainstream businesses 
-to easily launch blockchain-based economies without 
-requiring blockchain development.
+to easily launch blockchain based economies without requiring blockchain development.
 
 Brand Tokens (BTs) are white-label cryptocurrency tokens with utility representations 
-running on highly-scalable Ethereum-based side blockchains, 
-backed by value token (such as OST, USDC) staked on Ethereum mainnet. Within a business’s 
+running on highly-scalable Ethereum-based utility blockchains, 
+backed by value token (such as OST, USDC) staked on Ethereum mainnet. Within a business`s 
 token economy, BTs can only be transferred to whitelisted user addresses. 
 This ensures that they stay within the token economy.
 
 The OST technology stack is designed to give businesses everything they need 
 to integrate, test, and deploy BTs. Within the OST suite of products, developers 
-can use OST Platform to create, test, and launch Brand Tokens backed by value token (such as OST, USDC). 
+can use OST Platform to create, test, and launch Brand Tokens.
 
 OST APIs and server-side SDKs make it simple and easy for developers to 
 integrate blockchain tokens into their apps.
 
-## Requirements
-
-Integrating an OST SDK into your application can begin as soon as you create an account 
-with OST Platform, requiring only three steps:
-1. Sign-up on [https://platform.ost.com](https://platform.ost.com).
-2. Create your Brand Token in OST Platform.
-3. Obtain an API Key and API Secret from [https://platform.ost.com/mainnet/developer](https://platform.ost.com/mainnet/developer).
-
-## Documentation
-
-[https://dev.ost.com/](https://dev.ost.com/)
-
-## Installation
-
-Install OST Ruby SDK
-
-```bash
-> gem install ost-sdk-ruby
-```
+For documentation, visit [https://dev.ost.com/](https://dev.ost.com/)
 
 ## Getting Started
 
-Require the OST Ruby SDK:
+### Setup Brand Token
+1. Sign-up on [OST Platform](https://platform.ost.com) and setup your Brand Token.
+2. Obtain your API Key and API Secret from [developers page](https://platform.ost.com/mainnet/developer).
 
-```ruby
-require('ost-sdk-ruby')
+
+### Installation
+
+The preferred way to install the OST Ruby SDK is to use the RubyGems package manager for Ruby. Simply type the following into a terminal window:
+
+```bash
+ gem install ost-sdk-ruby
 ```
 
-Set variables for initializing SDK objects:
+## Usage
+* Require the OST Ruby SDK:
 
-```ruby
-# the latest valid API endpoint is "https://api.ost.com/mainnet/v2/"
-# The config field is optional
-ost_sdk = OSTSdk::Saas::Services.new({api_key: <api_key>, api_secret: <api_secret>, api_base_url: <api_base_url>, config: {timeout: <timeout_in_seconds>}})
-```
+    ```ruby
+    require('ost-sdk-ruby')
+    ```
 
-## SDK Modules
+* Initialize the SDK object.
 
-If a user's private key is lost, they could lose access 
-to their tokens. To tackle this risk, OST promotes a 
-mobile-first approach and provides mobile (client) and server SDKs. 
-
-
-* The server SDKs enable you to register users with OST Platform.
-* The client SDKs provide the additional support required for 
-the ownership and management of Brand Tokens by users so 
-that they can create keys and control their tokens. 
+    ```ruby
+    # Declare connection parameters.
+     
+    # Mandatory API parameters.
+     
+    api_key = '__abc'; # OBTAINED FROM DEVELOPER PAGE
+    api_secret = '_xyz';  # OBTAINED FROM DEVELOPER PAGE
+    
+    # The valid API endpoints are: 
+    # 1. Mainnet: "https://api.ost.com/mainnet/v2/"
+    # 2. Testnet: "https://api.ost.com/testnet/v2/"
+    api_base_url = 'https://api.ost.com/testnet/v2/'
+    
+    # Optional API parameters.
+    
+    # This is the timeout in seconds for which the socket connection will remain open.
+    timeout_in_seconds = ''
+    options = {timeout: timeout_in_seconds}
+    
+    # OST server side sdk object.
+    ost_sdk = OSTSdk::Saas::Services.new({api_key: api_key, api_secret: api_secret, api_base_url: api_base_url, config: options})
+    ```
 
 ### Users Module 
 
-To register users with OST Platform, you can use the services provided in the Users module. 
+* Initialize Users service object to perform user specific actions.
 
-Initialize a Users object to perform user-specific actions, like creating users:
+    ```ruby
+    users_service = ost_sdk.services.users
+    ```
 
-```ruby
-users_service = ost_sdk.services.users
-```
+* Create User. This creates a unique identifier for each user.
 
-Create a User with OST Platform:
+    ```ruby
+    create_params = {}
+    response = users_service.create(create_params)
+    ```
 
-```ruby
-create_params = {}
-response = users_service.create(create_params)
-```
+* Get User Detail using the userId obtained in user create.
 
-Get User Detail:
+    ```ruby
+    # Mandatory API parameters
+   
+    # UserId of user for whom user details needs to be fetched.
+    user_id = '912___'
+  
+    get_params = {}
+    get_params[:user_id] = user_id
+    response = users_service.get(get_params)
+    ```
 
-```ruby
-get_params = {}
-get_params[:user_id] = '91263ebd-6b2d-4001-b732-4024430ca758'
-response = users_service.get(get_params)
-```
+* Get Users List. Pagination is supported by this API.
 
-Get Users List:
-
-```ruby
-get_params = {}
-# get_params[:ids] = ['91263ebd-6b2d-4001-b732-4024430ca758', '45673ebd-6b2d-4001-b732-4024430ca758']
-# get_params[:limit] = 10
-response = users_service.get_list(get_params)
-```
+    ```ruby
+    # Mandatory API parameters 
+    # No mandatory parameters.
+   
+    # Optional API parameters
+  
+    # Array of userIds for which data needs to be fetched.
+    ids_array = ['c2c___', 'd2c6___']
+  
+    # Pagination identifier from the previous API call response. Not needed for page one.
+    pagination_identifier = 'e77y___'
+ 
+    # Limit.
+    limit = 10
+  
+    get_params = {}
+    get_params[:ids] = ids_array
+    get_params[:limit] = limit
+    get_params[:pagination_identifier] = pagination_identifier
+    response = users_service.get_list(get_params)
+    ```
 
 
 ### Devices Module 
-
-Once a user is created via the API, you can register the 
-user’s device with OST Platform. Next, activate the user’s 
-wallet on the user's device. Multiple devices can be 
-registered per user. 
  
-Initialize a Devices object to perform device-specific actions, like registering devices:
+* Initialize Devices service object to perform device specific actions.
 
-```ruby
-devices_service = ost_sdk.services.devices
-```
+    ```ruby
+    devices_service = ost_sdk.services.devices
+    ```
 
-Create a Device for User:
+* Create a Device for User.
 
-```ruby
-create_params = {}
-create_params[:user_id] = 'd194aa75-acd5-4f40-b3fb-e73a7cf7c0d9'
-create_params[:address] = '0x1Ea365269A3e6c8fa492eca9A531BFaC8bA1649E'
-create_params[:api_signer_address] = '0x5F860598383868e8E8Ee0ffC5ADD92369Db37455'
-response = devices_service.create(create_params)
-```
+    ```ruby
+    # Mandatory API parameters
+     
+    # UserId of user for whom device needs to be created.
+    user_id = 'c2c6___'
+         
+    # Device address of user's device.
+    device_address = '0x1Ea___'
+         
+    # Device API signer address. 
+    api_signer_address = '0x5F8___'
+     
+    create_params = {}
+    create_params[:user_id] = user_id
+    create_params[:address] = device_address
+    create_params[:api_signer_address] = api_signer_address
+    response = devices_service.create(create_params)
+    ```
 
-Get User Device Detail:
+* Get User Device Detail using userId and deviceAddress.
 
-```ruby
-get_params = {}
-get_params[:user_id] = 'd194aa75-acd5-4f40-b3fb-e73a7cf7c0d9'
-get_params[:device_address] = '0x1Ea365269A3e6c8fa492eca9A531BFaC8bA1649E'
-response = devices_service.get(get_params)
-```
+    ```ruby
+    # Mandatory API parameters
+  
+    # UserId of user for whom device details needs to be fetched.
+    user_id = 'c2c6f___'
+         
+    # Device address of user's device.
+    device_address = '0x1Ea___'
+     
+    get_params = {}
+    get_params[:user_id] = user_id
+    get_params[:device_address] = device_address
+    response = devices_service.get(get_params)
+    ```
 
-Get User Devices List:
+* Get User Devices List. Pagination is supported by this API.
 
-```ruby
-get_params = {}
-get_params[:user_id] = 'd194aa75-acd5-4f40-b3fb-e73a7cf7c0d9'
-# get_params[:pagination_identifier] = "eyJsYXN0RXZhbHVhdGVkS2V5Ijp7InVpZCI6eyJTIjoiZDE5NGFhNzUtYWNkNS00ZjQwLWIzZmItZTczYTdjZjdjMGQ5In0sIndhIjp7IlMiOiIweDU4YjQxMDY0NzQ4OWI4ODYzNTliNThmZTIyMjYwZWIxOTYwN2IwZjYifX19"
-# get_params[:addresses] = ["0x5906ae461eb6283cf15b0257d3206e74d83a6bd4","0xab248ef66ee49f80e75266595aa160c8c1abdd5a"]
-# get_params[:limit] = 10
-response = devices_service.get_list(get_params)
-```
-
+    ```ruby
+    # Mandatory API parameters
+     
+    # UserId of user for whom device details needs to be fetched.
+    user_id = 'c2c6___'
+     
+    # Optional API parameters
+    
+    # Pagination identifier from the previous API call response. Not needed for page one.
+    pagination_identifier = 'eyJs___'
+    
+    # Array of device addresses of end user.
+    device_addresses_array = ['0x590___','0xab___']
+    
+    # Limit.
+    limit = 10
+     
+    get_params = {}
+    get_params[:user_id] = user_id
+    get_params[:pagination_identifier] = pagination_identifier
+    get_params[:addresses] = device_addresses_array
+    get_params[:limit] = limit
+    response = devices_service.get_list(get_params)
+    ```
 
 ### Device Managers Module 
 
+* Initialize Device Manager service object to perform device manager specific actions.
 
-After a user is created and their device is registered via the API, 
-their wallet can be activated. Activating a wallet involves the deployment of the following contracts:
+    ```ruby
+    device_managers_service = ost_sdk.services.device_managers
+    ```
 
-* TokenHolder - each user in the economy is represented by a TokenHolder that holds the user's token balance.
-* Device Manager (multi-signature) - this contract is configured to control the user's TokenHolder contract.
-* DelayedRecoveryModule - this contract enables recovery in the event a key is lost.
+* Get Device Manager Detail using userId.
 
-In order to enable a user to access their tokens, i.e., interact 
-with their TokenHolder contract, from multiple devices without 
-having to share private keys across devices, a multi-signature 
-contract is employed. We refer to this entity as the Device 
-Manager in OST APIs.
-
-To get information about a user’s Device Manager, use services provided in the Device Managers module.
-
-```ruby
-device_managers_service = ost_sdk.services.device_managers
-```
-
-Get Device Manager Detail:
-
-```ruby
-get_params = {}
-get_params[:user_id] = '91263ebd-6b2d-4001-b732-4024430ca758'
-response = device_managers_service.get(get_params)
-```
-
+    ```ruby
+    # Mandatory API parameters
+     
+    # UserId of user for whom device manager details needs to be fetched.
+    user_id = 'c2c___'
+     
+    get_params = {}
+    get_params[:user_id] = user_id
+    response = device_managers_service.get(get_params)
+    ```
 
 ### Sessions Module
 
-In order to create a more seamless user experience, so that users don't have to 
-sign a new transaction at every move in the application, we use session keys. 
-These keys are authorized to sign transactions on the user's behalf 
-for a predetermined amount of time and with a defined maximum spending 
-limit per transaction.
+* Initialize Sessions service object to perform session specific actions.
 
-These session keys are created in a user's wallet. A user’s TokenHolder 
-contract can have multiple authorized session keys.
+    ```ruby
+    sessions_service = ost_sdk.services.sessions
+    ```
 
-To get information about a user’s session keys, use services provided in the Sessions module.
+* Get User Session Detail using userId and session address.
 
-```ruby
-sessions_service = ost_sdk.services.sessions
-```
+    ```ruby
+    # Mandatory API parameters
+    
+    # UserId of user for whom device manager details needs to be fetched.
+    user_id = 'c2c___'
+  
+    # Session address of user for which details needs to be fetched.
+    session_address = '0x5F8___'
+  
+    get_params = {}
+    get_params[:user_id] = user_id
+    get_params[:session_address] = session_address
+    response = sessions_service.get(get_params)
+    ```
 
-Get User Session Detail:
+* Get User Sessions List using userId. Pagination is supported by this API.
 
-```ruby
-get_params = {}
-get_params[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
-get_params[:session_address] = '0x5F860598383868e8E8Ee0ffC5ADD92369Db37455'
-response = sessions_service.get(get_params)
-```
-
-Get User Sessions List:
-
-```ruby
-get_params = {}
-get_params[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
-# get_params[:pagination_identifier] = "eyJsYXN0RXZhbHVhdGVkS2V5Ijp7InVpZCI6eyJTIjoiZDE5NGFhNzUtYWNkNS00ZjQwLWIzZmItZTczYTdjZjdjMGQ5In0sIndhIjp7IlMiOiIweDU4YjQxMDY0NzQ4OWI4ODYzNTliNThmZTIyMjYwZWIxOTYwN2IwZjYifX19"
-# get_params[:addresses] = ["0x5906ae461eb6283cf15b0257d3206e74d83a6bd4","0xab248ef66ee49f80e75266595aa160c8c1abdd5a"]
-# get_params[:limit] = 10
-response = sessions_service.get_list(get_params)
-```
-
+    ```ruby
+    # Mandatory API parameters
+    
+    # UserId of user for whom session details needs to be fetched.
+    user_id = 'c2c6___'
+    
+    # Optional API parameters
+        
+    # Pagination identifier from the previous API call response.  Not needed for page one.
+    pagination_identifier = 'eyJsY___'
+     
+    # Array of session addresses of end user.
+    session_addresses_array = ['0x59___','0xab___']
+    
+    # Limit.
+    limit = 10
+    
+    get_params = {}
+    get_params[:user_id] = user_id
+    get_params[:pagination_identifier] = pagination_identifier
+    get_params[:addresses] = session_addresses_array
+    get_params[:limit] = limit
+    response = sessions_service.get_list(get_params)
+    ```
 
 ### Executing Transactions
 
 For executing transactions, you need to understand the 4 modules described below.
 
-
 #### Rules Module
 
-When executing a token transfer, a user's TokenHolder contract 
-interacts with a token rule contract. A token economy can have 
-multiple token rule contracts. To enable a user to execute a 
-token transfer, you need to start with fetching details of 
-registered rule contracts and understanding their methods and the 
-corresponding parameters passed in those methods.
+* Initialize Rules service object to perform rules specific actions.
 
-To get information about deployed rule contracts, use services provided in the Rules module.
+    ```ruby
+    rules_service = ost_sdk.services.rules
+    ```
 
-
-```ruby
-rules_service = ost_sdk.services.rules
-```
-
-List Rules:
-
-```ruby
-get_params = {}
-response = rules_service.get_list(get_params)
-```
-
+* List Rules.
+    
+    ```ruby
+    get_params = {}
+    response = rules_service.get_list(get_params)
+    ```
 
 #### Price Points Module 
 
-To know the value tokens (such as OST, USDC) price point in pay currency and when it was last updated, 
-use services provided by the Price Points module.
+* Initialize Price Points service object to perform price points specific actions.
 
-```ruby
-price_points_service = ost_sdk.services.price_points
-```
+    ```ruby
+    price_points_service = ost_sdk.services.price_points
+    ```
 
-Get Price Points Detail:
+* Get Price Points Detail.
 
-```ruby
-get_params = {}
-get_params[:chain_id] = 2000
-response = price_points_service.get(get_params)
-```
+    ```ruby
+    # Mandatory API parameters
+    
+    chain_id = 2000
+     
+    get_params = {}
+    get_params[:chain_id] = chain_id
+    response = price_points_service.get(get_params)
+    ```
 
 
 #### Transactions Module
 
-After reviewing the rules information received using services in the Rules 
-module, you will know what data is required to execute transfers 
-with a token rule using the services provided in the Transaction module.
+* Initialize Transactions service object to perform transaction specific actions.
 
-```ruby
-transactions_service = ost_sdk.services.transactions
-```
+    ```ruby
+    transactions_service = ost_sdk.services.transactions
+    ```
 
-Execute Transaction DIRECT-TRANSFERS:
+* DIRECT-TRANSFERS execute transaction should be used to transfer BTs to your end-users.
 
-```ruby
-execute_params = {}
-execute_params[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
-execute_params[:to] = '0x4e9314f004026F89Fc52790c3357b2D34FBA93b0'
-raw_calldata = {}
-raw_calldata[:method] = "directTransfers" # or "pay" 
-raw_calldata[:parameters] = [["0x4e9314f004026F89Fc52790c3357b2D34FBA93b0", "0xe37906219ad67cc1301b970539c9860f9ce8d991"],['1','1']] 
-execute_params[:raw_calldata] = raw_calldata.to_json
+    ```ruby
+    # Mandatory API parameters
+    
+    # Token holder address of receiver.
+    transfer_to_address = '0x4e___'
+    
+    # Amount of tokens to be transferred. 
+    transfer_amount = '1'
+     
+    # Parameters required for rule execution.
+    raw_calldata = {}
+    raw_calldata[:method] = 'directTransfers' # Rule name which needs to be passed as-is.
+    raw_calldata[:parameters] = [[transfer_to_address],[transfer_amount]] 
+     
+    # Company userId.
+    company_user_id = 'ee8___'
+     
+    # Address of DirectTransfer rule. Use list rules API of Rules module to get the address of rules.
+    # In the rules array which you will get in response, use the address having name "Direct Transfer". 
+    direct_transfer_rule_address = '0xe37___'
+    
+    # Optional API parameters
+    
+    # Name of the transaction. Eg. 'like', 'download', etc.
+    # NOTE: Max length 25 characters (Allowed characters: [A-Za-z0-9_/s])
+    transaction_name = 'like'
+    
+    # Transaction type. Possible values: 'company_to_user', 'user_to_user', 'user_to_company'.
+    transaction_type = 'company_to_user'
+     
+    # Some extra information about transaction.
+    # NOTE: Max length 125 characters (Allowed characters: [A-Za-z0-9_/s])
+    details = 'lorem_ipsum'
+    
+    # Additional transaction information. There is no dependency between any of the metaProperty keys.
+    # However, if a key is present, its value cannot be null or undefined.
+    meta_property = {
+          name: transaction_name,
+          type: transaction_type,
+          details: details
+        }  
+    
+    execute_params = {}
+    execute_params[:user_id] = company_user_id
+    execute_params[:to] = direct_transfer_rule_address
+    execute_params[:raw_calldata] = raw_calldata.to_json
+    execute_params[:meta_property] = meta_property
+    response = transactions_service.execute(execute_params)
+    ```
 
-meta_property = {
-      name: "transaction_name" , #like, download
-      type: "user_to_user", # user_to_user, company_to_user, user_to_company
-      details: "test"  # memo field to add additional info about the transaction
-    }     
+* PAY Execute Transaction should be used when transactions of BTs equivalent to some fiat amount need to be executed.
 
-# execute_params[:meta_property] = meta_property
-response = transactions_service.execute(execute_params)
-```
+    ```ruby
+    # Mandatory API parameters
+    
+    # Token holder address of receiver.
+    transfer_to_address = '0x4e___'
+    
+    # Company holder address of sender.
+    company_token_holder_address= '0x34r___'
+     
+    # Pay currency code. Supported currency codes are 'USD', 'EUR' and 'GBP'.
+    pay_currency_code = 'USD'
+    
+    # In pay transaction, the transfer amounts are in pay currency (fiat currency like USD) which then are converted
+    # into tokens. Use get price point detail API of Price Points module to get this value.
+    price_point = 0.020606673
+    
+    # Price point needs to be passed in atto. Multiply the price point with 10^18. Also, this value should be a string.
+    intended_price_point_in_atto = "%.f" % ((price_point * 10**18)
+  
+    # Amount of Fiat to be transferred.
+    transfer_amount_in_fiat = 0.1
+      
+    # Transfer amount in wei needs to be passed in atto. Multiply the fiat transfer amount with 10^18. Also, this value should be a string.
+    fiat_transfer_amount_in_atto = "%.f" % (transfer_amount_in_fiat * 10**18)
+    
+    # Parameters required for rule execution.
+    raw_calldata = {}
+    raw_calldata[:method] = 'pay' # Rule name which needs to be passed as-is.
+    raw_calldata[:parameters] = [company_token_holder_address, [transfer_to_address],[fiat_transfer_amount_in_atto], pay_currency_code, intended_price_point_in_atto] 
+     
+    # Company userId.
+    company_user_id = 'ee8___'
+     
+    # Address of Pay rule. Use list rules API of Rules module to get the address of rules.
+    # In the rules array which you will get in response, use the address having name "Pricer". 
+    pay_rule_address = '0xe37___'
+    
+    # Optional API parameters
+    
+    # Name of the transaction. Eg. 'like', 'download', etc.
+    # NOTE: Max length 25 characters (Allowed characters: [A-Za-z0-9_/s])
+    transaction_name = 'like'
+    
+    # Transaction type. Possible values: 'company_to_user', 'user_to_user', 'user_to_company'.
+    transaction_type = 'company_to_user'
+     
+    # Additional transaction information. There is no dependency between any of the metaProperty keys.
+    # However, if a key is present, its value cannot be null or undefined.
+    details = 'lorem_ipsum'
+    
+    # Additional transaction information. There is no dependency between any of the metaProperty keys.
+    # However, if a key is present, its value cannot be null or undefined.
+    meta_property = {
+          name: transaction_name,
+          type: transaction_type,
+          details: details
+        }
+    
+    execute_params = {}
+    execute_params[:user_id] = company_user_id
+    execute_params[:to] = pay_rule_address
+    execute_params[:raw_calldata] = raw_calldata.to_json
+    execute_params[:meta_property] = meta_property
+    response = transactions_service.execute(execute_params)
+    ```
 
-Execute Transaction PAY:
+* Get Transaction Detail using userId and transactionId.
 
-```ruby
-execute_params = {}
-execute_params[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
-execute_params[:to] = '0x4e9314f004026F89Fc52790c3357b2D34FBA93b0'
-raw_calldata = {}
-raw_calldata[:method] = "pay" 
-raw_calldata[:parameters] = ["0xa9632350057c2226c5a10418b1c3bc9acdf7e2ee", ["0x4e9314f004026F89Fc52790c3357b2D34FBA93b0", "0xe37906219ad67cc1301b970539c9860f9ce8d991"],['1','1'], "USD", "23757000000000000"] 
-execute_params[:raw_calldata] = raw_calldata.to_json
+    ```ruby
+    # Mandatory parameters
+     
+    # UserId of end-user.
+    user_id = 'e50___'
+    
+    # Unique identifier of the transaction to be retrieved.
+    transaction_id = 't43___'
+    
+    get_params = {}
+    get_params[:user_id] = user_id
+    get_params[:transaction_id] = transaction_id
+    response = transactions_service.get(get_params)
+    ```
 
-meta_property = {
-      name: "transaction_name" ,
-      type: "user_to_user",
-      details: ""
-    }
+* Get User Transactions using userId. Pagination is supported by this API.
 
-# execute_params[:meta_property] = meta_property
-response = transactions_service.execute(execute_params)
-```
-
-Get Transaction Detail:
-
-```ruby
-get_params = {}
-get_params[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
-get_params[:transaction_id] = 't43g990c-32wa-ff3r-n553-9f1ew2t32rt1'
-response = transactions_service.get(get_params)
-```
-
-Get User Transactions:
-
-```ruby
-get_params = {}
-get_params[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
-
-meta_properties = [{
-      name: "transaction_name" ,
-      type: "user_to_user",
-      details: "test"
-    }]
-# get_params[:statuses] = ["CREATED", "SUBMITTED", "SUCCESS", "FAILED"]
-# get_params[:meta_properties] = meta_properties.to_json
-# get_params[:limit] = 10
- 
-response = transactions_service.get_list(get_params)
-```
+    ```ruby
+    # Mandatory parameters
+     
+    # UserId of end-user.
+    user_id = 'e502___'
+    
+    # Optional API parameters
+      
+    # Array of status values.
+    statuses_array = ['CREATED', 'SUBMITTED', 'SUCCESS', 'FAILED']
+    
+    # Name of the transaction. Eg. 'like', 'download', etc.
+    # NOTE: Max length 25 characters (Allowed characters: [A-Za-z0-9_/s])
+    transaction_name = 'like'
+    
+    # Transaction type. Possible values: 'company_to_user', 'user_to_user', 'user_to_company'.
+    transaction_type = 'company_to_user'
+    
+    # NOTE: Max length 125 characters (Allowed characters: [A-Za-z0-9_/s])
+    details = 'lorem_ipsum'
+    
+    # Additional transaction information. There is no dependency between any of the metaProperty keys.
+    # However, if a key is present, its value cannot be null or undefined. 
+    meta_properties = [{
+          name: transaction_name,
+          type: transaction_type,
+          details: details
+        }]
+    
+    # Limit.
+    limit = 10 
+    
+    # Pagination identifier from the previous API call response.  Not needed for page one.
+    pagination_identifier = 'eyJsY___'
+    
+    get_params = {}
+    get_params[:user_id] = user_id
+    get_params[:statuses] = statuses_array
+    get_params[:meta_properties] = meta_properties.to_json
+    get_params[:limit] = limit
+    get_params[:pagination_identifier] = pagination_identifier
+    response = transactions_service.get_list(get_params)
+    ```
 
 
 #### Balances Module
 
-Balance services offer the functionality to view a user’s balances.
+* Initialize Balances service object to perform balances specific actions.
 
-```ruby
-balances_service = ost_sdk.services.balance
-```
+    ```ruby
+    balances_service = ost_sdk.services.balance
+    ```
 
-Get token balance of an existing user:
+* Get User Balance using userId.
 
-```ruby
-get_params = {}
-get_params[:user_id] = '91263ebd-6b2d-4001-b732-4024430ca758'
-response = balances_service.get(get_params)
-```
+    ```ruby
+    # Mandatory API parameters
+    
+    # UserId for whom balance needs to be fetched.
+    user_id = '987w___'
+    
+    get_params = {}
+    get_params[:user_id] = user_id
+    response = balances_service.get(get_params)
+    ```
 
 
-### Recovery Owners Module 
+### Recovery Owners Module
 
+* Initialize Recovery Owners service object to perform recovery owners specific actions.
 
-A user’s Brand Tokens are held by a TokenHolder contract that is controlled ("owned") 
-by a Device Manager; the device manager is controlled ("owned") by device keys created 
-and held by the user in their wallets; and if any of those keys is lost, the Device 
-Manager (which is a multi-signature contract) is programmed to allow replacement of a 
-key by the recovery owner key for the user, via the DelayedRecoveryModule, which is deployed
-at the time of the creation of the user's initial wallet.
+    ```ruby
+    recovery_owners_service = ost_sdk.services.recovery_owners
+    ```
 
-To fetch the recovery owner address for a particular user, use services provided 
-in the Users module. To fetch that recovery owner's information, then services 
-provided in the Recovery Owners Module are used.
+* Get Recovery Owner Detail using userId and recovery owner address.
 
-```ruby
-recovery_owners_service = ost_sdk.services.recovery_owners
-```
-
-Get Recovery Owner Detail:
-
-```ruby
-get_params = {}
-get_params[:user_id] = '91263ebd-6b2d-4001-b732-4024430ca758'
-get_params[:recovery_owner_address] = '0x5F860598383868e8E8Ee0ffC5ADD92369Db37455'
-response = recovery_owners_service.get(get_params)
-```
+    ```ruby
+    # Mandatory API parameters
+    
+    # UserId for whom recovery details needs to be fetched.
+    user_id = '987w___'
+    
+    # Recovery address of user.
+    recovery_owner_address = '0x54e___'
+    
+    get_params = {}
+    get_params[:user_id] = user_id
+    get_params[:recovery_owner_address] = recovery_owner_address
+    response = recovery_owners_service.get(get_params)
+    ```
 
 
 ### Tokens Module 
 
-To get information about the Brand Token created on the OST Platform interface, use services provided 
-by the Tokens module. You can use this service to obtain the chain ID of the auxiliary 
-chain on which the token economy is running, in addition to other information.
+* Initialize Tokens service object to perform tokens specific actions.
 
-```ruby
-tokens_service = ost_sdk.services.tokens
-```
+    ```ruby
+    tokens_service = ost_sdk.services.tokens
+    ```
 
-Get Token Detail:
+* Get Token Detail.
 
-```ruby
-get_params = {}
-response = tokens_service.get(get_params)
-```
+    ```ruby
+    get_params = {}
+    response = tokens_service.get(get_params)
+    ```
 
 
 ### Chains Module
 
-To get information about the auxiliary chain on which the token economy is running, use services 
-provided by the Chains module.
+* Initialize Chains service object to perform chains specific actions.
 
-```ruby
-chains_service = ost_sdk.services.chains
-```
+    ```ruby
+    chains_service = ost_sdk.services.chains
+    ```
 
-Get Chain Detail:
+* Get Chain Detail using chainId.
 
-```ruby
-get_params = {}
-get_params[:chain_id] = 2000
-response = chains_service.get(get_params)
-```
+    ```ruby
+    # Mandatory API parameters
+    
+    # ChainId for which details needs to be fetched. Only origin chainId and OST-specific auxiliary chainIds are allowed.
+    chain_id = 2000
+    
+    get_params = {}
+    get_params[:chain_id] = chain_id
+    response = chains_service.get(get_params)
+    ```
 
 
 ### Base Tokens Module 
 
-To get information about the value tokens (such as OST, USDC) available on the OST Platform interface, use services
-provided by the Base Tokens module. You can use this service to obtain the value token details
-on OST Platform interface.
+* Initialize Base Tokens service object to perform base tokens specific actions.
 
-```ruby
-base_tokens_service = ost_sdk.services.base_tokens
-```
+    ```ruby
+    base_tokens_service = ost_sdk.services.base_tokens
+    ```
 
-Get Base Token Detail:
+* Get Base Tokens Detail.
 
-```ruby
-get_params = {}
-response = base_tokens_service.get(get_params)
-```
+    ```ruby
+    get_params = {}
+    response = base_tokens_service.get(get_params)
+    ```
 
 
 ### Webhooks Module
 
-To manage webhooks on the OST Platform Interface, use services provided by the Webhooks module. You can
-use this service to create new webhooks and manage existing webhooks.
+* Initialize Webhooks service object to perform webhooks specific actions.
 
-```ruby
-webhooks_service = ost_sdk.services.webhooks
-```
+    ```ruby
+    webhooks_service = ost_sdk.services.webhooks
+    ```
 
-Create Webhook:
+* Create Webhook using the topics and the subscription url.
 
-```ruby
-create_params = {}
-create_params[:topics] = ['transactions/initiate', 'transactions/success']
-create_params[:url] =  'https://testingWebhooks.com'
-# create_params[:status] =  'inactive'
-response = webhooks_service.create(create_params)
-```
+    ```ruby
+    # Mandatory API parameters
+    
+    # Array of topics.
+    topic_params = ['transactions/initiate', 'transactions/success']
+    
+    # URL where you want to receive the event notifications.
+    url = 'https://www.testingWebhooks.com'
+    
+    # Optional API parameters
+    
+    # Status of a webhook. Possible values are 'active' and 'inactive'.
+    status = 'active' 
+    
+    create_params = {}
+    create_params[:topics] = topic_params
+    create_params[:url] = url
+    create_params[:status] = status
+    response = webhooks_service.create(create_params)
+    ```
 
-Update Webhook:
+* Update existing Webhook using a webhookId and an array of topics.
 
-```ruby
-update_params = {}
-update_params[:webhook_id] = 'b036aff5-75a3-466d-a20c-a956b198fd14'
-update_params[:topics] =  ['transactions/initiate', 'transactions/success', 'transactions/failure']
-update_params[:status] =  'inactive'
-response = webhooks_service.update(update_params)
-```
+    ```ruby
+    # Mandatory API parameters
+    
+    # Array of topics.
+    topic_params = ['transactions/initiate', 'transactions/success']
+    
+    # Unique identifier for a webhook.
+    webhook_id = 'a743___'
+    
+    # Optional API parameters
+    
+    # Status of a webhook. Possible values are 'active' and 'inactive'.
+    status = 'active' 
+    
+    update_params = {}
+    update_params[:webhook_id] = webhook_id
+    update_params[:topics] = topic_params
+    update_params[:status] = status
+    response = webhooks_service.update(update_params)
+    ```
 
-Get Webhook:
+* Get Webhook using webhookId.
 
-```ruby
-get_params = {}
-get_params[:webhook_id] = 'b036aff5-75a3-466d-a20c-a956b198fd14'
-response = webhooks_service.get(get_params)
-```
+    ```ruby
+    # Mandatory API parameters
+     
+    # Unique identifier for a webhook.
+    webhook_id = 'a743___'
+    
+    get_params = {}
+    get_params[:webhook_id] = webhook_id
+    response = webhooks_service.get(get_params)
+    ```
 
-Get Webhook List:
+* Get Webhook List. Pagination is supported by this API.
 
-```ruby
-get_params = {}
-# get_params[:limit] = 1
-# get_params[:pagination_identifier] = 'eyJwYWdlIjoyLCJsaW1pdCI6MX0='
-response = webhooks_service.get_list(get_params)
-```
+    ```ruby
+    # Mandatory API parameters
+    # No mandatory parameters.
+    
+    # Optional API parameters
+    
+    # Limit.
+    limit = 10
+    
+    # Pagination identifier from the previous API call response.  Not needed for page one.
+    pagination_identifier = 'eyJwY___'
+    
+    get_params = {}
+    get_params[:limit] = limit
+    get_params[:pagination_identifier] = pagination_identifier
+    response = webhooks_service.get_list(get_params)
+    ```
 
-Delete Webhook:
+* Delete Webhook using webhookId.
 
-```ruby
-delete_params = {}
-delete_params[:webhook_id] = 'b036aff5-75a3-466d-a20c-a956b198fd14'
-response = webhooks_service.delete(delete_params)
-```
+    ```ruby
+    # Mandatory API parameters
+     
+    # Unique identifier for a webhook.
+    webhook_id = 'a743___'
+    
+    delete_params = {}
+    delete_params[:webhook_id] = webhook_id
+    response = webhooks_service.delete(delete_params)
+    ```
 
-Verify webhook request signature:
+* Verify webhook request signature. This can be used to validate if the webhook received at your end from OST platform is correctly signed.
 
-```ruby
-signature_params = {}
-webhook_event_data = {"id":"54e3cd1c-afd7-4dcf-9c78-137c56a53582","topic":"transactions/success","created_at":1560838772,"webhook_id":"0823a4ea-5d87-44cf-8ca8-1e5a31bf8e46","version":"v2","data":{"result_type":"transaction","transaction":{"id":"ddebe817-b94f-4b51-9227-f543fae4715a","transaction_hash":"0x7ee737db22b58dc4da3f4ea4830ca709b388d84f31e77106cb79ee09fc6448f9","from":"0x69a581096dbddf6d1e0fff7ebc1254bb7a2647c6","to":"0xc2f0dde92f6f3a3cb13bfff43e2bd136f7dcfe47","nonce":3,"value":"0","gas_price":"1000000000","gas_used":120558,"transaction_fee":"120558000000000","block_confirmation":24,"status":"SUCCESS","updated_timestamp":1560838699,"block_timestamp":1560838698,"block_number":1554246,"rule_name":"Pricer","meta_property":{},"transfers":[{"from":"0xc2f0dde92f6f3a3cb13bfff43e2bd136f7dcfe47","from_user_id":"acfdea7d-278e-4ffc-aacb-4a21398a280c","to":"0x0a754aaab96d634337aac6556312de396a0ca46a","to_user_id":"7bc8e0bd-6761-4604-8f8e-e33f86f81309","amount":"112325386","kind":"transfer"}]}}}
-signature_params[:stringified_data] = webhook_event_data.to_json
-
-# Get webhoook version from webhook events data.
-signature_params[:version] = "v2"
-
-# Get ost-timestamp from the response received in event.
-signature_params[:request_timestamp] = '1559902637'
-
-# Get signature from the response received in event.
-signature_params[:signature] = '2c56c143550c603a6ff47054803f03ee4755c9c707986ae27f7ca1dd1c92a824'
-
-signature_params[:webhook_secret] = 'mySecret'
-response = webhooks_service.verify_signature(signature_params)
-```
+    ```ruby
+    signature_params = {}
+    
+    # Webhook data obtained.
+    webhook_event_data = {"id":"54e3cd1c-afd7-4dcf-9c78-137c56a53582","topic":"transactions/success","created_at":1560838772,"webhook_id":"0823a4ea-5d87-44cf-8ca8-1e5a31bf8e46","version":"v2","data":{"result_type":"transaction","transaction":{"id":"ddebe817-b94f-4b51-9227-f543fae4715a","transaction_hash":"0x7ee737db22b58dc4da3f4ea4830ca709b388d84f31e77106cb79ee09fc6448f9","from":"0x69a581096dbddf6d1e0fff7ebc1254bb7a2647c6","to":"0xc2f0dde92f6f3a3cb13bfff43e2bd136f7dcfe47","nonce":3,"value":"0","gas_price":"1000000000","gas_used":120558,"transaction_fee":"120558000000000","block_confirmation":24,"status":"SUCCESS","updated_timestamp":1560838699,"block_timestamp":1560838698,"block_number":1554246,"rule_name":"Pricer","meta_property":{},"transfers":[{"from":"0xc2f0dde92f6f3a3cb13bfff43e2bd136f7dcfe47","from_user_id":"acfdea7d-278e-4ffc-aacb-4a21398a280c","to":"0x0a754aaab96d634337aac6556312de396a0ca46a","to_user_id":"7bc8e0bd-6761-4604-8f8e-e33f86f81309","amount":"112325386","kind":"transfer"}]}}}
+    signature_params[:stringified_data] = webhook_event_data.to_json
+    
+    # Get webhoook version from webhook events data.
+    signature_params[:version] = "v2"
+    
+    # Get ost-timestamp from the response received in event.
+    signature_params[:request_timestamp] = '1559902637'
+    
+    # Get signature from the response received in event.
+    signature_params[:signature] = '2c56c143550c603a6ff47054803f03ee4755c9c707986ae27f7ca1dd1c92a824'
+    
+    signature_params[:webhook_secret] = 'mySecret'
+    response = webhooks_service.verify_signature(signature_params)
+    ```
