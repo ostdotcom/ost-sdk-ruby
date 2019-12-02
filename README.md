@@ -460,7 +460,7 @@ For executing transactions, you need to understand the 4 modules described below
     # Mandatory parameters
      
     # UserId of end-user.
-    user_id = '0d91bb6f-7301-4bb8-8cf0-655e16de4f84'
+    user_id = 'e502___'
     
     # Optional API parameters
       
