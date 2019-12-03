@@ -467,7 +467,7 @@ For executing transactions, you need to understand the 4 modules described below
     # Array of status values.
     statuses_array = ['CREATED', 'SUBMITTED', 'SUCCESS', 'FAILED']
     
-    # To get transactions between some specific time, add start time and end time. 
+    # To get transactions between a specific time interval, add start timestamp and end timestamp. 
     start_time = 1563260786
     end_time = 1563280786
   
