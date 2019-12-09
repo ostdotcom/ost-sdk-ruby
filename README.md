@@ -467,6 +467,10 @@ For executing transactions, you need to understand the 4 modules described below
     # Array of status values.
     statuses_array = ['CREATED', 'SUBMITTED', 'SUCCESS', 'FAILED']
     
+    # To get transactions between a specific time interval, add start timestamp and end timestamp. 
+    start_time = 1563260786
+    end_time = 1563280786
+  
     # Name of the transaction. Eg. 'like', 'download', etc.
     # NOTE: Max length 25 characters (Allowed characters: [A-Za-z0-9_/s])
     transaction_name = 'like'
@@ -494,6 +498,8 @@ For executing transactions, you need to understand the 4 modules described below
     get_params = {}
     get_params[:user_id] = user_id
     get_params[:statuses] = statuses_array
+    get_params[:start_time] = start_time
+    get_params[:end_time] = end_time
     get_params[:meta_properties] = meta_properties.to_json
     get_params[:limit] = limit
     get_params[:pagination_identifier] = pagination_identifier
