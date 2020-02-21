@@ -570,6 +570,88 @@ For executing transactions, you need to understand the 4 modules described below
     response = tokens_service.get(get_params)
     ```
 
+#### Redemptions Module
+
+* Redemptions services offer the functionality to view a user’s redemptions.
+
+    ```ruby
+    redemptions_service = ost_sdk.services.redemptions
+    ```
+
+* Get Redemption Detail:
+
+    ```ruby
+    get_params = {}
+    get_params[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
+    get_params[:redemption_id] = 'df7eb64a-a5d1-4f8a-892f-9e3cb7e079e7'
+    response = redemptions_service.get(get_params)
+    ```
+
+* Get Redemptions list of a user:
+
+    ```ruby
+    # Mandatory API parameters
+    user_id = '91263ebd-6b2d-4001-b732-4024430ca758'
+    
+    # Optional API parameters
+    
+    # Limit.
+    limit = 10
+ 
+    # Redemption Uuids of user.
+    user_redemption_uuids = ['aa79a057-3afc-4988-b7d3-b5bab0df5730']
+    
+    # Pagination identifier from the previous API call response.  Not needed for page one.
+    pagination_identifier = 'eyJwY___'
+    
+    get_params = {}
+    get_params[:user_id] = user_id
+    get_params[:user_redemption_uuids] = user_redemption_uuids  
+    get_params[:limit] = limit
+    get_params[:pagination_identifier] = pagination_identifier
+    response = redemptions_service.get_list(get_params)
+    ```
+
+
+#### RedeemableSkus Module
+
+* RedeemableSkus services offer the functionality to view redeemable skus.
+
+    ```ruby
+    redeemable_skus_service = ost_sdk.services.redeemable_skus
+    ```
+
+* Get Redeemable Sku Detail:
+
+    ```ruby
+    get_params = {}
+    get_params[:redeemable_sku_id] = 'f2ba0875-f26a-44e3-8c95-c8d16bc56fcb'
+    response = redeemable_skus_service.get(get_params)
+    ```
+
+* Get RedeemableSkus list:
+
+    ```ruby
+    # Mandatory API parameters
+    # No mandatory parameters.
+    
+    # Optional API parameters
+    
+    # Limit.
+    limit = 10
+  
+    # reedemable sku ids.
+    ids = ['aa79a057-3afc-4988-b7d3-b5bab0df5730']
+    
+    # Pagination identifier from the previous API call response.  Not needed for page one.
+    pagination_identifier = 'eyJwY___'
+      
+    get_params = {}
+    get_params[:ids] = ids  
+    get_params[:limit] = limit
+    get_params[:pagination_identifier] = pagination_identifier
+    response = redeemable_skus_service.get_list(get_params)
+    ```
 
 ### Chains Module
 
