@@ -598,15 +598,15 @@ For executing transactions, you need to understand the 4 modules described below
     # Limit.
     limit = 10
  
-    # Redemption Uuids of user.
-    user_redemption_uuids = ['aa79a057-3afc-4988-b7d3-b5bab0df5730']
+    # Redemption ids of user.
+    redemption_ids = ['aa79a057-3afc-4988-b7d3-b5bab0df5730']
     
     # Pagination identifier from the previous API call response.  Not needed for page one.
     pagination_identifier = 'eyJwY___'
     
     get_params = {}
     get_params[:user_id] = user_id
-    get_params[:user_redemption_uuids] = user_redemption_uuids  
+    get_params[:redemption_ids] = redemption_ids  
     get_params[:limit] = limit
     get_params[:pagination_identifier] = pagination_identifier
     response = redemptions_service.get_list(get_params)
@@ -625,7 +625,7 @@ For executing transactions, you need to understand the 4 modules described below
 
     ```ruby
     get_params = {}
-    get_params[:redeemable_sku_id] = 'f2ba0875-f26a-44e3-8c95-c8d16bc56fcb'
+    get_params[:redeemable_sku_id] = '1'
     response = redeemable_skus_service.get(get_params)
     ```
 
@@ -641,13 +641,13 @@ For executing transactions, you need to understand the 4 modules described below
     limit = 10
   
     # reedemable sku ids.
-    ids = ['aa79a057-3afc-4988-b7d3-b5bab0df5730']
+    redeemable_sku_ids = ['1']
     
     # Pagination identifier from the previous API call response.  Not needed for page one.
     pagination_identifier = 'eyJwY___'
       
     get_params = {}
-    get_params[:ids] = ids  
+    get_params[:redeemable_sku_ids] = redeemable_sku_ids  
     get_params[:limit] = limit
     get_params[:pagination_identifier] = pagination_identifier
     response = redeemable_skus_service.get_list(get_params)
