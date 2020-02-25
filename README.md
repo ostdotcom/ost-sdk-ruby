@@ -570,88 +570,6 @@ For executing transactions, you need to understand the 4 modules described below
     response = tokens_service.get(get_params)
     ```
 
-#### Redemptions Module
-
-* Redemptions services offer the functionality to view a user’s redemptions.
-
-    ```ruby
-    redemptions_service = ost_sdk.services.redemptions
-    ```
-
-* Get Redemption Detail:
-
-    ```ruby
-    get_params = {}
-    get_params[:user_id] = 'e50e252c-318f-44a5-b586-9a9ea1c41c15'
-    get_params[:redemption_id] = 'df7eb64a-a5d1-4f8a-892f-9e3cb7e079e7'
-    response = redemptions_service.get(get_params)
-    ```
-
-* Get Redemptions list of a user:
-
-    ```ruby
-    # Mandatory API parameters
-    user_id = '91263ebd-6b2d-4001-b732-4024430ca758'
-    
-    # Optional API parameters
-    
-    # Limit.
-    limit = 10
- 
-    # Redemption ids of user.
-    redemption_ids = ['aa79a057-3afc-4988-b7d3-b5bab0df5730']
-    
-    # Pagination identifier from the previous API call response.  Not needed for page one.
-    pagination_identifier = 'eyJwY___'
-    
-    get_params = {}
-    get_params[:user_id] = user_id
-    get_params[:redemption_ids] = redemption_ids  
-    get_params[:limit] = limit
-    get_params[:pagination_identifier] = pagination_identifier
-    response = redemptions_service.get_list(get_params)
-    ```
-
-
-#### RedeemableSkus Module
-
-* RedeemableSkus services offer the functionality to view redeemable skus.
-
-    ```ruby
-    redeemable_skus_service = ost_sdk.services.redeemable_skus
-    ```
-
-* Get Redeemable Sku Detail:
-
-    ```ruby
-    get_params = {}
-    get_params[:redeemable_sku_id] = '1'
-    response = redeemable_skus_service.get(get_params)
-    ```
-
-* Get RedeemableSkus list:
-
-    ```ruby
-    # Mandatory API parameters
-    # No mandatory parameters.
-    
-    # Optional API parameters
-    
-    # Limit.
-    limit = 10
-  
-    # reedemable sku ids.
-    redeemable_sku_ids = ['1']
-    
-    # Pagination identifier from the previous API call response.  Not needed for page one.
-    pagination_identifier = 'eyJwY___'
-      
-    get_params = {}
-    get_params[:redeemable_sku_ids] = redeemable_sku_ids  
-    get_params[:limit] = limit
-    get_params[:pagination_identifier] = pagination_identifier
-    response = redeemable_skus_service.get_list(get_params)
-    ```
 
 ### Chains Module
 
@@ -811,4 +729,102 @@ For executing transactions, you need to understand the 4 modules described below
     
     signature_params[:webhook_secret] = 'mySecret'
     response = webhooks_service.verify_signature(signature_params)
+    ```
+
+
+### Redemptions Module
+
+* Initialize Redemptions service object to perform user redemption specific actions.
+
+    ```ruby
+    redemptions_service = ost_sdk.services.redemptions
+    ```
+
+* Get User redemption detail using the userId and redemptionId.
+
+    ```ruby 
+    # Mandatory API parameters
+ 
+    # UserId of user for whom redemption details needs to be fetched.
+    user_id = 'ee8___'
+  
+    # RedemptionId of user.
+    redemption_id = 'aa___'
+    
+    get_params = {} 
+    get_params[:user_id] = user_id
+    get_params[:redemption_id] = redemption_id
+    
+    response = redemptions_service.get(get_params)
+    ```
+
+* Get User Redemptions List. Pagination is supported by this API.
+
+    ```ruby
+    # Mandatory API parameters
+    user_id = 'ee8___'
+    
+    # Optional API parameters
+    
+    # Limit.
+    limit = 10
+ 
+    # Array of user redemption uuids.
+    redemption_ids = ['a743___', 'a743___']
+    
+    # Pagination identifier from the previous API call response.  Not needed for page one.
+    pagination_identifier = 'eyJwY___'
+    
+    get_params = {}
+    get_params[:user_id] = user_id
+    get_params[:redemption_ids] = redemption_ids  
+    get_params[:limit] = limit
+    get_params[:pagination_identifier] = pagination_identifier
+    response = redemptions_service.get_list(get_params)
+    ```
+
+
+### RedeemableSkus Module
+
+* Initialize RedeemableSkus service object to perform redeemable skus specific actions.
+
+    ```ruby
+    redeemable_skus_service = ost_sdk.services.redeemable_skus
+    ```
+
+* Get Redeemable SKU detail using the redeemable SKU id.
+
+    ```ruby
+    # Mandatory API parameters
+ 
+    # RedeemableSkuId of product for whom details needs to be fetched.
+    redeemable_sku_id = '1'
+
+    get_params = {}
+    get_params[:redeemable_sku_id] = redeemable_sku_id
+    response = redeemable_skus_service.get(get_params)
+    ```
+
+* Get Redeemable SKUs List. Pagination is supported by this API.
+
+    ```ruby
+    # Mandatory API parameters
+    # No mandatory parameters.
+    
+    # Optional API parameters
+    
+    # Limit.
+    limit = 10
+  
+    # Array of redeemable SKU ids.
+    redeemable_sku_ids = ['1', '2']
+    
+    # Pagination identifier from the previous API call response.  Not needed for page one.
+    pagination_identifier = 'eyJwY___'
+      
+    get_params = {}
+    get_params[:redeemable_sku_ids] = redeemable_sku_ids  
+    get_params[:limit] = limit
+    get_params[:pagination_identifier] = pagination_identifier
+    response = redeemable_skus_service.get_list(get_params)
     ```
