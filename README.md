@@ -388,7 +388,7 @@ For executing transactions, you need to understand the 4 modules described below
     price_point = 0.020606673
     
     # Price point needs to be passed in atto. Multiply the price point with 10^18. Also, this value should be a string.
-    intended_price_point_in_atto = "%.f" % ((price_point * 10**18)
+    intended_price_point_in_atto = "%.f" % ((price_point * 10**18))
   
     # Amount of Fiat to be transferred.
     transfer_amount_in_fiat = 0.1
