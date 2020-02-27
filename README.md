@@ -732,7 +732,54 @@ For executing transactions, you need to understand the 4 modules described below
     ```
 
 
-### Redemptions Module
+### Executing Redemptions
+
+For executing redemptions, you need to understand the 2 modules described below.
+
+#### Redeemable SKUs Module
+
+* Initialize Redeemable Skus service object to perform redeemable skus specific actions.
+
+    ```ruby
+    redeemable_skus_service = ost_sdk.services.redeemable_skus
+    ```
+* Get Redeemable SKU detail using the redeemable SKU id.
+
+    ```ruby
+    # Mandatory API parameters
+
+    # RedeemableSkuId of product for whom details needs to be fetched.
+    redeemable_sku_id = '1'
+    
+    get_params = {}
+    get_params[:redeemable_sku_id] = redeemable_sku_id
+    response = redeemable_skus_service.get(get_params)
+    ```
+
+* Get Redeemable SKUs List. Pagination is supported by this API.
+
+    ```ruby
+    # Mandatory API parameters
+    # NOTE: No mandatory parameters.
+  
+    # Optional API parameters
+  
+    # Limit.
+    limit = 10
+
+    # Array of redeemable SKU ids.
+    redeemable_sku_ids = ['1001', '1002']
+
+    # Pagination identifier from the previous API call response.  Not needed for page one.
+    pagination_identifier = 'eyJwY___'
+ 
+    get_params = {}
+    get_params[:redeemable_sku_ids] = redeemable_sku_ids  
+    get_params[:limit] = limit
+    get_params[:pagination_identifier] = pagination_identifier
+    response = redeemable_skus_service.get_list(get_params)
+    ```
+#### User Redemptions Module
 
 * Initialize Redemptions service object to perform user redemption specific actions.
 
@@ -740,16 +787,16 @@ For executing transactions, you need to understand the 4 modules described below
     redemptions_service = ost_sdk.services.redemptions
     ```
 
-* Get User redemption detail using the userId and redemptionId.
+* Get User Redemptions detail using the userId and redemptionId.
 
-    ```ruby 
+    ```ruby
     # Mandatory API parameters
- 
+
     # UserId of user for whom redemption details needs to be fetched.
     user_id = 'ee8___'
   
-    # RedemptionId of user.
-    redemption_id = 'aa___'
+    # Unique identifier of the redemption of user.
+    redemption_id = 'r43___'
     
     get_params = {} 
     get_params[:user_id] = user_id
@@ -768,63 +815,17 @@ For executing transactions, you need to understand the 4 modules described below
     
     # Limit.
     limit = 10
- 
+  
     # Array of user redemption uuids.
     redemption_ids = ['a743___', 'a743___']
     
     # Pagination identifier from the previous API call response.  Not needed for page one.
     pagination_identifier = 'eyJwY___'
-    
+      
     get_params = {}
     get_params[:user_id] = user_id
     get_params[:redemption_ids] = redemption_ids  
     get_params[:limit] = limit
     get_params[:pagination_identifier] = pagination_identifier
     response = redemptions_service.get_list(get_params)
-    ```
-
-
-### RedeemableSkus Module
-
-* Initialize RedeemableSkus service object to perform redeemable skus specific actions.
-
-    ```ruby
-    redeemable_skus_service = ost_sdk.services.redeemable_skus
-    ```
-
-* Get Redeemable SKU detail using the redeemable SKU id.
-
-    ```ruby
-    # Mandatory API parameters
- 
-    # RedeemableSkuId of product for whom details needs to be fetched.
-    redeemable_sku_id = '1'
-
-    get_params = {}
-    get_params[:redeemable_sku_id] = redeemable_sku_id
-    response = redeemable_skus_service.get(get_params)
-    ```
-
-* Get Redeemable SKUs List. Pagination is supported by this API.
-
-    ```ruby
-    # Mandatory API parameters
-    # No mandatory parameters.
-    
-    # Optional API parameters
-    
-    # Limit.
-    limit = 10
-  
-    # Array of redeemable SKU ids.
-    redeemable_sku_ids = ['1', '2']
-    
-    # Pagination identifier from the previous API call response.  Not needed for page one.
-    pagination_identifier = 'eyJwY___'
-      
-    get_params = {}
-    get_params[:redeemable_sku_ids] = redeemable_sku_ids  
-    get_params[:limit] = limit
-    get_params[:pagination_identifier] = pagination_identifier
-    response = redeemable_skus_service.get_list(get_params)
     ```
