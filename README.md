@@ -732,23 +732,23 @@ For executing transactions, you need to understand the 4 modules described below
     ```
 
 
-### Executing Redemptions
+### Redemption Modules
 
-For executing redemptions, you need to understand the 2 modules described below.
+Two modules of redemption, "Redeemable SKUs" and "User Redemptions", are described below.
 
 #### Redeemable SKUs Module
 
-* Initialize Redeemable Skus service object to perform redeemable skus specific actions.
+* Initialize Redeemable SKUs service object to perform redeemable skus specific actions.
 
     ```ruby
     redeemable_skus_service = ost_sdk.services.redeemable_skus
     ```
-* Get Redeemable SKU detail using the redeemable SKU id.
+* Get Redeemable SKU detail using the redeemable sku id.
 
     ```ruby
     # Mandatory API parameters
 
-    # RedeemableSkuId of product for whom details needs to be fetched.
+    # Fetch details of following redeemable sku.
     redeemable_sku_id = '1'
     
     get_params = {}
@@ -787,7 +787,7 @@ For executing redemptions, you need to understand the 2 modules described below.
     redemptions_service = ost_sdk.services.redemptions
     ```
 
-* Get User Redemptions detail using the userId and redemptionId.
+* Get User redemption details using the userId and redemptionId.
 
     ```ruby
     # Mandatory API parameters
