@@ -16,7 +16,7 @@ class RedemptionsTest < Test::Unit::TestCase
   end
 
   def test_redemptions_get_list
-    result = redemptions_service.get(user_id: Config::OST_KIT_USER_ID)
+    result = redemptions_service.get_list(user_id: Config::OST_KIT_USER_ID)
     puts "result=>#{result}" unless result["success"]
     assert_equal(result["success"], true )
   end

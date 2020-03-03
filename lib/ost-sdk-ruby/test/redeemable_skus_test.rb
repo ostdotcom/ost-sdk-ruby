@@ -16,7 +16,7 @@ class RedeemableSkusTest < Test::Unit::TestCase
   end
 
   def test_redeemable_skus_get_list
-    result = redeemable_skus_service.get()
+    result = redeemable_skus_service.get_list()
     puts "result=>#{result}" unless result["success"]
     assert_equal(result["success"], true)
   end
