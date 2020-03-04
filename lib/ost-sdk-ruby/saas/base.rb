@@ -66,6 +66,30 @@ module OSTSdk
         get_value_for_key!(params, "webhook_id")
       end
 
+      # Get redemption_id key from params hash and delete it
+      #
+      # Arguments:
+      #   params: (Hash)
+      #
+      # Returns:
+      #   redemption_id: (String)
+      #
+      def get_redemption_id!(params)
+        get_value_for_key!(params, "redemption_id")
+      end
+
+      # Get redeemable_sku_id key from params hash and delete it
+      #
+      # Arguments:
+      #   params: (Hash)
+      #
+      # Returns:
+      #   redeemable_sku_id: (String)
+      #
+      def get_redeemable_sku_id!(params)
+        get_value_for_key!(params, "redeemable_sku_id")
+      end
+
       # Get chain_id key from params hash and delete it
       #
       # Arguments:
