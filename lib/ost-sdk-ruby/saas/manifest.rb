@@ -4,8 +4,8 @@ module OSTSdk
 
     class Manifest
 
-      attr_reader :balance, :chains, :device_managers, :devices, :price_points, :recovery_owners, :rules,
-                  :sessions, :tokens, :transactions, :users, :base_tokens, :webhooks
+      attr_reader :balance, :chains, :device_managers, :devices, :price_points, :recovery_owners, :redemptions,
+                  :redeemable_skus, :rules, :sessions, :tokens, :transactions, :users, :base_tokens, :webhooks
 
       # Initialize
       #
@@ -24,6 +24,8 @@ module OSTSdk
         @devices = OSTSdk::Saas::Devices.new(params)
         @price_points = OSTSdk::Saas::PricePoints.new(params)
         @recovery_owners = OSTSdk::Saas::RecoveryOwners.new(params)
+        @redemptions = OSTSdk::Saas::Redemptions.new(params)
+        @redeemable_skus = OSTSdk::Saas::RedeemableSkus.new(params)
 
         @rules = OSTSdk::Saas::Rules.new(params)
         @sessions = OSTSdk::Saas::Sessions.new(params)

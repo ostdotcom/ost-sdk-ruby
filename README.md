@@ -388,7 +388,7 @@ For executing transactions, you need to understand the 4 modules described below
     price_point = 0.020606673
     
     # Price point needs to be passed in atto. Multiply the price point with 10^18. Also, this value should be a string.
-    intended_price_point_in_atto = "%.f" % ((price_point * 10**18)
+    intended_price_point_in_atto = "%.f" % ((price_point * 10**18))
   
     # Amount of Fiat to be transferred.
     transfer_amount_in_fiat = 0.1
@@ -729,4 +729,103 @@ For executing transactions, you need to understand the 4 modules described below
     
     signature_params[:webhook_secret] = 'mySecret'
     response = webhooks_service.verify_signature(signature_params)
+    ```
+
+
+### Redemption Modules
+
+Two modules of redemption, "Redeemable SKUs" and "User Redemptions", are described below.
+
+#### Redeemable SKUs Module
+
+* Initialize Redeemable SKUs service object to perform redeemable skus specific actions.
+
+    ```ruby
+    redeemable_skus_service = ost_sdk.services.redeemable_skus
+    ```
+* Get Redeemable SKU detail using the redeemable sku id.
+
+    ```ruby
+    # Mandatory API parameters
+
+    # Fetch details of following redeemable sku.
+    redeemable_sku_id = '1'
+    
+    get_params = {}
+    get_params[:redeemable_sku_id] = redeemable_sku_id
+    response = redeemable_skus_service.get(get_params)
+    ```
+
+* Get Redeemable SKUs List. Pagination is supported by this API.
+
+    ```ruby
+    # Mandatory API parameters
+    # NOTE: No mandatory parameters.
+  
+    # Optional API parameters
+  
+    # Limit.
+    limit = 10
+
+    # Array of redeemable SKU ids.
+    redeemable_sku_ids = ['1001', '1002']
+
+    # Pagination identifier from the previous API call response.  Not needed for page one.
+    pagination_identifier = 'eyJwY___'
+ 
+    get_params = {}
+    get_params[:redeemable_sku_ids] = redeemable_sku_ids  
+    get_params[:limit] = limit
+    get_params[:pagination_identifier] = pagination_identifier
+    response = redeemable_skus_service.get_list(get_params)
+    ```
+#### User Redemptions Module
+
+* Initialize Redemptions service object to perform user redemption specific actions.
+
+    ```ruby
+    redemptions_service = ost_sdk.services.redemptions
+    ```
+
+* Get User redemption details using the userId and redemptionId.
+
+    ```ruby
+    # Mandatory API parameters
+
+    # UserId of user for whom redemption details needs to be fetched.
+    user_id = 'ee8___'
+  
+    # Unique identifier of the redemption of user.
+    redemption_id = 'r43___'
+    
+    get_params = {} 
+    get_params[:user_id] = user_id
+    get_params[:redemption_id] = redemption_id
+    
+    response = redemptions_service.get(get_params)
+    ```
+
+* Get User Redemptions List. Pagination is supported by this API.
+
+    ```ruby
+    # Mandatory API parameters
+    user_id = 'ee8___'
+    
+    # Optional API parameters
+    
+    # Limit.
+    limit = 10
+  
+    # Array of user redemption uuids.
+    redemption_ids = ['a743___', 'a743___']
+    
+    # Pagination identifier from the previous API call response.  Not needed for page one.
+    pagination_identifier = 'eyJwY___'
+      
+    get_params = {}
+    get_params[:user_id] = user_id
+    get_params[:redemption_ids] = redemption_ids  
+    get_params[:limit] = limit
+    get_params[:pagination_identifier] = pagination_identifier
+    response = redemptions_service.get_list(get_params)
     ```
