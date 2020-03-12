@@ -1,0 +1,5 @@
+name: server-sdk-ruby
+title: Ost Server SDK Ruby
+version: '1.0'
+nav:
+- modules/ROOT/nav.adoc
